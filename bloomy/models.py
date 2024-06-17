@@ -7,18 +7,23 @@ class User(AbstractUser):
     responsible_person = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
-    userFiles = models.TextField(null=True, blank=True)
+    #userFiles = models.TextField(default='.')
+    userFiles = models.FileField(upload_to='user_files/', null=True, blank=True)
+
+    remaining_usages = models.IntegerField(default=0)
 
     def __str__(self):
         return self.username
-
-
+    
+    def has_usages_left(self):
+        return self.remaining_usages > 0
 
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
     allowed_usages = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    image = models.ImageField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -29,11 +34,10 @@ class Subscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
 
-    def getUsesLeft():
-        #IMPLEMENT
+    def getUsesLeft(self):
         return 0
     
-    def isActive():
+    def isActive(self):
         return self.getUsesLeft() > 0
 
     def __str__(self):
@@ -52,7 +56,8 @@ class Specification(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     #suscripction /idk
-    description = models.TextField()
+    name = models.CharField(max_length=100)
+    briefing = models.TextField()
     suggestedText = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     files = models.TextField()    
@@ -64,7 +69,6 @@ class Order(models.Model):
         ('CANCELADO', 'Cancelado'),
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
-
 
     def __str__(self):
         return f'Order {self.id} by {self.user.username}'

@@ -1,29 +1,57 @@
 from django.shortcuts import render, redirect
-from .forms import SignUpForm, OrderForm
+from .forms import SignUpForm, OrderForm, ProfileForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from .models import Package
+from .util import send_email
+'''
+Suscription page form/payment
+Form cadastro
+User orders page -> mostrando el status de la orden y mas
+new order form
 
-'''def packages(request):
+
+
+'''
+def packages(request):
     packages = Package.objects.all()
-    context = {'packages':packages}
-    return render(request, 'bloomy/packages.html',context)'''
+    context = {'packages': packages}
+    return render(request, 'bloomy/packages.html', context)
 
 
+@login_required
 def create_order(request):
-    form = OrderForm()
-    context = {'form':form}
-
     if request.method == 'POST':
         form = OrderForm(request.POST)
         if form.is_valid():
+            order = form.save(commit=False)
+            order.user = request.user
+            order.status = 'A_FAZER'
+            order.save()
+
+            #capturar datos y mandar email
+
+            return redirect('/') 
+        
+    form = OrderForm()
+    context = {'form':form}
+    return render(request, 'bloomy/order_form.html', context)
+
+
+@login_required
+def profile_form(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
             form.save()
             return redirect('/') 
-
-
-    return render(request, 'bloomy/order_form.html', context)
+        
+        
+    form = ProfileForm(instance=request.user)
+    context = {'form':form}
+    return render(request, 'bloomy/profile_form.html', context)
 
 
 def packages(request):
@@ -37,7 +65,6 @@ def client_page(request):
 
 
 @login_required(login_url='login')
-@allowed_users(allowed_roles=['fornecedor'])
 def index(request):
     return render(request, 'bloomy/index.html')
 
@@ -68,7 +95,7 @@ def register(request):
             form.save()
             email = form.cleaned_data.get('email')
             messages.success(request, 'A conta foi criada para ' + email)
-            return redirect('login')  # Cambia 'login' por el nombre de tu URL de redirección para el login
+            return redirect('login')  
     
     form = SignUpForm()
     return render(request, "bloomy/register.html", {'form': form})
