@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import User
+from .models import *
+from django.forms import ModelForm
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
@@ -10,3 +11,9 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username','email', 'password1', 'password2')
+
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order #which model i build a form for
+        fields = '__all__'
