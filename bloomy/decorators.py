@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 
 def unauthenticated_user(view_func):
     def wrapper_func(request, *args, **kwargs):
@@ -25,3 +26,4 @@ def allowed_users(allowed_roles=[]):
 
         return wrapper_func
     return decorator
+

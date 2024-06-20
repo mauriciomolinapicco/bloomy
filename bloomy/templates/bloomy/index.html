@@ -1,2 +1,8 @@
-<h3>Oi, {{user.email}}</h3>
-<a href="{% url 'logout' %}">Logout</a>
+
+{% extends "bloomy/layout.html" %}
+
+{% block body %}
+    {% for m in messages %}
+        {{m}}
+    {% endfor %}
+{% endblock %}

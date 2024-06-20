@@ -4,17 +4,37 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from .models import Package
+from .models import Package, Subscription
 from .util import send_email
 '''
 Suscription page form/payment
 Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
-
-
-
 '''
+def new_subscription(request, package_pk):
+    try:
+        if request.method == 'POST':
+            user = request.user
+            package = Package.objects.get(id=package_pk)
+            subscription = Subscription(
+                user=user,
+                package=package
+            )
+            subscription.save()
+            
+            messages.success(request, 'A suscriçao foi criada com sucesso')
+    except Exception as e:   
+        messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
+    finally:
+        return redirect('index') 
+
+
+def package_view(request, pk):
+    package = Package.objects.get(id=pk)
+    return render(request, "bloomy/package.html", {"package":package})
+
+
 def packages(request):
     packages = Package.objects.all()
     context = {'packages': packages}
@@ -64,7 +84,6 @@ def client_page(request):
     return render(request, 'bloomy/cliente.html')
 
 
-@login_required(login_url='login')
 def index(request):
     return render(request, 'bloomy/index.html')
 

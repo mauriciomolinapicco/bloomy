@@ -7,7 +7,6 @@ class User(AbstractUser):
     responsible_person = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
-    #userFiles = models.TextField(default='.')
     userFiles = models.FileField(upload_to='user_files/', null=True, blank=True)
 
     remaining_usages = models.IntegerField(default=0)
@@ -21,6 +20,7 @@ class User(AbstractUser):
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
     allowed_usages = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(null=True, blank=True)
