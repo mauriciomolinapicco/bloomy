@@ -44,6 +44,15 @@ class Subscription(models.Model):
         return f'{self.user.username} - {self.package.name}'
 
 
+class Usage(models.Model):
+    subscription = models.OneToOneField(Subscription, on_delete=models.CASCADE, related_name='usage')
+    remaining_usages = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f'Usage for Subscription {self.subscription.id}'
+
+
+
 class Specification(models.Model):
     name = models.CharField(max_length=255)
     pixel_size = models.CharField(max_length=100)

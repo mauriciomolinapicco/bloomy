@@ -10,6 +10,7 @@ urlpatterns = [
     path("packages/<str:pk>", views.package_view, name='package_view'),
     path("create_order", views.create_order, name="create_order"),
     path("profile_form", views.profile_form, name="profile_form"),
+    path("subscriptions", views.subscriptions, name="subscriptions"),
 
     path("new_subscription/<str:package_pk>", views.new_subscription, name="new_subscription"),
 

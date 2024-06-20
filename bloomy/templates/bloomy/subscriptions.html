@@ -1,0 +1,7 @@
+{% extends "bloomy/layout.html" %}
+
+{% block body %}
+    {% for subscription in subscriptions %}
+        {{subscription}}
+    {% endfor %}
+{% endblock %}

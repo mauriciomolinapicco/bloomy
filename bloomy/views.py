@@ -12,6 +12,12 @@ Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
 '''
+#login required
+def subscriptions(request):
+    subscriptions = request.user.subscriptions.all()
+    return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
+
+
 def new_subscription(request, package_pk):
     try:
         if request.method == 'POST':
