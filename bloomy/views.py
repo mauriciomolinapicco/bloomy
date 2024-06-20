@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from .models import Package, Subscription
+from .models import Package, Subscription, Usage
 from .util import send_email
 '''
 Suscription page form/payment
@@ -14,8 +14,9 @@ new order form
 '''
 #login required
 def subscriptions(request):
-    subscriptions = request.user.subscriptions.all()
-    return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
+    subscriptions = Subscription.objects.filter(user=request.user)
+    usages = Usage.objects.filter(subscription__in=subscriptions)
+    return render(request, "bloomy/subscriptions.html", {'usages':usages})
 
 
 def new_subscription(request, package_pk):
@@ -28,8 +29,10 @@ def new_subscription(request, package_pk):
                 package=package
             )
             subscription.save()
+            subscription.create_usage()
             
             messages.success(request, 'A suscriçao foi criada com sucesso')
+            #send email
     except Exception as e:   
         messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
     finally:
@@ -47,7 +50,7 @@ def packages(request):
     return render(request, 'bloomy/packages.html', context)
 
 
-@login_required
+#@login_required
 def create_order(request):
     if request.method == 'POST':
         form = OrderForm(request.POST)
@@ -56,14 +59,12 @@ def create_order(request):
             order.user = request.user
             order.status = 'A_FAZER'
             order.save()
-
-            #capturar datos y mandar email
-
+            #send email
             return redirect('/') 
         
     form = OrderForm()
     context = {'form':form}
-    return render(request, 'bloomy/order_form.html', context)
+    return render(request, 'bloomy/create_order.html', context)
 
 
 @login_required

@@ -34,6 +34,14 @@ class Subscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
 
+    def create_usage(self):
+        if not hasattr(self, 'usage'):
+            Usage.objects.create(
+                subscription=self,
+                remaining_usages=self.package.allowed_usages
+            )
+
+
     def getUsesLeft(self):
         return 0
     
@@ -49,7 +57,7 @@ class Usage(models.Model):
     remaining_usages = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Usage for Subscription {self.subscription.id}'
+        return f'Usage of: {self.subscription.user.username}, for package: {self.subscription.package.name}'
 
 
 
@@ -59,7 +67,7 @@ class Specification(models.Model):
     delivery_format = models.CharField(max_length=100)
 
     def __str__(self):
-        return f'Specification: {self.name}'
+        return f'{self.name}'
 
 
 class Order(models.Model):
