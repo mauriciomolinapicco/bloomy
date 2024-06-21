@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from .models import Package, Subscription, Usage
+from .models import Package, Subscription, User
 from .util import send_email
 '''
 Suscription page form/payment
@@ -15,8 +15,7 @@ new order form
 #login required
 def subscriptions(request):
     subscriptions = Subscription.objects.filter(user=request.user)
-    usages = Usage.objects.filter(subscription__in=subscriptions)
-    return render(request, "bloomy/subscriptions.html", {'usages':usages})
+    return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
 
 
 def new_subscription(request, package_pk):
@@ -29,7 +28,7 @@ def new_subscription(request, package_pk):
                 package=package
             )
             subscription.save()
-            subscription.create_usage()
+            subscription.addUsesToUser()
             
             messages.success(request, 'A suscriçao foi criada com sucesso')
             #send email

@@ -34,29 +34,32 @@ class Subscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
 
-    def create_usage(self):
+    def addUsesToUser(self):
+        self.user.remaining_usages += self.package.allowed_usages
+        self.user.save()
+        return
+
+    def __str__(self):
+        return f'{self.user.username} - {self.package.name}'
+    
+    '''def create_usage(self):
         if not hasattr(self, 'usage'):
             Usage.objects.create(
                 subscription=self,
                 remaining_usages=self.package.allowed_usages
             )
 
-    def getUsesLeft(self):
-        return self.usage.remaining_usages if hasattr(self, 'usage') else 0
+     def getUsesLeft(self):
+        return self.usage.remaining_usages if hasattr(self, 'usage') else 0'''
     
-    def isActive(self):
-        return self.getUsesLeft() > 0
-
-    def __str__(self):
-        return f'{self.user.username} - {self.package.name}'
 
 
-class Usage(models.Model):
+'''class Usage(models.Model):
     subscription = models.OneToOneField(Subscription, on_delete=models.CASCADE, related_name='usage')
     remaining_usages = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'Usage of: {self.subscription.user.username}, for package: {self.subscription.package.name}'
+        return f'Usage of: {self.subscription.user.username}, for package: {self.subscription.package.name}'''
 
 
 
