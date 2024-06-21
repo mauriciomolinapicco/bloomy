@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Pedidos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-2xl font-bold mb-4">Lista de Pedidos</h1>
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+            <tr>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Usuario
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Nombre
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Briefing
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Texto Sugerido
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Fecha
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Estado
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Especificación
+                </th>
+                <th class="px-6 py-3 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                    Acciones
+                </th>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            {% for order in orders %}
+                <tr>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.user.username }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.name }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.briefing }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.suggestedText }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.date }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.get_status_display }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {{ order.specification.name }}
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                        {% if order.status != 'EM_PRODUCAO' %}
+                            <form action="{% url 'order_in_progress' order.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Marcar como en proceso</button>
+                            </form>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

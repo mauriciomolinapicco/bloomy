@@ -103,6 +103,5 @@ class Delivery(models.Model):
     delivery_date = models.DateTimeField(auto_now_add=True)
     comment = models.TextField()
     
-
     def __str__(self):
             return f'Delivery {self.id} for Order {self.order.id}'

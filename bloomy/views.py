@@ -6,12 +6,26 @@ from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order
 from .util import send_email
+from django.urls import reverse
+
 '''
 Suscription page form/payment
 Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
 '''
+def order_in_progress(request, order_id):
+    order = Order.objects.get(id=order_id)
+    order.status = 'EM_PRODUCAO'
+    order.save()
+    return redirect(reverse('provider'))
+
+
+
+def provider_view(request):
+    orders = Order.objects.all()
+    return render(request, "bloomy/provider.html", {"orders":orders})
+
 
 def user_orders(request):
     orders = Order.objects.filter(user=request.user)
