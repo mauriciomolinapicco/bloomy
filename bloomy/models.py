@@ -41,9 +41,8 @@ class Subscription(models.Model):
                 remaining_usages=self.package.allowed_usages
             )
 
-
     def getUsesLeft(self):
-        return 0
+        return self.usage.remaining_usages if hasattr(self, 'usage') else 0
     
     def isActive(self):
         return self.getUsesLeft() > 0
