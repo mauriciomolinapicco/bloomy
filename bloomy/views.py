@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user, allowed_users
-from .models import Package, Subscription, User
+from .models import Package, Subscription, User, Order
 from .util import send_email
 '''
 Suscription page form/payment
@@ -12,6 +12,11 @@ Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
 '''
+
+def user_orders(request):
+    orders = Order.objects.filter(user=request.user)
+    return render(request, "bloomy/user_orders.html", {'orders':orders})
+
 #login required
 def subscriptions(request):
     subscriptions = Subscription.objects.filter(user=request.user)
@@ -52,14 +57,23 @@ def packages(request):
 #@login_required
 def create_order(request):
     if request.method == 'POST':
-        form = OrderForm(request.POST)
-        if form.is_valid():
-            order = form.save(commit=False)
-            order.user = request.user
-            order.status = 'A_FAZER'
-            order.save()
-            #send email
-            return redirect('/') 
+        user = request.user
+        form = OrderForm(request.POST, request.FILES)
+        if user.has_uses_left():
+            if form.is_valid():
+                order = form.save(commit=False)
+                order.user = user
+                order.status = 'A_FAZER'
+                order.save()
+
+                #send email
+
+                messages.success(request, 'Seu pedido foi carregado corretamente')
+                user.new_usage()
+                return redirect('/') 
+        else:
+            messages.error(request, 'Voce nao tem usos disponiveis, pede agora seu pacote')
+            return redirect('/packages')
         
     form = OrderForm()
     context = {'form':form}

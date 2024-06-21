@@ -11,6 +11,7 @@ urlpatterns = [
     path("create_order", views.create_order, name="create_order"),
     path("profile_form", views.profile_form, name="profile_form"),
     path("subscriptions", views.subscriptions, name="subscriptions"),
+    path("user_orders", views.user_orders, name="user_orders"),
 
     path("new_subscription/<str:package_pk>", views.new_subscription, name="new_subscription"),
 

@@ -13,8 +13,13 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def new_usage(self):
+        self.remaining_usages -= 1
+        self.save()
+        return
     
-    def has_usages_left(self):
+    def has_uses_left(self):
         return self.remaining_usages > 0
 
 
@@ -79,8 +84,7 @@ class Order(models.Model):
     briefing = models.TextField()
     suggestedText = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    files = models.TextField()    
-    status = models.CharField(max_length=100, choices=[
+    status = models.CharField(max_length=100, default='A_FAZER', choices=[
         #('EM_REVISAO', 'Em revisao'),
         ('A_FAZER', 'A fazer'),
         ('EM_PRODUCAO', 'Em produçao'),
@@ -88,9 +92,10 @@ class Order(models.Model):
         ('CANCELADO', 'Cancelado'),
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
+    orderFiles = models.FileField(null=True, blank=True, upload_to='order_files/')
 
     def __str__(self):
-        return f'Order {self.id} by {self.user.username}'
+        return f'ID:{self.id} | Pedido de {self.specification}  by {self.user.username}'
 
 
 class Delivery(models.Model):
