@@ -36,6 +36,37 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
             </svg>
         </button>
+        <br><hr>
+        <div class="max-w-3xl mx-auto">
+
+            <h1 class="text-3xl font-bold mb-4">Peças que voce precisa abaixar</h1>
+        
+            <ul class="divide-y divide-gray-200">
+                {% for order in completed_orders %}
+                    <li class="py-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="text-lg font-semibold">Pedido ID: {{ order.id }}</p>
+                                <p class="text-gray-600">Nome do pedido: {{ order.name }}</p>
+                                <p class="text-gray-600">Data de Entrega: {{ order.date }}</p>
+                            </div>
+                            <div class="ml-4">
+                                {% if order.latest_delivery_file %}
+                                    <a href="{{ order.latest_delivery_file }}" class="text-blue-600 hover:text-blue-800" download>Abaixar arquivo</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="py-4">
+                        <p class="text-gray-600">Nao tem pedidos entregues disponiveis</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+
+
     </div>
 </div>
 

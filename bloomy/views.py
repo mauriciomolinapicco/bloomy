@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
-from .forms import SignUpForm, OrderForm, ProfileForm
+from .forms import SignUpForm, OrderForm, ProfileForm, DeliveryForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
-from .models import Package, Subscription, User, Order
+from .models import Package, Subscription, User, Order, Delivery
 from .util import send_email
 from django.urls import reverse
 
@@ -14,31 +15,58 @@ Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
 '''
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def complete_order(request, order_id):
+    if request.method == 'POST':
+        order = Order.objects.get(id=order_id)
+        file = request.FILES['file']
+        delivery = Delivery(
+            order=order,
+            file=file
+        )
+        delivery.save()
+        order.status = 'ENTREGUE'
+        order.save()
+
+        return redirect('provider_single_order', order_id=order.id)
+
+    return render(request, 'complete_order.html', {'order': order})
+    
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def provider_single_order(request, order_id):
+    order = Order.objects.get(id=order_id)
+    context = {"order":order, "form":DeliveryForm()}
+    return render(request, "bloomy/provider_single_order.html", context)
+
+@login_required(login_url='login')
 def single_order(request, order_id):
     order = order = Order.objects.get(id=order_id)
     return render(request, "bloomy/single_order.html", {"order":order})
 
 
-def order_in_progress(request, order_id):
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
+def update_order_status(request, order_id, status):
     order = Order.objects.get(id=order_id)
-    order.status = 'EM_PRODUCAO'
+    order.status = status
     order.save()
-    return redirect(reverse('provider'))
+    return redirect(reverse('provider_single_order', kwargs={'order_id': order_id}))
 
-
-
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['admin'])
 def provider_view(request):
-    #ordersToDo = Order.objects.filter(status='A_FAZER')
-    #ordersInProd = Order.objects.filter(status='EM_PRODUCAO')
-    #ordersCompleted = Order.objects.filter(status='ENTREGUE')
-    #context = {"ordersToDo":ordersToDo, "ordersInProd":ordersInProd, "ordersCompleted":ordersCompleted}
     orders = Order.objects.all()
     return render(request, "bloomy/provider.html", {"orders":orders})
 
 
 def user_orders(request):
     orders = Order.objects.filter(user=request.user)
-    return render(request, "bloomy/user_orders.html", {'orders':orders})
+    completed_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
+    context = {'orders':orders, 'completed_orders':completed_orders}
+    return render(request, "bloomy/user_orders.html", context)
 
 #login required
 def subscriptions(request):
@@ -79,9 +107,11 @@ def packages(request):
 
 #@login_required
 def create_order(request):
+
     if request.method == 'POST':
         user = request.user
         form = OrderForm(request.POST, request.FILES)
+
         if user.has_uses_left():
             if form.is_valid():
                 order = form.save(commit=False)
@@ -111,7 +141,6 @@ def profile_form(request):
             form.save()
             return redirect('/') 
         
-        
     form = ProfileForm(instance=request.user)
     context = {'form':form}
     return render(request, 'bloomy/profile_form.html', context)
@@ -121,12 +150,7 @@ def packages(request):
     packages = Package.objects.all()
     context = {'packages':packages}
     return render(request, 'bloomy/packages.html',context)
-
-
-def client_page(request):
-    return render(request, 'bloomy/cliente.html')
-
-
+ 
 def index(request):
     return render(request, 'bloomy/index.html')
 
@@ -150,11 +174,13 @@ def login_view(request):
 
 @unauthenticated_user
 def register(request):
-
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            group = Group.objects.get(name='customer')
+            user.groups.add(group)
+
             email = form.cleaned_data.get('email')
             messages.success(request, 'A conta foi criada para ' + email)
             return redirect('login')  

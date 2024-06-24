@@ -46,26 +46,6 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.package.name}'
-    
-    '''def create_usage(self):
-        if not hasattr(self, 'usage'):
-            Usage.objects.create(
-                subscription=self,
-                remaining_usages=self.package.allowed_usages
-            )
-
-     def getUsesLeft(self):
-        return self.usage.remaining_usages if hasattr(self, 'usage') else 0'''
-    
-
-
-'''class Usage(models.Model):
-    subscription = models.OneToOneField(Subscription, on_delete=models.CASCADE, related_name='usage')
-    remaining_usages = models.IntegerField(default=0)
-
-    def __str__(self):
-        return f'Usage of: {self.subscription.user.username}, for package: {self.subscription.package.name}'''
-
 
 
 class Specification(models.Model):
@@ -92,16 +72,25 @@ class Order(models.Model):
         ('CANCELADO', 'Cancelado'),
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
-    orderFiles = models.FileField(null=True, blank=True, upload_to='order_files/')
+    file = models.FileField(null=True, blank=True, upload_to='order_files/')
+
+    def latest_delivery_file(self):
+        latest_delivery = self.delivery_set.order_by('-delivery_date').first()
+        if latest_delivery:
+            return latest_delivery.file
+        return None
+
 
     def __str__(self):
         return f'ID:{self.id} | Pedido de {self.specification}  by {self.user.username}'
+
+        
 
 
 class Delivery(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     delivery_date = models.DateTimeField(auto_now_add=True)
-    comment = models.TextField()
+    file = models.FileField(null=True, blank=True, upload_to='delivery_files/')
     
     def __str__(self):
             return f'Delivery {self.id} for Order {self.order.id}'

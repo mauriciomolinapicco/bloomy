@@ -1,0 +1,41 @@
+{% extends "bloomy/layout.html" %}
+{% block body %}
+    <body>
+        <div class="container mx-auto text-center my-10">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6"><b>Pedido #{{ order.id }}</b></h1>
+            <h1 class="text-3xl font-bold text-gray-800 mb-6"><b>{{ order.name }}</b></h1>
+            <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
+            <div class="text-xl text-gray-600"><b>Status:</b> {{ order.get_status_display }}</div>
+            <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
+            <div class="text-xl text-gray-600"><b>Briefing:</b> {{ order.briefing }}</div>
+            <div class="text-xl text-gray-600"><b>Texto sugerido:</b> {{ order.suggested_text }}</div>
+            <div class="mt-6">
+                {% if order.status != 'ENTREGUE' and order.status != 'CANCELADO' %}
+                    {% if order.status != 'A_FAZER' %}
+                        <a href="{% url 'update_order_status' order.id 'A_FAZER' %}"><button class="button bg-purple-500 text-white font-bold py-2 px-4 rounded m-2">Marcar como a fazer</button></a>
+                    {% endif %}
+                    {% if order.status != 'EM_PRODUCAO' %}
+                        <a href="{% url 'update_order_status' order.id 'EM_PRODUCAO' %}"><button class="button bg-purple-500 text-white font-bold py-2 px-4 rounded m-2">Marcar como em Produçao</button></a>
+                    {% endif %}
+                    <a href="{% url 'update_order_status' order.id 'CANCELADO' %}"><button class="button bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
+                    <hr> <br>
+                    <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="order-image" class="block text-xl text-gray-600 mb-2">Entregar pedido</label> 
+                        <!-- <input type="file" id="order-file" name="order-file" class="block w-full text-lg text-gray-700 border border-gray-300 rounded mb-4 p-2" required> -->
+                        {{ form.file }} <br>
+                        <button type="submit" id="btn-completado" class="button bg-green-500 text-white font-bold py-2 px-4 rounded m-2">Completar Pedido</button>
+                    </form>
+                {% else %}
+                    {% if order.status == 'ENTREGUE' %}
+                        <p class="font-bold text-2xl">Esse pedido ja foi entregue</p>
+                    {% endif %}
+                    {% if order.status == 'CANCELADO' %}
+                        <p class="font-bold text-2xl">Esse pedido foi cancelado</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+        </div>
+    </body>
+{% endblock %}

@@ -23,6 +23,11 @@ class ProfileForm(ModelForm):
 
 class OrderForm(ModelForm):
     class Meta:
-        model = Order #which model i build a form for
-        fields = '__all__'
-        exclude = ['user', 'status']
+        model = Order 
+        fields = ('name','briefing','suggestedText', 'specification', 'file')
+
+
+class DeliveryForm(ModelForm):
+    class Meta:
+        model = Delivery 
+        fields = ('file',) 
