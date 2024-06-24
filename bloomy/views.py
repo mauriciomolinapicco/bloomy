@@ -14,6 +14,11 @@ Form cadastro
 User orders page -> mostrando el status de la orden y mas
 new order form
 '''
+def single_order(request, order_id):
+    order = order = Order.objects.get(id=order_id)
+    return render(request, "bloomy/single_order.html", {"order":order})
+
+
 def order_in_progress(request, order_id):
     order = Order.objects.get(id=order_id)
     order.status = 'EM_PRODUCAO'
@@ -23,6 +28,10 @@ def order_in_progress(request, order_id):
 
 
 def provider_view(request):
+    #ordersToDo = Order.objects.filter(status='A_FAZER')
+    #ordersInProd = Order.objects.filter(status='EM_PRODUCAO')
+    #ordersCompleted = Order.objects.filter(status='ENTREGUE')
+    #context = {"ordersToDo":ordersToDo, "ordersInProd":ordersInProd, "ordersCompleted":ordersCompleted}
     orders = Order.objects.all()
     return render(request, "bloomy/provider.html", {"orders":orders})
 
