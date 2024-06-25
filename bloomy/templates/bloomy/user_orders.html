@@ -51,9 +51,10 @@
                                 <p class="text-gray-600">Data de Entrega: {{ order.date }}</p>
                             </div>
                             <div class="ml-4">
-                                {% if order.latest_delivery_file %}
-                                    <a href="{{ order.latest_delivery_file }}" class="text-blue-600 hover:text-blue-800" download>Abaixar arquivo</a>
+                                {% if order.latest_delivery_url %}
+                                    <a href="{{ order.latest_delivery_file.file.url }}" class="text-blue-600 hover:text-blue-800" download>Download do arquivo</a>
                                 {% endif %}
+        
                             </div>
                         </div>
                     </li>

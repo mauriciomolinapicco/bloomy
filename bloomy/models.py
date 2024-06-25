@@ -74,11 +74,12 @@ class Order(models.Model):
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
 
-    def latest_delivery_file(self):
+    def latest_delivery_url(self):
         latest_delivery = self.delivery_set.order_by('-delivery_date').first()
         if latest_delivery:
-            return latest_delivery.file
+            return latest_delivery.file.url
         return None
+
 
 
     def __str__(self):
@@ -92,5 +93,8 @@ class Delivery(models.Model):
     delivery_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(null=True, blank=True, upload_to='delivery_files/')
     
+    def file_url(self):
+        return self.file.url
+
     def __str__(self):
             return f'Delivery {self.id} for Order {self.order.id}'

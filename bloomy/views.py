@@ -130,7 +130,7 @@ def create_order(request):
 
                 messages.success(request, 'Seu pedido foi carregado corretamente')
                 user.new_usage()
-                return redirect('/') 
+                return redirect('/')
         else:
             messages.error(request, 'Voce nao tem usos disponiveis, pede agora seu pacote')
             return redirect('/packages')
