@@ -1,0 +1,26 @@
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho disponível para visualização</title>
+</head>
+<body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <h1>Trabalho disponível para visualização</h1>
+                {% if user.company_name %}
+                    <p>Olá {{ user.company_name }},</p>
+                {% else %}
+                    <p>Olá,</p>
+                {% endif %}
+                <p>O trabalho #{{order.id}} de {{order.specification.name}} que você esperava já está disponível para visualização no sistema da Bloomy.</p>
+                <p>Lembre-se de que você tem até 3 dias para baixá-lo.</p>
+                <p>Visite o sistema da Bloomy para acessar o trabalho.</p>
+                <p>Atenciosamente,</p>
+                <p>Equipe Bloomy</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

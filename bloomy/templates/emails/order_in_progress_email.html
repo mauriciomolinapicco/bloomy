@@ -1,0 +1,27 @@
+<!-- templates/emails/order_in_progress_email.html -->
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordem em progresso</title>
+</head>
+<body>
+    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center" style="padding: 40px 0;">
+                <h1>Ordem em progresso</h1>
+                {% if order.user.company_name %}
+                    <p>Olá {{ order.user.company_name }},</p>
+                {% else %}
+                    <p>Olá,</p>
+                {% endif %}
+                <p>Gostaríamos de informar que a sua ordem #{{order.id}} de {{order.specification.name}} está em progresso.</p>
+                <p>Estamos trabalhando duro para completá-la no prazo estabelecido.</p>
+                <p>Continue acompanhando o status da ordem no sistema da Bloomy.</p>
+                <p>Atenciosamente,</p>
+                <p>Equipe Bloomy</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

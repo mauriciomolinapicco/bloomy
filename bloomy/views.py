@@ -42,6 +42,7 @@ def provider_single_order(request, order_id):
     context = {"order":order, "form":DeliveryForm()}
     return render(request, "bloomy/provider_single_order.html", context)
 
+
 @login_required(login_url='login')
 def single_order(request, order_id):
     order = order = Order.objects.get(id=order_id)
@@ -54,7 +55,12 @@ def update_order_status(request, order_id, status):
     order = Order.objects.get(id=order_id)
     order.status = status
     order.save()
+    if status == 'EM_PRODUCAO':
+        order_in_progress_email(order)
+    elif status == 'CANCELADO':
+        order_cancelled_email(order)
     return redirect(reverse('provider_single_order', kwargs={'order_id': order_id}))
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -184,6 +190,8 @@ def register(request):
 
             email = form.cleaned_data.get('email')
             messages.success(request, 'A conta foi criada para ' + email)
+
+            welcome_email(email)
             return redirect('login')  
     
     form = SignUpForm()

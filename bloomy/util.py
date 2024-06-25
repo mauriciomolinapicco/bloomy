@@ -45,3 +45,30 @@ def created_order_email(user, order):
     }
     html_content_user = render_to_string('emails/created_order_email_user.html', context_user)
     send_email(user_email, subject_user, html_content_user)
+
+
+def welcome_email(user_email):
+    subject = "Bem-vindo ao Bloomy"
+    html_content = render_to_string('emails/welcome_email.html')
+    send_email(user_email, subject, html_content)
+
+
+def delivered_order_email(order):
+    subject = "Trabalho disponível para visualização"
+    to_emails = order.user.email
+    html_content = render_to_string('emails/delivered_order_email.html')
+    send_email(to_emails, subject, html_content)
+
+
+def order_in_progress_email(order):
+    subject = "Ordem em progresso"
+    html_content = render_to_string('emails/order_in_progress_email.html', {'order': order})
+    to_emails = order.user.email
+    send_email(to_emails, subject, html_content)
+
+
+def order_cancelled_email(order):
+    subject = "Ordem cancelada"
+    html_content = render_to_string('emails/order_cancelled_email.html', {'order': order})
+    to_emails = order.user.email
+    send_email(to_emails, subject, html_content)
