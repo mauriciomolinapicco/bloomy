@@ -1,0 +1,18 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido corretamente enviado</title>
+</head>
+<body>
+    <h2>Seu pedido foi enviado com sucesso!</h2>
+    <ul>
+        <li>Pedido #{{ order.id }}</li>
+        <li>Especificacao: {{ order.specification.name }}</li>
+        <li>Texto sugerido: {{ order.suggestedText }}</li>
+        <li>Briefing: {{ order.briefing }}</li>
+    </ul>
+    <hr>
+    <p>Pode ver mais informacao no sistema da Bloomy</p>
+</body>
+</html>

@@ -6,14 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order, Delivery
-from .util import send_email
+from .util import *
 from django.urls import reverse
 
 '''
-Suscription page form/payment
-Form cadastro
-User orders page -> mostrando el status de la orden y mas
-new order form
+send emails
+check for virus in files
+
 '''
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -28,6 +27,8 @@ def complete_order(request, order_id):
         delivery.save()
         order.status = 'ENTREGUE'
         order.save()
+
+        delivered_order_email(order)
 
         return redirect('provider_single_order', order_id=order.id)
 
@@ -119,7 +120,7 @@ def create_order(request):
                 order.status = 'A_FAZER'
                 order.save()
 
-                #send email
+                created_order_email(user, order)
 
                 messages.success(request, 'Seu pedido foi carregado corretamente')
                 user.new_usage()
