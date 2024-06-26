@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import SignUpForm, OrderForm, ProfileForm, DeliveryForm
+from .forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -12,8 +12,8 @@ from django.urls import reverse
 '''
 send emails
 check for virus in files
-
 '''
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def complete_order(request, order_id):
@@ -192,7 +192,7 @@ def register(request):
             messages.success(request, 'A conta foi criada para ' + email)
 
             welcome_email(email)
-            return redirect('login')  
+            return redirect('login')
     
     form = SignUpForm()
     return render(request, "bloomy/register.html", {'form': form})

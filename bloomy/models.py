@@ -59,13 +59,11 @@ class Specification(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    #suscripction /idk
     name = models.CharField(max_length=100)
     briefing = models.TextField()
     suggestedText = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=100, default='A_FAZER', choices=[
-        #('EM_REVISAO', 'Em revisao'),
         ('A_FAZER', 'A fazer'),
         ('EM_PRODUCAO', 'Em produçao'),
         ('ENTREGUE', 'Entregue'),
@@ -74,22 +72,12 @@ class Order(models.Model):
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
 
-    def latest_delivery_url(self):
-        latest_delivery = self.delivery_set.order_by('-delivery_date').first()
-        if latest_delivery:
-            return latest_delivery.file.url
-        return None
-
-
-
     def __str__(self):
-        return f'ID:{self.id} | Pedido de {self.specification}  by {self.user.username}'
-
-        
+        return f'ID:{self.id} | Pedido de {self.specification} by {self.user.username}'
 
 
 class Delivery(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery')
     delivery_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(null=True, blank=True, upload_to='delivery_files/')
     
@@ -97,4 +85,4 @@ class Delivery(models.Model):
         return self.file.url
 
     def __str__(self):
-            return f'Delivery {self.id} for Order {self.order.id}'
+        return f'Delivery {self.id} for Order {self.order.id}'
