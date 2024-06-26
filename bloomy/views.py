@@ -9,10 +9,8 @@ from .models import Package, Subscription, User, Order, Delivery
 from .util import *
 from django.urls import reverse
 
-'''
-send emails
-check for virus in files
-'''
+
+
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -182,16 +180,17 @@ def login_view(request):
 @unauthenticated_user
 def register(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             group = Group.objects.get(name='customer')
             user.groups.add(group)
+            user.save()
 
             email = form.cleaned_data.get('email')
             messages.success(request, 'A conta foi criada para ' + email)
 
-            welcome_email(email)
+            #welcome_email(email)
             return redirect('login')
     
     form = SignUpForm()
