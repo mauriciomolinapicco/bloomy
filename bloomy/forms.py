@@ -4,9 +4,17 @@ from .models import *
 from django.forms import ModelForm
 
 class SignUpForm(UserCreationForm):
+    company_name = forms.CharField(max_length=255, required=False)
+    CNPJ = forms.CharField(max_length=14, min_length=14, required=False)
+    responsible_person = forms.CharField(max_length=255, required=False)
+    email = forms.EmailField()
+    phone_number = forms.CharField(max_length=20, required=False)
+    userFiles = forms.FileField(required=False)
+
     class Meta:
         model = User
-        fields = ('username','email', 'password1', 'password2') 
+        fields = ('username', 'password1', 'password2', 'company_name', 'CNPJ', 'responsible_person', 'email', 'phone_number', 'userFiles')
+
 
 
 class ProfileForm(ModelForm):
