@@ -1,12 +1,12 @@
 from django.conf import settings
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Email, To, Content
+from sendgrid.helpers.mail import Mail, Email, Content, To
 import os 
 from dotenv import load_dotenv
 from django.template.loader import render_to_string
 
 load_dotenv()
-#SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
 def send_email(to_emails, subject, html_content):
     message = Mail(
         from_email='fabricio@rooster.dev.br', 

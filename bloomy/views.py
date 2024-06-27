@@ -73,6 +73,7 @@ def user_orders(request):
     context = {'orders':orders, 'completed_orders':completed_orders}
     return render(request, "bloomy/user_orders.html", context)
 
+
 #login required
 def subscriptions(request):
     subscriptions = Subscription.objects.filter(user=request.user)
@@ -119,6 +120,7 @@ def create_order(request):
 
         if user.has_uses_left():
             if form.is_valid():
+                
                 order = form.save(commit=False)
                 order.user = user
                 order.status = 'A_FAZER'
