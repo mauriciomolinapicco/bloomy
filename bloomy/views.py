@@ -10,8 +10,6 @@ from .util import *
 from django.urls import reverse
 
 
-
-
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def complete_order(request, order_id):
@@ -185,14 +183,14 @@ def register(request):
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
+            #group = Group.objects.get(name='customer')
+            #user.groups.add(group)
             user.save()
 
             email = form.cleaned_data.get('email')
             messages.success(request, 'A conta foi criada para ' + email)
 
-            #welcome_email(email)
+            welcome_email(email)
             return redirect('login')
     
     form = SignUpForm()

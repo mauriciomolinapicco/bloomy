@@ -1,16 +1,43 @@
-<h3>login</h3>
-<form action="" method="post">
-    {% csrf_token %}
-    <label for="">Usuario</label>
-    <input type="text" name="username" id="">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
 
-    <label for="">Senha</label>
-    <input type="password" name="password" id="">
+</head>
+{% load widget_tweaks %}
+<body>
+    <div class="relative flex justify-center items-center bg-pink-600 h-screen">
+        <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
+        <div class="absolute -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+            
+        <div class="max-w-md mx-auto p-6">
+            <h1 class="text-center text-4xl font-bold text-yellow-400">Bloomy</h1>
+            <br> <br>
+            <h3 class="text-center text-xl text-white mb-4">Bem vindo a Bloomy</h3>
+        
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600 mb-4" name="username" placeholder="Nome de usuário">
+            
+                <input type="password" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600 mb-4" name="password" placeholder="Senha">
+            
+                <input type="submit" class="w-full bg-yellow-400 text-pink-600 hover:bg-yellow-500 font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block" value="Entrar">
+            </form>
+           
+            <br><hr><br><a href="{% url 'register' %}" class="text-center text-yellow-400 hover:text-yellow-600 block mb-4">Cadastre-se</a>
+            <a href="{% url 'reset_password' %}" class="text-center text-yellow-400 hover:text-yellow-600 block">Esqueceu a senha?</a>
+            
+            <br><br>
+            {% for message in messages %}
+            <p class="border border-yellow-400 rounded-full px-4 py-2 w-full text-center bg-yellow-400">{{ message }}</p>
+            {% endfor %}
+        </div>
+    </div>
+        
+</body>
+</html>
 
-    <input type="submit" name="" id="">
-</form>
-<a href="{% url 'reset_password' %}">Esqueceu a senha?</a>
-
-{% for message in messages %}
-{{ message }}
-{% endfor %}
