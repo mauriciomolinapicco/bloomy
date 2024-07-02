@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
+
+</head>
+{% load widget_tweaks %}
+<body class="bg-pink-600">
+    
+
+    <div class="relative overflow-hidden  flex justify-center items-center ">
+        <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
+        <div class="absolute -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+
+        <form action="" method="POST" class="p-6 rounded-lg max-w-md w-full">
+            {% csrf_token %}
+            <h1 class="text-center text-4xl font-bold text-yellow-400">Bloomy</h1>
+            <br> <br>
+            <h3 class="text-center white text-xl text-white mb-4">Bem vindo a Bloomy</h3>
+
+            <div class="mb-4">
+                {% render_field form.username placeholder=form.username.label class+="bg-transparent bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.email placeholder=form.email.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.password1 placeholder="Senha" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.password2 placeholder="Confirmar senha" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.company_name placeholder="Nome da empresa" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.responsible_person placeholder="Nome da pessoa responsavel" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.CNPJ placeholder="CNPJ" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.phone_number placeholder="Telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.userFiles placeholder="Arquivos" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            <div class="mb-4 flex justify-center">
+                <input type="submit" value="Cadastre-se" class="bg-yellow-500 center hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
+            </div>
+            
+            
+            <a href="{% url 'login' %}" class="text-center text-yellow-400 hover:text-yellow-600 block">Ja tem uma conta?</a>
+        </form>
+        
+    </div>
+    </div>
+</body>
+</html>

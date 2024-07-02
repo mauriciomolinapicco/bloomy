@@ -174,7 +174,7 @@ def login_view(request):
         else:
             messages.info(request, 'Usuario ou senha incorreta')
 
-    return render(request, "bloomy/login.html")
+    return render(request, "registration/login.html")
 
 
 @unauthenticated_user
@@ -194,7 +194,7 @@ def register(request):
             return redirect('login')
     
     form = SignUpForm()
-    return render(request, "bloomy/register.html", {'form': form})
+    return render(request, "registration/register.html", {'form': form})
 
 
 def logout_view(request):
