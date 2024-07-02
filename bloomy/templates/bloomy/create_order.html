@@ -1,9 +1,60 @@
 {% extends "bloomy/layout.html" %}
-
+{% load widget_tweaks %}
 {% block body %}
-    <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form}}
-        <input class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="submit" value="Criar">
-    </form>
+
+    
+    <body class="bg-purple-600">
+    
+
+        <div class="relative overflow-hidden  flex justify-center items-center ">
+            <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
+            <div class="absolute -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+    
+            <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="text-center text-4xl font-bold text-yellow-400">Bloomy</h1>
+                <br> <br>
+                <h3 class="text-center white text-2xl text-white mb-4">Bora lá!</h3>
+                <h3 class="text-center white text-xl text-white mb-4">Qual material você deseja?</h3>
+                
+                <div class="mb-4">
+                    <label for="">Nome da peça</label>
+                    {% render_field form.name placeholder="Nome da peca" class+="bg-transparent bg-transparent border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    {% render_field form.briefing placeholder="Briefing" class+="bg-transparent bg-transparent border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    {% render_field form.suggestedText placeholder="Texto sugerido" class+="bg-transparent bg-transparent border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    {% render_field form.specification placeholder="Formato" class+="bg-transparent bg-transparent border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    {% render_field form.file placeholder="File" class+="bg-transparent bg-transparent border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                {% for group, specification, index in widget.optgroups %}
+                    {% for option in specification %}
+                        <div class="card p-4 border rounded-lg hover:bg-gray-100 transition duration-300 cursor-pointer">
+                        <label class="flex items-center">
+                            {{ option.tag }}
+                            <span class="ml-2">{{ option.choice_label }}</span>
+                        </label>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+               
+                <input type="submit" class="w-full bg-yellow-500 center hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
+            </form>
+            
+        </div>
+        </div>
+    </body>
+    
 {% endblock %}

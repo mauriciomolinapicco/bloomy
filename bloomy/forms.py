@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.forms import ModelForm
 
+
 class SignUpForm(UserCreationForm):
     company_name = forms.CharField(max_length=255, required=False)
     CNPJ = forms.CharField(max_length=14, min_length=14, required=False)
@@ -16,21 +17,10 @@ class SignUpForm(UserCreationForm):
         fields = ('username', 'password1', 'password2', 'company_name', 'CNPJ', 'responsible_person', 'email', 'phone_number', 'userFiles')
 
 
-'''class ProfileForm(ModelForm):
-    class Meta:
-        model = User
-        fields = ('company_name', 'CNPJ', 'responsible_person', 'phone_number', 'userFiles')
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['userFiles'].required = False #user files nao e requerido'''
-
-
 class OrderForm(ModelForm):
     class Meta:
         model = Order 
         fields = ('name','briefing','suggestedText', 'specification', 'file')
-
 
 class DeliveryForm(ModelForm):
     class Meta:
