@@ -16,14 +16,20 @@ urlpatterns = [
     path("provider", views.provider_view, name="provider"),
     path("provider_single_order/<str:order_id>", views.provider_single_order, name="provider_single_order"),
 
-    path("new_subscription/<str:package_pk>", views.new_subscription, name="new_subscription"),
+    path("new_subscription/<str:package_pk>", views.redirect_to_payment, name="new_subscription"),
     path("update_order_status/<str:order_id>/<str:status>", views.update_order_status, name="update_order_status"),
     path("complete_order/<str:order_id>", views.complete_order, name="complete_order"),
 
+    #user urls
     path("login", views.login_view, name="login"),
     path("register", views.register, name="register"),
     path("logout", views.logout_view, name="logout"),
 
+    #payment urls
+    path("payment_success", views.payment_success, name="payment_success"),
+    path("payment_cancel", views.payment_cancel, name="payment_cancel"),
+
+    #reset password urls
     path("reset_password/", auth_views.PasswordResetView.as_view(template_name="registration/password_reset.html"), 
     name="reset_password"),
 

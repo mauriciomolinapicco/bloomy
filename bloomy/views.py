@@ -8,6 +8,7 @@ from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order, Delivery
 from .util import *
 from django.urls import reverse
+import stripe
 
 
 @login_required(login_url='login')
@@ -78,24 +79,60 @@ def subscriptions(request):
     return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
 
 
-def new_subscription(request, package_pk):
-    try:
-        if request.method == 'POST':
+def redirect_to_payment(request, package_pk):
+    if request.method == 'POST':
+        
+        try:
             user = request.user
             package = Package.objects.get(id=package_pk)
-            subscription = Subscription(
-                user=user,
-                package=package
-            )
-            subscription.save()
-            subscription.addUsesToUser()
             
-            messages.success(request, 'A suscriçao foi criada com sucesso')
-            #send email
-    except Exception as e:   
-        messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
-    finally:
-        return redirect('index') 
+            if user.stripe_customer_id is None:
+                user.create_stripe_account()
+            
+            print(user.stripe_customer_id)
+            
+            customer_id = user.stripe_customer_id
+            price_id = package.stripe_product_id #check if its not none
+
+            print(request, customer_id, price_id, package.id, user.id)
+            checkout_url = create_checkout_session_url(request, customer_id, price_id, package.id, user.id)
+            return redirect(checkout_url)
+
+        except Exception as e:   
+            messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
+            return redirect('packages')
+        
+    else:
+        return render(request, "bloomy/packages.html")
+
+
+def payment_success(request):
+    session_id = request.GET.get('session_id')
+
+    checkout_session = retrieve_checkout_session(session_id)
+    if confirm_payment(checkout_session):
+        user_id, package_id = extract_user_and_plan_id(checkout_session)
+
+        user = User.objects.get(id=user_id)
+        package = Package.objects.get(id=package_id)
+
+        subscription = Subscription(
+            user=user,
+            package=package
+        )
+        subscription.save()
+        subscription.addUsesToUser()
+
+        messages.success(request, 'A suscriçao foi criada com sucesso')
+        
+        return render(request, "payment/payment_success.html")
+    else:
+        return render(request, "payment/payment_cancel.html")
+
+
+def payment_cancel(request):
+    return render(request, "payment/payment_cancel.html")
+
 
 
 def package_view(request, pk):

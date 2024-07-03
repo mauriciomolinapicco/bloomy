@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import stripe
 
 class User(AbstractUser):
     company_name = models.CharField(max_length=255, null=True, blank=True)
@@ -8,6 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     userFiles = models.FileField(upload_to='user_files/', null=True, blank=True)
+    stripe_customer_id = models.CharField(max_length=255, null=True, blank=True)
 
     remaining_usages = models.IntegerField(default=0)
 
@@ -21,7 +23,59 @@ class User(AbstractUser):
     
     def has_uses_left(self):
         return self.remaining_usages > 0
+    
 
+    def create_stripe_account(self):
+        try:
+            customers = stripe.Customer.list(email=self.email)
+
+            if customers.data:
+                customer = customers.data[0] 
+            else:
+                customer = stripe.Customer.create(
+                    email=self.email,
+                    name=self.responsible_person,
+                )
+
+            self.stripe_customer_id = customer.id
+            self.save()
+        
+        except stripe.error.CardError as e:
+            
+            body = e.json_body
+            err  = body.get('error', {})
+            print(f"Status is: {e.http_status}")
+            print(f"Type is: {err.get('type')}")
+            print(f"Code is: {err.get('code')}")
+            
+            raise Exception(f"Card error: {err.get('message')}")
+
+        except stripe.error.RateLimitError as e:
+            print(f"Rate limit error: {e}")
+            raise Exception("Rate limit error, please try again later.")
+
+        except stripe.error.InvalidRequestError as e:
+            print(f"Invalid request: {e}")
+            raise Exception("Invalid request, please check your parameters.")
+
+        except stripe.error.AuthenticationError as e:
+            print(f"Authentication error: {e}")
+            raise Exception("Authentication error, please check your API keys.")
+
+        except stripe.error.APIConnectionError as e:
+            print(f"Network error: {e}")
+            raise Exception("Network error, please try again.")
+
+        except stripe.error.StripeError as e:
+            print(f"Stripe error: {e}")
+            raise Exception("An error occurred, please try again.")
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            raise Exception("An unexpected error occurred, please try again.")
+
+        
+            
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
@@ -29,6 +83,8 @@ class Package(models.Model):
     allowed_usages = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     image = models.ImageField(null=True, blank=True, upload_to='package_images/')
+
+    stripe_product_id = models.CharField(max_length=255, null=True, blank=True)
 
     def __str__(self):
         return self.name
