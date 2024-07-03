@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
 from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order, Delivery
-from .util import *
+from .util.email_util import *
+from .util.payment_util import *
 from django.urls import reverse
 import stripe
 

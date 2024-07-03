@@ -4,8 +4,6 @@ from sendgrid.helpers.mail import Mail, Email, Content, To
 import os 
 from dotenv import load_dotenv
 from django.template.loader import render_to_string
-import stripe
-from django.urls import reverse
 
 load_dotenv()
 
@@ -74,41 +72,3 @@ def order_cancelled_email(order):
     html_content = render_to_string('emails/order_cancelled_email.html', {'order': order})
     to_emails = order.user.email
     send_email(to_emails, subject, html_content)
-
-
-def create_checkout_session_url(request, customer_id, price_id, package_id, user_id):
-    success_url = request.build_absolute_uri(reverse('payment_success'))
-    cancel_url = request.build_absolute_uri(reverse('payment_cancel'))
-    print('paso')
-    session = stripe.checkout.Session.create(
-        customer=customer_id,
-        payment_method_types=['card'],
-        line_items=[{
-            'price': price_id,
-            'quantity': 1,
-        }],
-        mode='payment',
-        success_url=success_url,
-        cancel_url=cancel_url,
-        metadata={
-                'user_id': str(user_id), 'package_id': str(package_id)},
-    )
-
-    return session.url
-
-
-def retrieve_checkout_session(session_id):
-        try:
-            return stripe.checkout.Session.retrieve(session_id)
-        except stripe.error.StripeError as e:
-            raise
-
-
-def confirm_payment(checkout_session):
-    return checkout_session.payment_status == "paid"
-
-
-def extract_user_and_plan_id(checkout_session):
-        user_id = checkout_session.metadata['user_id']
-        package_id = checkout_session.metadata['package_id']
-        return user_id, package_id
