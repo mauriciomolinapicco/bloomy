@@ -74,8 +74,6 @@ class User(AbstractUser):
             print(f"An error occurred: {e}")
             raise Exception("An unexpected error occurred, please try again.")
 
-        
-            
 
 class Package(models.Model):
     name = models.CharField(max_length=255)

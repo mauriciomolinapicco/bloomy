@@ -9,7 +9,6 @@ urlpatterns = [
     path("packages", views.packages, name='packages'),
     path("packages/<str:pk>", views.package_view, name='package_view'),
     path("create_order", views.create_order, name="create_order"),
-    path("profile_form", views.profile_form, name="profile_form"),
     path("subscriptions", views.subscriptions, name="subscriptions"),
     path("user_orders", views.user_orders, name="user_orders"),
     path("user_orders/<str:order_id>", views.single_order, name='single_order'),

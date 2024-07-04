@@ -4,7 +4,8 @@ import stripe
 def create_checkout_session_url(request, customer_id, price_id, package_id, user_id):
     success_url = request.build_absolute_uri(reverse('payment_success'))
     cancel_url = request.build_absolute_uri(reverse('payment_cancel'))
-    
+     
+
     try:
         session = stripe.checkout.Session.create(
             customer=customer_id,
@@ -14,7 +15,7 @@ def create_checkout_session_url(request, customer_id, price_id, package_id, user
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=success_url,
+            success_url=success_url + '?session_id={CHECKOUT_SESSION_ID}',
             cancel_url=cancel_url,
             metadata={
                 'user_id': str(user_id),

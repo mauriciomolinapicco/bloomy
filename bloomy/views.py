@@ -176,19 +176,6 @@ def create_order(request):
     return render(request, 'bloomy/create_order.html', context)
 
 
-@login_required
-def profile_form(request):
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user)
-        if form.is_valid():
-            form.save()
-            return redirect('/') 
-        
-    form = ProfileForm(instance=request.user)
-    context = {'form':form}
-    return render(request, 'bloomy/profile_form.html', context)
-
-
 def packages(request):
     packages = Package.objects.all()
     context = {'packages':packages}
