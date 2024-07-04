@@ -1,8 +1,10 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 import stripe
+import uuid
 
 class User(AbstractUser):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     company_name = models.CharField(max_length=255, null=True, blank=True)
     CNPJ = models.CharField(max_length=14, null=True, blank=True)
     responsible_person = models.CharField(max_length=255, null=True, blank=True)
@@ -76,11 +78,10 @@ class User(AbstractUser):
 
 
 class Package(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
     allowed_usages = models.IntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(null=True, blank=True, upload_to='package_images/')
 
     stripe_product_id = models.CharField(max_length=255, null=True, blank=True)
 
@@ -89,6 +90,7 @@ class Package(models.Model):
 
 
 class Subscription(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
@@ -103,6 +105,7 @@ class Subscription(models.Model):
 
 
 class Specification(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     name = models.CharField(max_length=255)
     pixel_size = models.CharField(max_length=100)
     delivery_format = models.CharField(max_length=100)
@@ -112,6 +115,7 @@ class Specification(models.Model):
 
 
 class Order(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     name = models.CharField(max_length=100)
     briefing = models.TextField()
@@ -131,6 +135,7 @@ class Order(models.Model):
 
 
 class Delivery(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery')
     delivery_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(null=True, blank=True, upload_to='delivery_files/')
