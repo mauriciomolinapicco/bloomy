@@ -163,20 +163,21 @@ AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
-EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+# Configuración de SendGrid
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "apikey"  # Esto es literal, no tu nombre de usuario de SendGrid
+EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Reemplaza con tu SendGrid API key
+DEFAULT_FROM_EMAIL = "fabricio@rooster.dev.br"
+
+
+#EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
+#SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
 
 
 
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' #to serve js, css, etc.. from s3 bucket
-
-#SMTP CONFIGURATION (simple mail transfer protocol)
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
-#EMAIL_HOST = 'smtp.sendgrid.net'
-#EMAIL_PORT = 587
-#EMAIL_USE_TLS = True
-#EMAIL_HOST_USER = 'apikey'  
-#EMAIL_HOST_PASSWORD = os.getenv(SENDGRID_API_KEY)  

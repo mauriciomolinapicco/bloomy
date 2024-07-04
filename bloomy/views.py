@@ -9,8 +9,6 @@ from .models import Package, Subscription, User, Order, Delivery
 from .util.email_util import *
 from .util.payment_util import *
 from django.urls import reverse
-import stripe
-
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -135,12 +133,6 @@ def payment_cancel(request):
     return render(request, "payment/payment_cancel.html")
 
 
-
-def package_view(request, pk):
-    package = Package.objects.get(id=pk)
-    return render(request, "bloomy/package.html", {"package":package})
-
-
 def packages(request):
     packages = Package.objects.all()
     context = {'packages': packages}
@@ -199,7 +191,7 @@ def login_view(request):
         else:
             messages.info(request, 'Usuario ou senha incorreta')
 
-    return render(request, "registration/login.html")
+    return render(request, "register/login.html")
 
 
 @unauthenticated_user
@@ -219,7 +211,7 @@ def register(request):
             return redirect('login')
     
     form = SignUpForm()
-    return render(request, "registration/register.html", {'form': form})
+    return render(request, "register/register.html", {'form': form})
 
 
 def logout_view(request):

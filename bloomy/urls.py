@@ -7,7 +7,6 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path("", views.index, name="index"),
     path("packages", views.packages, name='packages'),
-    path("packages/<str:pk>", views.package_view, name='package_view'),
     path("create_order", views.create_order, name="create_order"),
     path("subscriptions", views.subscriptions, name="subscriptions"),
     path("user_orders", views.user_orders, name="user_orders"),
@@ -29,14 +28,15 @@ urlpatterns = [
     path("payment_cancel", views.payment_cancel, name="payment_cancel"),
 
     #reset password urls
-    path("reset_password/", auth_views.PasswordResetView.as_view(template_name="registration/password_reset.html"), 
+    path("reset_password/", auth_views.PasswordResetView.as_view(template_name="register/password_reset.html"), 
     name="reset_password"),
 
-    path("reset_password_sent/", auth_views.PasswordResetDoneView.as_view(template_name="registration/password_reset_sent.html"), 
+    path("reset_password_sent/", auth_views.PasswordResetDoneView.as_view(template_name="register/password_reset_sent.html"), 
     name="password_reset_done"),
 
-    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(template_name="registration/password_reset_form.html"), 
+    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(template_name="register/password_reset_form.html"), 
     name="password_reset_confirm"),
 
-    path("reset_password_complete/", auth_views.PasswordResetCompleteView.as_view(template_name="registration/password_reset_done.html"), name="password_reset_complete"),
+    path("reset_password_complete/", auth_views.PasswordResetCompleteView.as_view(template_name="register/password_reset_done.html"), 
+         name="password_reset_complete"),
 ] 
