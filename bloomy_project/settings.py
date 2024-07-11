@@ -9,15 +9,15 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import stripe
+
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -79,23 +79,23 @@ WSGI_APPLICATION = 'bloomy_project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
+        'NAME': 'rooster_rds',
         'USER': 'rooster',
         'PASSWORD': os.getenv("POSTGRESQL_AWS_PASS"),
         'HOST': os.getenv("AWS_RDS_ENDPOINT"),
         'PORT': '5432'
     }
-}'''
-DATABASES = {
+}
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / "db.sqlite3",
     }
-}
+}'''
 
 
 
@@ -177,7 +177,6 @@ DEFAULT_FROM_EMAIL = "fabricio@rooster.dev.br"
 #EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
-
-
-
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' #to serve js, css, etc.. from s3 bucket
+
+stripe.api_key = os.getenv("STRIPE_API_KEY")

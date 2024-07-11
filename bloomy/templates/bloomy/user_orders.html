@@ -4,7 +4,7 @@
 {% block title %}Novo pedido{% endblock %}
 
 {% block body %}
-<body class="bg-gray-700">
+<div class="bg-gray-600">
     <div class="container mx-auto py-8">
         <h2 class="text-2xl text-white mb-4 text-center">Quadro de demandas</h2>
         
@@ -36,6 +36,11 @@
                                 </button>
                             </a>
                         </div>
+                    </div>
+                    {% empty %}
+                    <div class="flex items-center">
+                        <p class="text-white font-bold">Nao tem pedidos registrados</p> <br>
+                        <a href="{% url 'create_order' %}" class="text-white">Clicke aqui e faça seu primero pedido agora!</a>
                     </div>
                     {% endfor %}
                 </div>
@@ -110,7 +115,7 @@
         </div>
         </div>
     </div>
-</body>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

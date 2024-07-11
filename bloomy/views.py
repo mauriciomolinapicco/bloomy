@@ -121,8 +121,6 @@ def payment_success(request):
         )
         subscription.save()
         subscription.addUsesToUser()
-
-        messages.success(request, 'A suscriçao foi criada com sucesso')
         
         return render(request, "payment/payment_success.html")
     else:

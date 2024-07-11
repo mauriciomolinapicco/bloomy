@@ -23,7 +23,7 @@ def create_checkout_session_url(request, customer_id, price_id, package_id, user
         )
 
         return session.url
-
+ 
     except stripe.error.InvalidRequestError as e:
         print(f"Error de solicitud inválida en Stripe: {e}")
         raise Exception("Error al crear la sesión de checkout en Stripe.")
