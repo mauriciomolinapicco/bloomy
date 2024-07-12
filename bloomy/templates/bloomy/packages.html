@@ -1,7 +1,9 @@
 {% extends "bloomy/layout.html" %}
+{% load static %}
 {% block title %} - Pacotes {% endblock%}
 {% block body %}
-    <div class="bg-purple-600 min-h-screen">
+    <img src="{% static 'img/tira-cuadrados.webp' %}" alt="">
+    <div class="bg-purple-600" style="height: 550px;">
         {% for m in messages %}
             {{m}}
         {% endfor %}
