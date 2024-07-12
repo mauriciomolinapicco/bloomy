@@ -144,16 +144,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bloomy.User'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = 'static/'
+LOGIN_URL = '/login/'  
 
+#STATIC_URL = '/static/'
+STATIC_URL = os.getenv("AWS_S3_DOMAIN")
 #path to store images when theyre uploaded
 MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-LOGIN_URL = '/login/'  
-
 
 #AWS S3 CONFIG
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
@@ -165,7 +164,9 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL =  None
 AWS_S3_VERITY = True
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' #to serve js, css, etc.. from s3 bucket
 
+#EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 # Configuración de SendGrid
@@ -176,10 +177,8 @@ EMAIL_HOST_USER = "apikey"  # Esto es literal, no tu nombre de usuario de SendGr
 EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Reemplaza con tu SendGrid API key
 DEFAULT_FROM_EMAIL = "fabricio@rooster.dev.br"
 
-
 #EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_SANDBOX_MODE_IN_DEBUG = False
 
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' #to serve js, css, etc.. from s3 bucket
 
 stripe.api_key = os.getenv("STRIPE_API_KEY")
