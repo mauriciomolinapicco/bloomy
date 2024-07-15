@@ -13,7 +13,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import stripe
-import dj_database_url
+
 
 load_dotenv()
 
@@ -87,11 +87,14 @@ WSGI_APPLICATION = 'bloomy_project.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=f"postgres://{os.getenv('DATABASE_USER')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}:{os.getenv('DATABASE_PORT')}/{os.getenv('DATABASE_NAME')}"
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
