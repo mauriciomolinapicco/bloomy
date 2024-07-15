@@ -84,17 +84,22 @@ WSGI_APPLICATION = 'bloomy_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
+import dj_database_url
 
-
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-import dj_database_url
+
 db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+DATABASES['default'].update(db_from_env)'''
+DATABASES = {
+    'default': dj_database_url.config(
+        default=f"postgres://{os.getenv('DATABASE_USER', '')}:{os.getenv('DATABASE_PASSWORD', '')}@{os.getenv('DATABASE_HOST', '')}:{os.getenv('DATABASE_PORT', '')}/{os.getenv('DATABASE_NAME', '')}"
+    )
+}
 
 
 # Password validation
