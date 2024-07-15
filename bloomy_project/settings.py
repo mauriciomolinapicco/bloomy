@@ -13,6 +13,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 import stripe
+import dj_database_url
 
 load_dotenv()
 
@@ -83,21 +84,12 @@ WSGI_APPLICATION = 'bloomy_project.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 
-''' DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rooster_rds',
-        'USER': 'rooster',
-        'PASSWORD': os.getenv("POSTGRESQL_AWS_PASS"),
-        'HOST': os.getenv("AWS_RDS_ENDPOINT"),
-        'PORT': '5432'
-    }
-}'''
+
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / "db.sqlite3",
-    }
+    'default': dj_database_url.config(
+        default=f"postgres://{os.getenv('DATABASE_USER')}:{os.getenv('DATABASE_PASSWORD')}@{os.getenv('DATABASE_HOST')}:{os.getenv('DATABASE_PORT')}/{os.getenv('DATABASE_NAME')}"
+    )
 }
 
 
@@ -175,7 +167,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "apikey"  # Esto es literal, no tu nombre de usuario de SendGrid
 EMAIL_HOST_PASSWORD = os.getenv("SENDGRID_API_KEY")  # Reemplaza con tu SendGrid API key
-DEFAULT_FROM_EMAIL = "fabricio@rooster.dev.br"
+DEFAULT_FROM_EMAIL = "bloomy@rooster.dev.br"
 
 #EMAIL_BACKEND = "sendgrid_backend.SendgridBackend"
 #SENDGRID_SANDBOX_MODE_IN_DEBUG = False

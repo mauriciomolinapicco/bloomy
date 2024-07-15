@@ -9,7 +9,7 @@ load_dotenv()
 
 def send_email(to_emails, subject, html_content):
     message = Mail(
-        from_email='fabricio@rooster.dev.br', 
+        from_email='bloomy@rooster.dev.br', 
         to_emails=to_emails,
         subject=subject,
         html_content=html_content)
