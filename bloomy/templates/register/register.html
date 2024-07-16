@@ -8,6 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
 
 </head>
+{% load static %}
 {% load widget_tweaks %}
 <body class="bg-pink-600">
     
@@ -18,7 +19,8 @@
 
         <form action="" method="POST" class="p-6 rounded-lg max-w-md w-full">
             {% csrf_token %}
-            <h1 class="text-center text-4xl font-bold text-yellow-400">Bloomy</h1>
+
+            <img src="{% static 'img/logo-login (1).webp' %}" alt="bloomy logo">            
             <br> <br>
             <h3 class="text-center white text-xl text-white mb-4">Bem vindo a Bloomy</h3>
 
