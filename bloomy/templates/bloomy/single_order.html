@@ -10,8 +10,14 @@
             <div class="text-xl text-white">Briefing: {{ order.briefing }}</div>
             <div class="text-xl text-white">Texto sugerido: {{ order.suggestedText }}</div>
         </div>
-    <img src="{% static 'img/tira-cuadrados.webp' %}" class="fixed bottom-14 left-0 w-full">
+    
     </div> 
+    <div class="hidden md:block"> 
+        <img src="{% static 'img/three-rows.webp' %}" class="w-full">
+    </div>
+    <div class="md:hidden"> 
+        <img src="{% static 'img/three-rows-sm.webp' %}" class="w-full">
+    </div>
 </div>
 
 

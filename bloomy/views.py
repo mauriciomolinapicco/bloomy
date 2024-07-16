@@ -97,7 +97,7 @@ def redirect_to_payment(request, package_pk):
             checkout_url = create_checkout_session_url(request, customer_id, price_id, package.id, user.id)
             return redirect(checkout_url)
 
-        except Exception as e:   
+        except Exception as e:
             messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
             return redirect('packages')
         
@@ -106,11 +106,11 @@ def redirect_to_payment(request, package_pk):
 
 
 def payment_success(request):
-    session_id = request.GET.get('session_id')
+    checkout_session_id = request.GET.get('session_id', None)
 
-    checkout_session = retrieve_checkout_session(session_id)
-    if confirm_payment(checkout_session):
-        user_id, package_id = extract_user_and_plan_id(checkout_session)
+    session = retrieve_checkout_session(checkout_session_id)
+    if confirm_payment(session):
+        user_id, package_id = extract_user_and_plan_id(session)
 
         user = User.objects.get(id=user_id)
         package = Package.objects.get(id=package_id)
