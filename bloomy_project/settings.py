@@ -31,6 +31,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['bloomy-dcdfca068a83.herokuapp.com', '127.0.0.1']
 
+#tailwind config
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+    'https://bloomy-dcdfca068a83.herokuapp.com/',
+]
+
+NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
 
 # Application definition
 
@@ -43,20 +52,23 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bloomy',
     'widget_tweaks',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'bloomy_project.urls'
