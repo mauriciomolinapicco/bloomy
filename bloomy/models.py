@@ -12,8 +12,8 @@ class User(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     userFiles = models.FileField(upload_to='user_files/', null=True, blank=True)
     stripe_customer_id = models.CharField(max_length=255, null=True, blank=True)
-
     remaining_usages = models.IntegerField(default=0)
+
 
     def __str__(self):
         return self.username
@@ -94,6 +94,8 @@ class Subscription(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='subscriptions')
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
+
+    stripe_session_id = models.CharField(max_length=255, null=True, blank=True)
 
     def addUsesToUser(self):
         self.user.remaining_usages += self.package.allowed_usages

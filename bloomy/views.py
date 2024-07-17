@@ -115,9 +115,14 @@ def payment_success(request):
         user = User.objects.get(id=user_id)
         package = Package.objects.get(id=package_id)
 
+        if Subscription.objects.filter(stripe_session_id=checkout_session_id).exists():
+            return render(request, "payment/payment_success.html")
+
+        
         subscription = Subscription(
             user=user,
-            package=package
+            package=package,
+            stripe_session_id=checkout_session_id
         )
         subscription.save()
         subscription.addUsesToUser()
