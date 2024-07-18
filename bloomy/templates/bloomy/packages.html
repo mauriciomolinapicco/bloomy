@@ -4,10 +4,6 @@
 {% block body %}
     <img src="{% static 'img/tira-cuadrados.webp' %}" alt="">
     <div class="bg-purple-600" style="height: 400px;">
-        {% for m in messages %}
-            {{m}}
-        {% endfor %}
-
         <br><br>
         <div class="flex justify-center">
             <h1 class="text-2xl text-white">Selecione o melhor pacote para você</h1>
@@ -15,9 +11,9 @@
         </div>
         <div class="flex justify-center flex-wrap gap-4">
             {% for p in packages %}
-                <div class="bg-transparent border border-yellow-200 rounded-lg w-60 h-60 flex flex-col justify-center items-center">
+                <div class="bg-transparent border border-yellow-200 rounded-lg w-60 h-50 flex flex-col justify-center items-center">
                     <div class="p-5">
-                        <h5 class="mb-2 text-2xl text-white font-bold">{{p.allowed_usages}} usos</h5>
+                        <h5 class="mb-2 text-2xl text-white font-bold">Pacote de {{p.allowed_usages}} usos</h5>
                         <p class="mb-3 font-normal text-white">${{p.price}}</p>
                         <form action="{% url 'new_subscription' p.id %}" method="post">
                             {% csrf_token %}
@@ -28,11 +24,11 @@
             {% endfor %}
         </div>
     </div>
-    <div class="flex justify-between items-center mt-0 px-4 md:px-8 bg-gray-700" style="height: 500px;">
+    <div class="flex justify-between items-center mt-0 px-4 md:px-8 bg-gray-700 relative" style="height: 500px;">
         <div class="w-full md:w-1/2">
             <h2 class="text-3xl font-bold text-left text-yellow-400">Como funcionam os nossos pacotes?</h2>
             <br>
-            <p class="text-white">
+            <p class="text-white mr-8">
                 Selecionamos algumas peças que são as queridinhas 
                 das empresas para você parar de sofrer com prazos 
                 enormes e demandas limitadas. Você vai ter acesso a 
@@ -41,10 +37,13 @@
                 fazer suas ideias ganharem corpo na internet.
             </p>
         </div>
-        <div class="w-full md:w-1/2 flex flex-col items-center">
-            <img src="{% static 'img/pink-thunder.webp' %}" class="w-10">
-            <p class="mt-2 text-white">Veja algumas peças que você pode pedir!</p>
+        <div class="w-full md:w-1/2 flex flex-col items-center relative">
+            <div class="absolute top-0 right-0 mt-2 mr-2">
+                <p class="text-white mr-16">Veja algumas peças<br>que você pode pedir!</p>
+            </div>
+            <img src="{% static 'img/pink-thunder.webp' %}" class="w-10 mb-4 mr-8">
             <img src="{% static 'img/sample_pieces.webp' %}" alt="Pecas de exemplo" class="">
         </div>
     </div>
+    
 {% endblock %}

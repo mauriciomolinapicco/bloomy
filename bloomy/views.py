@@ -79,6 +79,10 @@ def subscriptions(request):
 
 
 def redirect_to_payment(request, package_pk):
+    if not request.user.is_authenticated:
+        messages.error(request, 'Faça login para adquirir um pacote!')
+        return redirect('login')
+
     if request.method == 'POST':
         
         try:
@@ -98,7 +102,6 @@ def redirect_to_payment(request, package_pk):
             return redirect(checkout_url)
 
         except Exception as e:
-            messages.error(request, f"Ocorreu um erro ao criar a inscrição: {e}")
             return redirect('packages')
         
     else:
@@ -142,7 +145,7 @@ def packages(request):
     return render(request, 'bloomy/packages.html', context)
 
 
-#@login_required
+@login_required(login_url='login')
 def create_order(request):
 
     if request.method == 'POST':
@@ -201,20 +204,60 @@ def login_view(request):
 def register(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
-            #group = Group.objects.get(name='customer')
-            #user.groups.add(group)
-            user.save()
 
-            email = form.cleaned_data.get('email')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password1')
+        password_confirmation = request.POST.get('password2')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Usuário já existe')
+            return render(request, 'register/register.html', {'form': form})
+
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'E-mail já está em uso')
+            return render(request, 'register/register.html', {'form': form})
+
+        elif len(password) < 8:
+            messages.error(request, 'A senha deve ter pelo menos 8 caracteres')
+            return render(request, 'register/register.html', {'form': form})
+        
+        elif not any(char.isdigit() for char in password):
+            messages.error(request, 'A senha deve conter pelo menos um dígito')
+            return render(request, 'register/register.html', {'form': form})
+        
+        elif not any(char.isalpha() for char in password):
+            messages.error(request, 'A senha deve conter pelo menos uma letra')
+            return render(request, 'register/register.html', {'form': form})
+        
+        elif not any(char.isupper() for char in password):
+            messages.error(request, 'A senha deve conter pelo menos uma letra maiúscula')
+            return render(request, 'register/register.html', {'form': form})
+        
+        elif not any(char.islower() for char in password):
+            messages.error(request, 'A senha deve conter pelo menos uma letra minúscula')
+            return render(request, 'register/register.html', {'form': form})
+
+        elif password != password_confirmation:
+            messages.error(request, 'As senhas não coincidem')
+            return render(request, 'register/register.html', {'form': form})
+
+
+        if form.is_valid():
+            form.save()
             messages.success(request, 'A conta foi criada para ' + email)
 
             welcome_email(email)
             return redirect('login')
-    
-    form = SignUpForm()
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'Erro no campo {field}: {error}')
+    else:
+        form = SignUpForm()
+
     return render(request, "register/register.html", {'form': form})
+
 
 
 def logout_view(request):

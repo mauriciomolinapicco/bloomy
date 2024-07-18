@@ -6,12 +6,17 @@
     <title>Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
-
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap');
+        body {
+            font-family: "Alexandria", sans-serif;
+        }
+    </style>
+    
 </head>
 {% load static %}
 {% load widget_tweaks %}
 <body class="bg-pink-600">
-    
 
     <div class="relative overflow-hidden  flex justify-center items-center ">
         <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
@@ -20,8 +25,15 @@
         <form action="" method="POST" class="p-6 rounded-lg max-w-md w-full">
             {% csrf_token %}
 
-            <img src="{% static 'img/logo-login (1).webp' %}" alt="bloomy logo">            
-            <br> <br>
+            <img src="{% static 'img/logo-login (1).webp' %}" alt="bloomy logo"> 
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <br><p class="border border-yellow-400 rounded-full px-4 py-2 w-full text-center bg-yellow-400">{{ message }}</p>
+                {% endfor %}    
+            </div>
+            {% endif %}
+                    <br> <br>
             <h3 class="text-center white text-xl text-white mb-4">Bem vindo a Bloomy</h3>
 
             <div class="mb-4">
