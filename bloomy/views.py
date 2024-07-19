@@ -8,6 +8,7 @@ from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order, Delivery
 from .util.email_util import *
 from .util.payment_util import *
+from .util.others_util import validate_password
 from django.urls import reverse
 
 @login_required(login_url='login')
@@ -64,7 +65,7 @@ def provider_view(request):
     orders = Order.objects.all()
     return render(request, "bloomy/provider.html", {"orders":orders})
 
-
+@login_required(login_url='login')
 def user_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-date')
     completed_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
@@ -72,7 +73,7 @@ def user_orders(request):
     return render(request, "bloomy/user_orders.html", context)
 
 
-#login required
+@login_required(login_url='login')
 def subscriptions(request):
     subscriptions = Subscription.objects.filter(user=request.user)
     return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
@@ -82,9 +83,7 @@ def redirect_to_payment(request, package_pk):
     if not request.user.is_authenticated:
         messages.error(request, 'Faça login para adquirir um pacote!')
         return redirect('login')
-
     if request.method == 'POST':
-        
         try:
             user = request.user
             package = Package.objects.get(id=package_pk)
@@ -137,12 +136,6 @@ def payment_success(request):
 
 def payment_cancel(request):
     return render(request, "payment/payment_cancel.html")
-
-
-def packages(request):
-    packages = Package.objects.all()
-    context = {'packages': packages}
-    return render(request, 'bloomy/packages.html', context)
 
 
 @login_required(login_url='login')
@@ -209,7 +202,7 @@ def register(request):
         email = request.POST.get('email')
         password = request.POST.get('password1')
         password_confirmation = request.POST.get('password2')
-
+        
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Usuário já existe')
             return render(request, 'register/register.html', {'form': form})
@@ -218,31 +211,11 @@ def register(request):
             messages.error(request, 'E-mail já está em uso')
             return render(request, 'register/register.html', {'form': form})
 
-        elif len(password) < 8:
-            messages.error(request, 'A senha deve ter pelo menos 8 caracteres')
+        password_error = validate_password(password, password_confirmation)
+        if password_error:
+            messages.error(request, password_error)
             return render(request, 'register/register.html', {'form': form})
         
-        elif not any(char.isdigit() for char in password):
-            messages.error(request, 'A senha deve conter pelo menos um dígito')
-            return render(request, 'register/register.html', {'form': form})
-        
-        elif not any(char.isalpha() for char in password):
-            messages.error(request, 'A senha deve conter pelo menos uma letra')
-            return render(request, 'register/register.html', {'form': form})
-        
-        elif not any(char.isupper() for char in password):
-            messages.error(request, 'A senha deve conter pelo menos uma letra maiúscula')
-            return render(request, 'register/register.html', {'form': form})
-        
-        elif not any(char.islower() for char in password):
-            messages.error(request, 'A senha deve conter pelo menos uma letra minúscula')
-            return render(request, 'register/register.html', {'form': form})
-
-        elif password != password_confirmation:
-            messages.error(request, 'As senhas não coincidem')
-            return render(request, 'register/register.html', {'form': form})
-
-
         if form.is_valid():
             form.save()
             messages.success(request, 'A conta foi criada para ' + email)
