@@ -8,39 +8,41 @@
     <div class="container mx-auto py-8 block" style="height: 600px;">
         <h2 class="text-2xl text-white mb-4 text-center">Quadro de demandas</h2>
         
-        <div>
+        <div class="relative"> <!-- Modificado: Añadido contenedor relativo para los botones -->
             <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full focus:outline-none z-10">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
                 </svg>
             </button>
-            <div id="carousel" class="flex overflow-hidden" style="width: 100%;">
-                <div id="inner-carousel" class="flex transition-transform duration-300" style="width: 300%;">
+            <div id="carousel" class="overflow-hidden"> <!-- Modificado: Añadido contenedor para el carrusel -->
+                <div id="inner-carousel" class="flex transition-transform duration-300"> <!-- Modificado: Estilo flex y transición para el carrusel interno -->
                     {% for order in orders %}
-                    <div class="w-1/3 flex items-center justify-center border-2 border-yellow-400 text-white rounded-lg overflow-hidden shadow-lg mx-2 p-6" style="height: 350px;">
-                        <div class="text-center">
-                            <div class="font-bold text-2xl mb-2">{{ order.name }}</div>
-                            <div class="text-l mb-2">Data do pedido: {{ order.date|date:"d/m/Y" }}</div>
-                            <br>
-                            <p>Status:</p>
-                            {% if order.status == 'ENTREGUE' %}
-                                <p class="text-yellow-300 text-base font-semibold">{{ order.get_status_display }}</p>
-                            {% else %}
-                                <p class="text-pink-400 text-base font-semibold">{{ order.get_status_display }}</p>
-                            {% endif %}
-                            <br>
-                            
-                            <a href="{% url 'single_order' order.id %}">
-                                <button class="bg-pink-600 hover:bg-pink-400 text-white py-2 px-4 rounded mt-2">
-                                    Ver Pedido
-                                </button>
-                            </a>
+                    <div class="w-full flex-shrink-0" style="width: calc(100% / 3);"> <!-- Modificado: Ajustado para mostrar 3 elementos por vez -->
+                        <div class="border-2 border-yellow-400 text-white rounded-lg overflow-hidden shadow-lg mx-2 p-6" style="height: 350px;">
+                            <div class="text-center">
+                                <div class="font-bold text-2xl mb-2">{{ order.name }}</div>
+                                <div class="text-l mb-2">Data do pedido: {{ order.date|date:"d/m/Y" }}</div>
+                                <br>
+                                <p>Status:</p>
+                                {% if order.status == 'ENTREGUE' %}
+                                    <p class="text-yellow-300 text-base font-semibold">{{ order.get_status_display }}</p>
+                                {% else %}
+                                    <p class="text-pink-400 text-base font-semibold">{{ order.get_status_display }}</p>
+                                {% endif %}
+                                <br>
+                                
+                                <a href="{% url 'single_order' order.id %}">
+                                    <button class="bg-pink-600 hover:bg-pink-400 text-white py-2 px-4 rounded mt-2">
+                                        Ver Pedido
+                                    </button>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     {% empty %}
                     <div class="flex items-center">
                         <p class="text-white font-bold">Nao tem pedidos registrados</p> <br>
-                        <a href="{% url 'create_order' %}" class="text-white">Clicke aqui e faça seu primero pedido agora!</a>
+                        <a href="{% url 'create_order' %}" class="text-white">Clicke aqui e faça seu primeiro pedido agora!</a>
                     </div>
                     {% endfor %}
                 </div>
@@ -50,8 +52,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
-            <br>
-        </div>
+        </div> <!-- Modificado: Fin del contenedor relativo para los botones -->
+        <br>
     </div>
     <div class="bg-purple-600 ">
         

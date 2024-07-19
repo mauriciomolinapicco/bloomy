@@ -1,20 +1,15 @@
 {% extends "bloomy/layout.html" %}
 {% load widget_tweaks %}
 {% block body %}
-
-    
     <div class="bg-purple-600">
         <div class="ml-20 mr-20">
             <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}          
-            
-        
                 <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <h1 class="text-center text-4xl font-bold text-yellow-400">Bloomy</h1>
                     <br> <br>
-                    <h3 class="text-center white text-2xl text-white mb-4">Bora lá!</h3>
-                    <h3 class="text-center white text-xl text-white mb-4">Qual material você deseja?</h3>
+                    <h3 class="text-left white text-2xl text-white">Bora lá!</h3>
+                    <h3 class="text-left white text-xl text-white mb-4">Qual material você deseja?</h3>
                     
                     <div class="mb-4">
                         <p class="text-white text-l"><b>Nome da peça</b></p>
@@ -23,7 +18,7 @@
 
                     <div class="mb-4">
                         <p class="text-white text-l"><b>Formato</b></p>
-                        {% render_field form.specification class+="bg-transparent rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                        {% render_field form.specification class+="bg-purple-600 rounded-lg text-white border border-yellow-300 px-4 py-2 w-full focus:outline-none focus:border-yellow-300" %}
                     </div>
 
                     <div class="mb-4">
@@ -46,20 +41,6 @@
                             abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
                         {% render_field form.file class+="bg-transparent rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
                     </div>
-
-                    
-
-                    <!-- {% for group, specification, index in widget.optgroups %}
-                        {% for option in specification %}
-                            <div class="card p-4 border rounded-lg hover:bg-gray-100 transition duration-300 cursor-pointer">
-                            <label class="flex items-center">
-                                {{ option.tag }}
-                                <span class="ml-2">{{ option.choice_label }}</span>
-                            </label>
-                            </div>
-                        {% endfor %}
-                    {% endfor %} -->
-
                 
                     <div class="flex justify-center">
                         <input type="submit" value="Enviar briefing" class="w-500px bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">

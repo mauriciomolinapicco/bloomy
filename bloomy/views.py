@@ -66,7 +66,7 @@ def provider_view(request):
 
 
 def user_orders(request):
-    orders = Order.objects.filter(user=request.user)
+    orders = Order.objects.filter(user=request.user).order_by('-date')
     completed_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
     context = {'orders':orders, 'completed_orders':completed_orders}
     return render(request, "bloomy/user_orders.html", context)

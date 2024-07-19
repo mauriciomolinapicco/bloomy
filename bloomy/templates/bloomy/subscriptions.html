@@ -16,6 +16,11 @@
                 <h2 class="text-2xl font-bold text-yellow-300 mb-2">Pacote de {{ subscription.package.allowed_usages }} usos</h2>
                 <p class="text-white mb-4">Data de inscrição: {{ subscription.start_date|date:"d/m/Y" }} as {{ subscription.start_date|date:"H:i" }}</p>
             </div>
+            {% empty %}
+            <div class="flex items-center">
+                <p class="text-white font-bold">Você ainda nao adquiriu pecas</p> <br>
+                <a href="{% url 'packages' %}" class="text-white">Clicke aqui compre as primeras pecas!</a>
+            </div>
             {% endfor %}
         </div>
     </div>
