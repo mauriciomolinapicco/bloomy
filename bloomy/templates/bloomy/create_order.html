@@ -37,10 +37,13 @@
 
                     <div class="mb-4">
                         <p class="text-white text-l"><b>Upload de imagens</b></p>
-                        <p class="text-white" >Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
+                        <p class="text-white mb-4" >Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
                             abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
-                        {% render_field form.file class+="bg-transparent rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                        <label id="file-upload-label" for="file-upload" class="bg-transparent cursor-pointer mt-4 rounded-lg border border-yellow-300 h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300">Selecionar arquivo</label>
+                        {% render_field form.file id='file-upload' class+="bg-transparent hidden rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
                     </div>
+                   
+                    
                 
                     <div class="flex justify-center">
                         <input type="submit" value="Enviar briefing" class="w-500px bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
@@ -50,5 +53,17 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('file-upload').addEventListener('change', function() {
+            var label = document.getElementById('file-upload-label');
+            if (this.files.length > 0) {
+                label.textContent = 'Arquivo selecionado: ' + this.files[0].name;
+            } else {
+                label.textContent = 'Selecionar arquivo';
+            }
+        });
+    </script>
+        
     
 {% endblock %}
