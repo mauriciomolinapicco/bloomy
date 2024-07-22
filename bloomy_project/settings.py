@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'tailwind',
     'theme',
     'django_browser_reload',
-    
+    'storages',  # Agregar storages
 ]
 
 MIDDLEWARE = [
@@ -159,12 +159,12 @@ AUTH_USER_MODEL = 'bloomy.User'
 
 LOGIN_URL = '/login/'  
 
-#STATIC_URL = '/static/'
-STATIC_URL = os.getenv("AWS_S3_DOMAIN")
+STATIC_URL = '/static/'  # Cambiar de S3 a local
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Renombrado para evitar confusiones
+
 #path to store images when theyre uploaded
 MEDIA_URL = '/media/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #AWS S3 CONFIG
@@ -174,10 +174,10 @@ AWS_STORAGE_BUCKET_NAME = 'bloomy-bucket'
 AWS_S3_SIGNATURE_NAME = 's3v4',
 AWS_S3_REGION_NAME = 'sa-east-1'
 AWS_S3_FILE_OVERWRITE = False
-AWS_DEFAULT_ACL =  None
+AWS_DEFAULT_ACL = None
 AWS_S3_VERITY = True
+
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage' #to serve js, css, etc.. from s3 bucket
 
 #EMAIL SETTINGS
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
