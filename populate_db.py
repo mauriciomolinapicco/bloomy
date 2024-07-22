@@ -30,8 +30,43 @@ def create_specifications():
     specifications = [
         {
             'name': 'Post instagram',
-            'pixel_size': '1000x1000',
-            'delivery_format': 'PNG'
+            'pixel_size': '1200x1200',
+            'delivery_format': '.png'
+        },
+        {
+            'name': 'Arte WhatsApp',
+            'pixel_size': '1200x1200',
+            'delivery_format': '.png'
+        },
+        {
+            'name': ' Flyer Digital',
+            'pixel_size': '425x595',
+            'delivery_format': '.png e .jpeg'
+        },
+        {
+            'name': 'Cartão visita digital',
+            'pixel_size': '1200x1200',
+            'delivery_format': '.png'
+        },
+        {
+            'name': 'Assinatura de e-mail',
+            'pixel_size': '70x400',
+            'delivery_format': '.png'
+        },
+        {
+            'name': 'Convite digital',
+            'pixel_size': '1200x800',
+            'delivery_format': '.png'
+        },
+        {
+            'name': 'Banner para site',
+            'pixel_size': 'personalizado',
+            'delivery_format': '.png'
+        },
+        {
+            'name': 'Anúncios IG e FB',
+            'pixel_size': '1200x1200',
+            'delivery_format': '.png'
         }
     ]
 
