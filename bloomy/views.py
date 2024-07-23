@@ -63,6 +63,7 @@ def update_order_status(request, order_id, status):
 @allowed_users(allowed_roles=['admin'])
 def provider_view(request):
     orders = Order.objects.all().order_by('-date')
+    #filter = OrderFilter()
     return render(request, "bloomy/provider.html", {"orders":orders})
 
 @login_required(login_url='login')

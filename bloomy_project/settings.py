@@ -52,9 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bloomy',
     'widget_tweaks',
-    'tailwind',
-    'theme',
-    'django_browser_reload',
     'storages',  # Agregar storages
     'django_filters',
 ]
@@ -69,7 +66,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django_browser_reload.middleware.BrowserReloadMiddleware',
 ]
 
 ROOT_URLCONF = 'bloomy_project.urls'
