@@ -4,11 +4,15 @@
 {% block title %}Novo pedido{% endblock %}
 
 {% block body %}
-<div class="bg-purple-500 grid grid-cols-3">
-    <div class="m-16 text-xl text-white">E aí, <b class="text-3xl">{{request.user}}</b></div>
-    <div></div>
-    <div class="m-16 text-white"><a class="bg-yellow-300 text-gray-700 rounded-full p-6 hover:bg-yellow-200" href="{% url 'create_order' %}">Novo briefing</a></div>
+<div class="bg-purple-500 flex flex-col md:flex-row items-center justify-between p-8">
+    <div class="text-xl text-white mb-4 md:mb-0">
+        E aí, <b class="text-2xl md:text-3xl">{{request.user}}</b>
+    </div>
+    <div class="text-center">
+        <a class="bg-yellow-300 text-gray-700 rounded-full p-4 hover:bg-yellow-200" href="{% url 'create_order' %}">Novo briefing</a>
+    </div>
 </div>
+
 <div class="bg-gray-600">
     <div class="container mx-auto py-8 block" style="height: 600px;">
         <div class="flex items-center mb-4">
@@ -48,9 +52,8 @@
                         </div>
                     </div>
                     {% empty %}
-                    <div class="flex items-center">
-                        <p class="text-white font-bold">Nao tem pedidos registrados</p> <br>
-                        <a href="{% url 'create_order' %}" class="text-white">Clicke aqui e faça seu primeiro pedido agora!</a>
+                    <div class="flex items-center m-16">
+                        <a href="{% url 'create_order' %}" class="text-white">Ainda nao tem pedidos registrados. <b> Clicke aqui e faça seu primeiro pedido agora!</b></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -60,11 +63,12 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
             </button>
-        </div> <!-- Modificado: Fin del contenedor relativo para los botones -->
+        </div>
         <br>
     </div>
     <div class="bg-purple-600 grid grid-cols-6">
         <div class="ml-16 mt-8 col-span-4">
+           
             <p class="flex items-center text-white text-3xl mb-4">Peças que voce precisa abaixar</p> <hr><br>
             <div class="col-span-3">
                 <div class="flex">
