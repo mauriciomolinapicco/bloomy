@@ -3,72 +3,68 @@
 {% block body %}
     <div class="bg-purple-600">
         <div class="mx-10 lg:mx-40">
-            <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}          
-                <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <br> <br>
-                    <h3 class="text-left white text-2xl text-white">Bora lá!</h3>
-                    <h3 class="text-left white text-xl text-white mb-4">Qual material você deseja?</h3>
-                    
-                    <div class="mb-4">
-                        <p class="text-white text-l"><b>Nome da peça</b></p>
-                        {% render_field form.name class+="bg-transparent rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-white text-l"><b>Formato</b></p>
-                        {% render_field form.specification class+="bg-purple-600 rounded-lg text-white border border-yellow-300 px-4 py-2 w-full focus:outline-none focus:border-yellow-300" %}
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-white text-l"><b>Briefing</b></p>
-                        <p class="text-white">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais informações o material 
-                            precisa conter, se há alguma imagem específica que precisa ser utilizada, se há cores que prefere ou que são 
-                            proibidas, etc. Deixe-nos saber de tudo que for necessário para acertarmos em cheio no seu material!</p>
-                            {% render_field form.briefing class+="rounded-lg bg-transparent border border-yellow-300 px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-white text-l"><b>Texto sugerido</b></p>
-                        <p class="text-white" >Quais são os textos que precisam estar no material?</p>
-                        {% render_field form.suggestedText class+="bg-transparent rounded-lg border border-yellow-300 h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-white text-l"><b>Upload de imagens</b></p>
-                        <p class="text-white mb-4" >Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
-                            abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
-                        <label id="file-upload-label" for="file-upload" class="bg-transparent cursor-pointer mt-4 rounded-lg border border-yellow-300 h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300">Selecionar arquivo</label>
-                        {% render_field form.file id='file-upload' class+="bg-transparent hidden rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
-                    </div>
-                   
-                    
+            <form id="order-form" action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <br> <br>
+                <h3 class="text-left white text-2xl text-white">Bora lá!</h3>
+                <h3 class="text-left white text-xl text-white mb-4">Qual material você deseja?</h3>
                 
-                    <div class="flex justify-center">
-                        <input type="submit" value="Enviar briefing" class="w-500px bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
-                    </div>
-                    <br>
-                </form>
-            </div>
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Nome da peça</b></p>
+                    {% render_field form.name class+="bg-transparent rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Formato</b></p>
+                    {% render_field form.specification class+="bg-purple-600 rounded-lg text-white border border-yellow-300 px-4 py-2 w-full focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Briefing</b></p>
+                    <p class="text-white">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais informações o material 
+                        precisa conter, se há alguma imagem específica que precisa ser utilizada, se há cores que prefere ou que são 
+                        proibidas, etc. Deixe-nos saber de tudo que for necessário para acertarmos em cheio no seu material!</p>
+                        {% render_field form.briefing class+="rounded-lg bg-transparent border border-yellow-300 px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Texto sugerido</b></p>
+                    <p class="text-white">Quais são os textos que precisam estar no material?</p>
+                    {% render_field form.suggestedText class+="bg-transparent rounded-lg border border-yellow-300 h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Upload de imagens</b></p>
+                    <p class="text-white mb-4">Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
+                        abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
+                    <label id="file-upload-label" for="file-upload" class="bg-transparent cursor-pointer mt-4 rounded-lg border border-yellow-300 h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300">Selecionar arquivo</label>
+                    {% render_field form.file id='file-upload' class+="bg-transparent hidden rounded-lg border border-yellow-300 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-300" %}
+                </div>
+
+                <div class="flex justify-center">
+                    <input type="submit" value="Enviar briefing" id="submit-button" class="w-500px bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
+                </div>
+                <br>
+            </form>
         </div>
     </div>
 
     <script>
-        document.getElementById('file-upload').addEventListener('change', function() {
-        var label = document.getElementById('file-upload-label');
-        if (this.files.length > 0) {
-            let fileName = this.files[0].name; 
-            if (fileName.length > 20) {
-                 fileName = fileName.substring(0, 20)
-            }
-            label.textContent = 'Arquivo selecionado: ' + fileName + '...';
-        } else {
-            label.textContent = 'Upload de seus arquivos de marca';
-        }
-    });
+        document.getElementById('order-form').addEventListener('submit', function() {
+            document.getElementById('submit-button').disabled = true;
+        });
 
-</script>
-        
-    
+        document.getElementById('file-upload').addEventListener('change', function() {
+            var label = document.getElementById('file-upload-label');
+            if (this.files.length > 0) {
+                let fileName = this.files[0].name; 
+                if (fileName.length > 20) {
+                    fileName = fileName.substring(0, 20)
+                }
+                label.textContent = 'Arquivo selecionado: ' + fileName + '...';
+            } else {
+                label.textContent = 'Upload de seus arquivos de marca';
+            }
+        });
+    </script>
 {% endblock %}
