@@ -1,14 +1,20 @@
 {% extends "bloomy/layout.html" %}
 {% block body %}
-    <body>
+{% load widget_tweaks %}
+    <div class="bg-purple-200 min-h-screen">
         <div class="container mx-auto text-center my-10">
-            <h1 class="text-3xl font-bold text-gray-800 mb-6"><b>Pedido #{{ order.id }}</b></h1>
             <h1 class="text-3xl font-bold text-gray-800 mb-6"><b>{{ order.name }}</b></h1>
+            <div class="text-xl text-gray-600"><b>ID do pedido:</b> {{ order.id }}</div>
             <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-gray-600"><b>Status:</b> {{ order.get_status_display }}</div>
             <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-gray-600"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-gray-600"><b>Texto sugerido:</b> {{ order.suggested_text }}</div>
+            {% if order.file %}
+                <a href="{{ order.file.url }}" class="text-xl text-gray-600 hover:text-blue-800" download><u>Download do arquivo</u></a>
+            {% else %}
+                <div class="text-xl text-gray-600 mt-6"><i>O usuario nao carregou arquivos para esse pedido</i></div>
+            {% endif %}
             <div class="mt-6">
                 {% if order.status != 'ENTREGUE' and order.status != 'CANCELADO' %}
                     {% if order.status != 'A_FAZER' %}
@@ -19,12 +25,13 @@
                     {% endif %}
                     <a href="{% url 'update_order_status' order.id 'CANCELADO' %}"><button class="button bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                     <hr> <br>
-                    <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data">
+                    <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
-                        <label for="order-image" class="block text-xl text-gray-600 mb-2">Entregar pedido</label> 
-                        <!-- <input type="file" id="order-file" name="order-file" class="block w-full text-lg text-gray-700 border border-gray-300 rounded mb-4 p-2" required> -->
-                        {{ form.file }} <br>
-                        <button type="submit" id="btn-completado" class="button bg-green-500 text-white font-bold py-2 px-4 rounded m-2">Completar Pedido</button>
+                        <div class="block text-xl text-gray-600 mb-6">Fazer entregue do pedido</div> 
+                        <label id="file-label" for="form-file" class="text-lg text-white border border-yellow-200 p-4 bg-yellow-500 rounded-full mt-4 mb-4">Subir trabalho</label>
+                        {% render_field form.file id="form-file" class+="hidden" %}
+                        <br>
+                        <button type="submit" id="btn-completado" class="hidden">Completar Pedido</button>
                     </form>
                 {% else %}
                     {% if order.status == 'ENTREGUE' %}
@@ -37,5 +44,23 @@
             </div>
 
         </div>
-    </body>
+    </div>
+    <script>
+        document.getElementById('form-file').addEventListener('change', function() {
+        var label = document.getElementById('file-label');
+        const btn = document.getElementById('btn-completado');
+        if (this.files.length > 0) {
+            let fileName = this.files[0].name; 
+            btn.classList = 'block button bg-green-500 text-white font-bold py-2 px-4 rounded m-2 mt-6';
+            if (fileName.length > 20) {
+                 fileName = fileName.substring(0, 20)
+            }
+            label.textContent = 'Arquivo selecionado: ' + fileName + '...';
+        } else {
+            label.textContent = 'Subir trabalho';
+            btn.classList = 'hidden button bg-green-500 text-white font-bold py-2 px-4 rounded m-2 mt-6';
+        }
+        });
+
+    </script>
 {% endblock %}

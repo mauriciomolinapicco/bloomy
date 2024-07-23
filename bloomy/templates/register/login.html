@@ -22,9 +22,21 @@
             
         <div class="max-w-md mx-auto p-6">
             <img src="../../../static/logo-login (1).webp" alt="bloomy logo">
-            {% for message in messages %}
-            <br><p class="border border-yellow-400 rounded-full px-4 py-2 w-full text-center bg-yellow-400">{{ message }}</p>
-            {% endfor %}
+            <div class="container mx-auto">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="my-4 p-4 rounded-lg 
+                            {% if message.tags == 'success' %} bg-green-300 border border-green-400 text-green-700 
+                            {% elif message.tags == 'error' %} bg-red-300 border border-red-400 text-red-700 
+                            {% elif message.tags == 'warning' %} bg-yellow-300 border border-yellow-400 text-yellow-700 
+                            {% elif message.tags == 'info' %} bg-blue-300 border border-blue-400 text-blue-700 
+                            {% else %} bg-gray-100 border border-gray-400 text-gray-700 
+                            {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
             <br>
             <h3 class="text-center text-xl text-white mb-4">Bem vindo a Bloomy</h3>
         

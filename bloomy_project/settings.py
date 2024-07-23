@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'theme',
     'django_browser_reload',
     'storages',  # Agregar storages
+    'django_filters',
 ]
 
 MIDDLEWARE = [

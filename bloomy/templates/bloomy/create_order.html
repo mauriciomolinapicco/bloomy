@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 {% block body %}
     <div class="bg-purple-600">
-        <div class="ml-20 mr-20">
+        <div class="mx-10 lg:mx-40">
             <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}          
                 <form action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
@@ -56,14 +56,19 @@
 
     <script>
         document.getElementById('file-upload').addEventListener('change', function() {
-            var label = document.getElementById('file-upload-label');
-            if (this.files.length > 0) {
-                label.textContent = 'Arquivo selecionado: ' + this.files[0].name;
-            } else {
-                label.textContent = 'Selecionar arquivo';
+        var label = document.getElementById('file-upload-label');
+        if (this.files.length > 0) {
+            let fileName = this.files[0].name; 
+            if (fileName.length > 20) {
+                 fileName = fileName.substring(0, 20)
             }
-        });
-    </script>
+            label.textContent = 'Arquivo selecionado: ' + fileName + '...';
+        } else {
+            label.textContent = 'Upload de seus arquivos de marca';
+        }
+    });
+
+</script>
         
     
 {% endblock %}

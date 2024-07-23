@@ -14,25 +14,32 @@
     </style>
     
 </head>
-{% load static %}
 {% load widget_tweaks %}
 <body class="bg-pink-600">
 
     <div class="relative overflow-hidden  flex justify-center items-center ">
-        <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
-        <div class="absolute -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+        <div class="absolute hidden lg:block -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
+        <div class="absolute hidden lg:block -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
 
         <form action="" method="POST" class="p-6 rounded-lg max-w-md w-full">
             {% csrf_token %}
 
             <img src="../../../static/logo-login (1).webp" alt="bloomy logo"> 
-            {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                <br><p class="border border-yellow-400 rounded-full px-4 py-2 w-full text-center bg-yellow-400">{{ message }}</p>
-                {% endfor %}    
+            <div class="container mx-auto">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="my-4 p-4 rounded-lg 
+                            {% if message.tags == 'success' %} bg-green-300 border border-green-400 text-green-700 
+                            {% elif message.tags == 'error' %} bg-red-300 border border-red-400 text-red-700 
+                            {% elif message.tags == 'warning' %} bg-yellow-300 border border-yellow-400 text-yellow-700 
+                            {% elif message.tags == 'info' %} bg-blue-300 border border-blue-400 text-blue-700 
+                            {% else %} bg-gray-100 border border-gray-400 text-gray-700 
+                            {% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            {% endif %}
                     <br> <br>
             <h3 class="text-center white text-xl text-white mb-4">Bem vindo a Bloomy</h3>
 
@@ -68,10 +75,14 @@
                 {% render_field form.phone_number placeholder="Telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
             </div>
             
-            <div class="mb-4">
-                {% render_field form.userFiles placeholder="Arquivos" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            <div class="mb-4 mt-6">
+                <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
+                    Upload de seus arquivos de marca
+                </label>
+                {% render_field form.userFiles placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}
             </div>
-            <div class="mb-4 flex justify-center">
+            
+            <div class="mt-8 mb-4 flex justify-center">
                 <input type="submit" value="Cadastre-se" class="bg-yellow-500 center hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
             </div>
             
@@ -82,4 +93,18 @@
     </div>
     </div>
 </body>
+<script>
+    document.getElementById('register-file').addEventListener('change', function() {
+        var label = document.getElementById('file-label');
+        if (this.files.length > 0) {
+            let fileName = this.files[0].name; 
+            if (fileName.length > 20) {
+                 fileName = fileName.substring(0, 20)
+            }
+            label.textContent = 'Arquivo selecionado: ' + fileName + '...';
+        } else {
+            label.textContent = 'Upload de seus arquivos de marca';
+        }
+    });
+</script>
 </html>

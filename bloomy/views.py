@@ -62,7 +62,7 @@ def update_order_status(request, order_id, status):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def provider_view(request):
-    orders = Order.objects.all()
+    orders = Order.objects.all().order_by('-date')
     return render(request, "bloomy/provider.html", {"orders":orders})
 
 @login_required(login_url='login')
@@ -188,7 +188,7 @@ def login_view(request):
             login(request, user)
             return redirect('index')
         else:
-            messages.info(request, 'Usuario ou senha incorreta')
+            messages.error(request, 'Usuario ou senha incorreta')
 
     return render(request, "register/login.html")
 

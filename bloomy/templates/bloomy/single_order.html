@@ -4,11 +4,14 @@
 <div class="bg-purple-600">
     <div class="container mx-auto text-center my-10">
         <h1 class="text-3xl font-bold text-white mb-6">Pedido: {{ order.name }}</h1>
-        <div class="border border-yellow-300 rounded-lg w-100">
+        <div class="border border-yellow-300 rounded-lg w-100 p-4">
             <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-white"><b>Status:</b> {{ order.get_status_display }}</div>
             <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
+            {% if order.delivery.file %}
+                <a href="{{ order.delivery.file.url }}" class="text-xl text-white hover:text-blue-400"><u>Download do arquivo</u></a>
+            {% endif %}
         </div>
     
     </div> 
