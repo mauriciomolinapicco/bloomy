@@ -29,45 +29,51 @@ def create_packages():
 def create_specifications():
     specifications = [
         {
-            'name': 'Post instagram',
-            'pixel_size': '1200x1200',
-            'delivery_format': '.png'
+            'name': 'Post para redes sociais (1080x1080px)',
         },
         {
-            'name': 'Arte WhatsApp',
-            'pixel_size': '1200x1200',
-            'delivery_format': '.png'
+            'name': 'Stories para instagram (1080x1920px)',
         },
         {
-            'name': ' Flyer Digital',
-            'pixel_size': '425x595',
-            'delivery_format': '.png e .jpeg'
+            'name': 'Capa de reels (1080x1920px)',
         },
         {
-            'name': 'Cartão visita digital',
-            'pixel_size': '1200x1200',
-            'delivery_format': '.png'
+            'name': 'Banner para site (1920x700px)',
         },
         {
-            'name': 'Assinatura de e-mail',
-            'pixel_size': '70x400',
-            'delivery_format': '.png'
+            'name': 'Arte para WhatsApp (1080x1080px)',
         },
         {
-            'name': 'Convite digital',
-            'pixel_size': '1200x800',
-            'delivery_format': '.png'
+            'name': 'Flyer digital (10x15cm)',
         },
         {
-            'name': 'Banner para site',
-            'pixel_size': 'personalizado',
-            'delivery_format': '.png'
+            'name': 'Cartão de visita digital (1080x1920px)',
         },
         {
-            'name': 'Anúncios IG e FB',
-            'pixel_size': '1200x1200',
-            'delivery_format': '.png'
+            'name': 'Timbrado digital (A4)',
+        },
+        {
+            'name': 'Assinatura de e-mail (70x300px)',
+        },
+        {
+            'name': 'Banner para LinkedIn (1200x627px)',
+        },
+        {
+            'name': 'Convite digital (1080x1080px)',
+        },
+        {
+            'name': 'Anúncia para redes sociais (1080x1080px ou 1080x1920px)',
+        },
+        {
+            'name': 'Estampa de camiseta corporativa (20x20cm)',
+        },
+        {
+            'name': 'Estampa de Ecobag corporativa (20x20cm)',
+        },
+        {
+            'name': 'Arte para brinde corporativo',
         }
+        
     ]
 
     for spec_data in specifications:

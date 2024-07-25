@@ -14,7 +14,6 @@ class User(AbstractUser):
     stripe_customer_id = models.CharField(max_length=255, null=True, blank=True)
     remaining_usages = models.IntegerField(default=0)
 
-
     def __str__(self):
         return self.username
 
@@ -106,9 +105,7 @@ class Subscription(models.Model):
 
 class Specification(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    name = models.CharField(max_length=255)
-    pixel_size = models.CharField(max_length=100)
-    delivery_format = models.CharField(max_length=100)
+    name = models.CharField(max_length=255)    
 
     def __str__(self):
         return f'{self.name}'
@@ -122,16 +119,30 @@ class Order(models.Model):
     suggestedText = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=100, default='A_FAZER', choices=[
-        ('A_FAZER', 'A fazer'),
-        ('EM_PRODUCAO', 'Em produçao'),
+        ('PRODUZINDO', 'Produzindo'),
+        ('EM_APROVACAO', 'Em aprovação'),
         ('ENTREGUE', 'Entregue'),
-        ('CANCELADO', 'Cancelado'),
+        ('EM_AJUSTE', 'Em ajuste'),
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
+    pixel_size = models.CharField(max_length=100, null=True, blank=True)
+    ajustes_counter = models.IntegerField(default=0)
 
     def __str__(self):
         return f'ID:{self.id} | Pedido de {self.specification} by {self.user.username}'
+
+
+    def new_ajuste(self):
+        if self.ajustes_counter < 2:
+            self.ajustes_counter += 1
+            self.save()
+        else:
+            raise Exception("O usuario nao tem mais ajustes disponiveis")
+
+
+    def has_ajustes_left(self):
+        return self.ajustes_counter < 2
 
 
 class Delivery(models.Model):
@@ -145,3 +156,10 @@ class Delivery(models.Model):
 
     def __str__(self):
         return f'Delivery {self.id} for Order {self.order.id}'
+
+
+class Ajuste(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ajuste')
+    description = models.TextField(max_length=500)
+    file = models.FileField(null=True, blank=True, upload_to='ajustes_files/')
