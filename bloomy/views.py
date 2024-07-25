@@ -11,6 +11,21 @@ from .util.payment_util import *
 from .util.others_util import validate_password
 from django.urls import reverse
 
+
+@login_required(login_url='login')
+def update_profile(request):
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'O usuario foi atualizado corretamente')
+            return redirect('index')
+    else:
+        form = UserProfileForm(instance=request.user)
+
+    return render(request, 'user/update_profile.html', {'form':form})
+
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def complete_order(request, order_id):
@@ -191,7 +206,7 @@ def login_view(request):
         else:
             messages.error(request, 'Usuario ou senha incorreta')
 
-    return render(request, "register/login.html")
+    return render(request, "user/login.html")
 
 
 @unauthenticated_user
@@ -206,16 +221,16 @@ def register(request):
         
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Usuário já existe')
-            return render(request, 'register/register.html', {'form': form})
+            return render(request, 'user/register.html', {'form': form})
 
         elif User.objects.filter(email=email).exists():
             messages.error(request, 'E-mail já está em uso')
-            return render(request, 'register/register.html', {'form': form})
+            return render(request, 'user/register.html', {'form': form})
 
         password_error = validate_password(password, password_confirmation)
         if password_error:
             messages.error(request, password_error)
-            return render(request, 'register/register.html', {'form': form})
+            return render(request, 'user/register.html', {'form': form})
         
         if form.is_valid():
             form.save()
@@ -226,11 +241,11 @@ def register(request):
         else:
             for field, errors in form.errors.items():
                 for error in errors:
-                    messages.error(request, f'Erro no campo {field}: {error}')
+                    messages.error(request, f'Ocurreu um erro na criacao da conta')
     else:
         form = SignUpForm()
 
-    return render(request, "register/register.html", {'form': form})
+    return render(request, "user/register.html", {'form': form})
 
 
 

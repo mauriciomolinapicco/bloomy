@@ -1,0 +1,32 @@
+{% extends "bloomy/layout.html" %}
+{% load widget_tweaks %}
+{% block body %}
+<div class="bg-pink-600 flex flex-col items-center p-8">
+    <h3 class="text-center white text-2xl text-white mb-6">Atualizar dados do usuario</h3>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <p class="text-white">Nome da empresa</p>
+        <div class="mb-6">
+            {% render_field form.company_name class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        <div class="mb-6">
+            <p class="text-white">CNPJ</p>
+            {% render_field form.CNPJ class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        <div class="mb-6">
+            <p class="text-white">Nome da pessoa responsvael</p>
+            {% render_field form.responsible_person class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        <div class="mb-6">
+            <p class="text-white">Numero de telefone</p>
+            {% render_field form.phone_number class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        
+        <div class="mt-8 mb-6 flex justify-center">
+            <input type="submit" value="Salvar" class="bg-yellow-500 center hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none">
+        </div>
+    </form>   
+</div>
+<img src="../../../static/tira-cuadrados.webp" alt=""> 
+{% endblock %}

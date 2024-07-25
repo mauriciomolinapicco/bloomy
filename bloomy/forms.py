@@ -22,7 +22,14 @@ class OrderForm(ModelForm):
         model = Order 
         fields = ('name','briefing','suggestedText', 'specification', 'file')
 
+
 class DeliveryForm(ModelForm):
     class Meta:
         model = Delivery 
         fields = ('file',) 
+
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = User
+        fields = ('company_name', 'CNPJ', 'responsible_person', 'phone_number',)
