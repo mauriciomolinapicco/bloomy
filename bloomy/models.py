@@ -148,7 +148,7 @@ class Order(models.Model):
 
 class Delivery(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, related_name='delivery')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='deliveries')
     delivery_date = models.DateTimeField(auto_now_add=True)
     file = models.FileField(null=True, blank=True, upload_to='delivery_files/')
     

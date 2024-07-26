@@ -2,11 +2,11 @@
 {% block body %}
 {% load widget_tweaks %}
     <div class="bg-purple-200 min-h-screen">
-        <div class="container mx-auto text-center my-10">
+        <div class="container mx-auto text-center my-10 border border-gray-800 rounded-lg p-4">
             <h1 class="text-3xl font-bold text-gray-800 mb-6"><b>{{ order.name }}</b></h1>
+            <div class="text-2xl text-gray-700 mb-4"><b>Status:</b> <u>{{ order.get_status_display }}</u></div>
             <div class="text-xl text-gray-600"><b>ID do pedido:</b> {{ order.id }}</div>
             <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
-            <div class="text-xl text-gray-600"><b>Status:</b> {{ order.get_status_display }}</div>
             <div class="text-xl text-gray-600"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-gray-600"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-gray-600"><b>Texto sugerido:</b> {{ order.suggested_text }}</div>
@@ -27,7 +27,7 @@
                     {% endif %}
                     <div class="text-xl text-gray-600">Descricao do ajuste: {{ajuste.description}}</div>
                     {%if ajuste.file %}
-                        <a href="{{ ajuste.file.url }}" class="text-blue-500"><u>Abaixar arquivo adjunto do ajuste</u></a>
+                        <a href="{{ ajuste.file.url }}" class="text-blue-500" download><u>Abaixar arquivo adjunto do ajuste</u></a>
                     {% else %}
                         <p class="text-blue-500"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
                     {% endif %}
@@ -41,11 +41,16 @@
                     <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
                         <div class="block text-xl text-gray-600 mb-6">Fazer entregue do pedido</div> 
-                        <label id="file-label" for="form-file" class="text-lg text-white border border-yellow-200 p-4 bg-yellow-500 rounded-full mt-4 mb-4">Subir trabalho</label>
+                        <label id="file-label" for="form-file" class="text-lg text-white border border-yellow-200 p-4 bg-yellow-500 rounded-full mt-4 ">Subir trabalho</label>
                         {% render_field form.file id="form-file" class+="hidden" %}
                         <br>
                         <button type="submit" id="btn-completado" class="hidden">Completar Pedido</button>
+
+                        {% if order.status == 'EM_APROVACAO' %}
+                            <div>(O arquivo ja foi enviado e esta em espera de aprovacao do usuario)</div>
+                        {% endif %}
                     </form>
+                
                     <a href="{% url 'cancel_order' order.id %}"><button class="button bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                 {% else %}
                     {% if order.status == 'ENTREGUE' %}
