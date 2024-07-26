@@ -15,15 +15,28 @@
             {% else %}
                 <div class="text-xl text-gray-600 mt-6"><i>O usuario nao carregou arquivos para esse pedido</i></div>
             {% endif %}
+
+            {% if ajustes %}
+            <br><hr>
+                <div class="text-2xl font-bold text-gray-800 mb-6">O usuario pidiu ajuste/s, para esse pedido</div>
+                {% for ajuste in ajustes %}
+                    {% if forloop.counter == 1 %}
+                        <strong class="text-xl text-gray-600">Primeiro ajuste:</strong>
+                    {% elif forloop.counter == 2 %}
+                        <strong class="text-xl text-gray-600">Segundo ajuste:</strong>
+                    {% endif %}
+                    <div class="text-xl text-gray-600">Descricao do ajuste: {{ajuste.description}}</div>
+                    {%if ajuste.file %}
+                        <a href="{{ ajuste.file.url }}" class="text-blue-500"><u>Abaixar arquivo adjunto do ajuste</u></a>
+                    {% else %}
+                        <p class="text-blue-500"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
+                    {% endif %}
+                    <br>
+                {% endfor %}
+            {% endif %}
+
             <div class="mt-6">
                 {% if order.status != 'ENTREGUE' and order.status != 'CANCELADO' %}
-                    {% if order.status != 'A_FAZER' %}
-                        <a href="{% url 'update_order_status' order.id 'A_FAZER' %}"><button class="button bg-purple-500 text-white font-bold py-2 px-4 rounded m-2">Marcar como a fazer</button></a>
-                    {% endif %}
-                    {% if order.status != 'EM_PRODUCAO' %}
-                        <a href="{% url 'update_order_status' order.id 'EM_PRODUCAO' %}"><button class="button bg-purple-500 text-white font-bold py-2 px-4 rounded m-2">Marcar como em Produçao</button></a>
-                    {% endif %}
-                    <a href="{% url 'update_order_status' order.id 'CANCELADO' %}"><button class="button bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                     <hr> <br>
                     <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
@@ -33,6 +46,7 @@
                         <br>
                         <button type="submit" id="btn-completado" class="hidden">Completar Pedido</button>
                     </form>
+                    <a href="{% url 'cancel_order' order.id %}"><button class="button bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                 {% else %}
                     {% if order.status == 'ENTREGUE' %}
                         <p class="font-bold text-2xl">Esse pedido ja foi entregue</p>
@@ -41,6 +55,7 @@
                         <p class="font-bold text-2xl">Esse pedido foi cancelado</p>
                     {% endif %}
                 {% endif %}
+
             </div>
 
         </div>

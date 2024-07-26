@@ -6,6 +6,7 @@
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Añadir Font Awesome -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap');
         body {
@@ -15,13 +16,13 @@
 </head>
 {% load widget_tweaks %}
 {% load static %}
-    <body>
+<body>
     <div class="relative flex justify-center items-center bg-pink-600 h-screen">
-        <div class="absolute -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
-        <div class="absolute -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+        <div class="absolute hidden lg:block -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
+        <div class="absolute hidden lg:block -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
             
         <div class="max-w-md mx-auto p-6">
-            <img src="../../../static/logo-login (1).webp" alt="bloomy logo">
+            <img src="{% static 'logo-login (1).webp' %}" alt="bloomy logo">
             <div class="container mx-auto">
                 {% if messages %}
                     {% for message in messages %}
@@ -43,8 +44,13 @@
             <form action="" method="post">
                 {% csrf_token %}
                 <input type="text" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600 mb-4" name="username" placeholder="Nome de usuário">
-            
-                <input type="password" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600 mb-4" name="password" placeholder="Senha">
+                
+                <div class="relative mb-4">
+                    <input id="password" type="password" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" name="password" placeholder="Senha">
+                    <span id="toggle-password" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                        <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
+                    </span>
+                </div>
             
                 <input type="submit" class="w-full bg-yellow-400 text-pink-600 hover:bg-yellow-500 font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block" value="Entrar">
             </form>
@@ -55,6 +61,17 @@
             <br><br>
         </div>
     </div>
-    </body>
-</html>
 
+    <script>
+        const togglePassword = document.querySelector('#toggle-password');
+        const password = document.querySelector('#password');
+        const eyeIcon = document.querySelector('#eye-icon');
+
+        togglePassword.addEventListener('click', function (e) {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            eyeIcon.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>

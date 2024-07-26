@@ -118,11 +118,12 @@ class Order(models.Model):
     briefing = models.TextField()
     suggestedText = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=100, default='A_FAZER', choices=[
+    status = models.CharField(max_length=100, default='PRODUZINDO', choices=[
         ('PRODUZINDO', 'Produzindo'),
         ('EM_APROVACAO', 'Em aprovação'),
         ('ENTREGUE', 'Entregue'),
         ('EM_AJUSTE', 'Em ajuste'),
+        ('CANCELADO', 'Cancelado'),
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
@@ -130,7 +131,7 @@ class Order(models.Model):
     ajustes_counter = models.IntegerField(default=0)
 
     def __str__(self):
-        return f'ID:{self.id} | Pedido de {self.specification} by {self.user.username}'
+        return f'Pedido de {self.specification} by {self.user.username}'
 
 
     def new_ajuste(self):
@@ -160,6 +161,9 @@ class Delivery(models.Model):
 
 class Ajuste(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ajuste')
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='ajustes')
     description = models.TextField(max_length=500)
     file = models.FileField(null=True, blank=True, upload_to='ajustes_files/')
+
+    def __str__(self):
+        return f'Ajuste do pedido {self.order.__str__}'

@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order 
-        fields = ('name','briefing','suggestedText', 'specification', 'file')
+        fields = ('name','briefing','suggestedText', 'specification', 'file', 'pixel_size')
 
 
 class DeliveryForm(ModelForm):
@@ -33,3 +33,8 @@ class UserProfileForm(ModelForm):
     class Meta:
         model = User
         fields = ('company_name', 'CNPJ', 'responsible_person', 'phone_number',)
+
+class AjusteForm(ModelForm):
+    class Meta:
+        model = Ajuste
+        fields = ('description', 'file')

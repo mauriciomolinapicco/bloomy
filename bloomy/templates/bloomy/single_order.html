@@ -12,8 +12,14 @@
             {% if order.delivery.file %}
                 <a href="{{ order.delivery.file.url }}" class="text-xl text-white hover:text-blue-400"><u>Download do arquivo</u></a>
             {% endif %}
+            
         </div>
-    
+        <div class="mt-8">
+            {% if order.status == 'EM_APROVACAO' %}
+                <a href="{% url 'aprove_order' order.id %}" class="text-white bg-green-500 rounded-full p-4">Aprovar entregue</a>
+                <a class="text-white bg-red-500 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar ajuste</a>
+            {% endif %}
+        </div>
     </div> 
     <div class="hidden md:block"> 
         <img src="../../../static/three-rows.webp" class="w-full">

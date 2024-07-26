@@ -11,6 +11,38 @@ from .util.payment_util import *
 from .util.others_util import validate_password
 from django.urls import reverse
 
+@login_required(login_url='login')
+def aprove_order(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    order.status = 'ENTREGUE'
+    order.save()
+    messages.success(request, "A entrega foi confirmada com sucesso")
+    return redirect('user_orders')
+
+
+@login_required(login_url='login')
+def new_ajuste(request, order_id):
+    order = Order.objects.get(pk=order_id)
+    if request.method == 'POST':
+        
+        if not order.has_ajustes_left():
+            messages.error(request, "Nao tem mais ajustes disponiveis")
+            return redirect('user_orders')
+
+        form = AjusteForm(request.POST, request.FILES)
+        if form.is_valid():
+            ajuste = form.save(commit=False)
+            ajuste.order = order
+            ajuste.save()
+            order.status = 'EM_AJUSTE'
+            order.save()
+            messages.success(request, 'O ajuste foi enviado corretamente')
+            return redirect('user_orders')
+        
+    else:
+        form = AjusteForm()
+    return render(request, 'bloomy/new_ajuste.html', {'form': form})
+
 
 @login_required(login_url='login')
 def update_profile(request):
@@ -37,13 +69,12 @@ def complete_order(request, order_id):
             file=file
         )
         delivery.save()
-        order.status = 'ENTREGUE'
+        order.status = 'EM_APROVACAO'
         order.save()
 
         delivered_order_email(order)
 
         return redirect('provider_single_order', order_id=order.id)
-
     return render(request, 'complete_order.html', {'order': order})
     
 
@@ -51,7 +82,8 @@ def complete_order(request, order_id):
 @allowed_users(allowed_roles=['admin'])
 def provider_single_order(request, order_id):
     order = Order.objects.get(id=order_id)
-    context = {"order":order, "form":DeliveryForm()}
+    ajustes = order.ajustes.all()
+    context = {"order":order, "form":DeliveryForm(), "ajustes":ajustes}
     return render(request, "bloomy/provider_single_order.html", context)
 
 
@@ -60,17 +92,13 @@ def single_order(request, order_id):
     order = order = Order.objects.get(id=order_id)
     return render(request, "bloomy/single_order.html", {"order":order})
 
-
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
-def update_order_status(request, order_id, status):
+def cancel_order(request, order_id):
     order = Order.objects.get(id=order_id)
-    order.status = status
+    order.status = 'CANCELADO'
     order.save()
-    if status == 'EM_PRODUCAO':
-        order_in_progress_email(order)
-    elif status == 'CANCELADO':
-        order_cancelled_email(order)
+    order_cancelled_email(order)
     return redirect(reverse('provider_single_order', kwargs={'order_id': order_id}))
 
 
@@ -80,6 +108,7 @@ def provider_view(request):
     orders = Order.objects.all().order_by('-date')
     #filter = OrderFilter()
     return render(request, "bloomy/provider.html", {"orders":orders})
+
 
 @login_required(login_url='login')
 def user_orders(request):
@@ -163,10 +192,9 @@ def create_order(request):
 
         if user.has_uses_left():
             if form.is_valid():
-                
                 order = form.save(commit=False)
                 order.user = user
-                order.status = 'A_FAZER'
+                order.status = 'PRODUZINDO'
                 order.save()
 
                 created_order_email(user, order)
