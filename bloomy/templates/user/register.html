@@ -3,33 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.7/flowbite.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Añadir Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap');
         body {
             font-family: "Alexandria", sans-serif;
         }
-        .disabled-button {
-            background-color: #d1d5db; /* Color de fondo para el botón desactivado */
-            cursor: not-allowed; /* Cursor no permitido */
+        .error {
+            border-color: orange;
         }
         .error-message {
-            color: #1E3A8A; /* Azul oscuro para mensajes de error */
+            color: white;
+            display: none;
+        }
+        .password-eye {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
         }
     </style>
 </head>
 {% load widget_tweaks %}
-{% load static %}
 <body class="bg-pink-600">
-    <div class="relative flex justify-center items-center h-screen">
+    <div class="relative overflow-hidden flex justify-center items-center">
         <div class="absolute hidden lg:block -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
         <div class="absolute hidden lg:block -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
 
-        <div class="max-w-md mx-auto p-6">
-            <img src="{% static 'logo-login (1).webp' %}" alt="bloomy logo">
+        <form action="" method="POST" class="p-6 rounded-lg max-w-md w-full" id="registration-form">
+            {% csrf_token %}
+            <img src="../../../static/logo-login (1).webp" alt="bloomy logo"> 
             <div class="container mx-auto">
                 {% if messages %}
                     {% for message in messages %}
@@ -45,171 +52,142 @@
                     {% endfor %}
                 {% endif %}
             </div>
+            <br> <br>
             <h3 class="text-center text-xl text-white mb-4">Bem-vindo à Bloomy</h3>
 
-            <form action="" method="post" id="registrationForm">
-                {% csrf_token %}
-                <div class="mb-4">
-                    {% render_field form.username placeholder=form.username.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                    <p id="usernameError" class="error-message text-center mt-2"></p>
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.email placeholder=form.email.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                </div>
-
-                <div class="relative mb-4">
-                    {% render_field form.password1 placeholder="Senha" id="password1" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                    <span id="toggle-password1" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
-                        <i id="eye-icon1" class="fas fa-eye text-yellow-400"></i>
-                    </span>
-                    <p id="passwordError" class="error-message text-center mt-2"></p>
-                </div>
-
-                <div class="relative mb-4">
-                    {% render_field form.password2 placeholder="Confirmar senha" id="password2" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                    <span id="toggle-password2" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
-                        <i id="eye-icon2" class="fas fa-eye text-yellow-400"></i>
-                    </span>
-                    <p id="passwordMatchError" class="error-message text-center mt-2"></p>
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.phone_number placeholder="Telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                    <p id="phoneError" class="error-message text-center mt-2"></p>
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.company_name placeholder="Nome da empresa" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.responsible_person placeholder="Nome da pessoa responsável" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.CNPJ placeholder="CNPJ" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                </div>
-
-                <div class="mb-4">
-                    {% render_field form.userFiles placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                    <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
-                        Upload de seus arquivos de marca
-                    </label>
-                </div>
-
-                <div class="mt-8 mb-4 flex justify-center">
-                    <input type="submit" id="submitButton" value="Cadastre-se" class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block">
-                </div>
-
-                <a href="{% url 'login' %}" class="text-center text-yellow-400 hover:text-yellow-600 block">Já tem uma conta?</a>
-            </form>
-        </div>
+            <div class="mb-4 relative">
+                {% render_field form.username placeholder=form.username.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+                <span id="username-error" class="error-message text-sm">O nome de usuário não pode conter espaços, letras maiúsculas ou caracteres especiais.</span>
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.email placeholder=form.email.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4 relative">
+                {% render_field form.password1 placeholder="Senha" id="password1" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+                <span id="toggle-password1" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                    <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
+                </span>
+                <span id="password1-error" class="error-message text-sm">A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula.</span>
+            </div>
+            
+            <div class="mb-4 relative">
+                {% render_field form.password2 placeholder="Confirmar senha" id="password2" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+                <span id="password2-error" class="error-message text-sm">As senhas não coincidem.</span>
+                <span id="toggle-password2" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                    <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
+                </span>
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.company_name placeholder="Nome da empresa" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.responsible_person placeholder="Nome da pessoa responsável" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.CNPJ placeholder="CNPJ" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4">
+                {% render_field form.phone_number placeholder="Telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mb-4 mt-6">
+                <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-full px-4 py-2 text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
+                    Upload de seus arquivos de marca
+                </label>
+                {% render_field form.userFiles placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}
+            </div>
+            
+            <div class="mt-8 mb-4 flex justify-center">
+                <input type="submit" value="Cadastre-se" class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none" id="submit-button">
+            </div>
+            
+            <a href="{% url 'login' %}" class="text-center text-yellow-400 hover:text-yellow-600 block">Já tem uma conta?</a>
+        </form>
     </div>
 
-    <script>
-        const togglePassword1 = document.querySelector('#toggle-password1');
-        const password1 = document.querySelector('#password1');
-        const eyeIcon1 = document.querySelector('#eye-icon1');
-
-        togglePassword1.addEventListener('click', function (e) {
-            const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
-            password1.setAttribute('type', type);
-            eyeIcon1.classList.toggle('fa-eye-slash');
-        });
-
-        const togglePassword2 = document.querySelector('#toggle-password2');
-        const password2 = document.querySelector('#password2');
-        const eyeIcon2 = document.querySelector('#eye-icon2');
-
-        togglePassword2.addEventListener('click', function (e) {
-            const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
-            password2.setAttribute('type', type);
-            eyeIcon2.classList.toggle('fa-eye-slash');
-        });
-
-        const form = document.querySelector('#registrationForm');
-        const usernameField = document.querySelector('#username');
-        const passwordField1 = document.querySelector('#password1');
-        const passwordField2 = document.querySelector('#password2');
-        const phoneField = document.querySelector('#phone_number');
-        const submitButton = document.querySelector('#submitButton');
-
-        form.addEventListener('input', function(event) {
-            let hasError = false;
-
-            // Username validation
-            if (usernameField) {
-                const usernameValue = usernameField.value;
-                const usernameError = document.querySelector('#usernameError');
-                if (usernameValue !== usernameValue.toLowerCase() || /\s/.test(usernameValue)) {
-                    usernameError.textContent = 'O nome de usuário deve estar em minúsculas e sem espaços.';
-                    hasError = true;
-                } else {
-                    usernameError.textContent = '';
-                }
+<script>
+    document.getElementById('register-file').addEventListener('change', function() {
+        var label = document.getElementById('file-label');
+        if (this.files.length > 0) {
+            let fileName = this.files[0].name; 
+            if (fileName.length > 20) {
+                fileName = fileName.substring(0, 20) + '...';
             }
+            label.textContent = 'Arquivo selecionado: ' + fileName;
+        } else {
+            label.textContent = 'Upload de seus arquivos de marca';
+        }
+    });
 
-            // Password validation
-            if (passwordField1) {
-                const passwordValue1 = passwordField1.value;
-                const passwordError = document.querySelector('#passwordError');
-                if (passwordValue1.length < 6) {
-                    passwordError.textContent = 'A senha deve ter pelo menos 6 caracteres.';
-                    hasError = true;
-                } else {
-                    passwordError.textContent = '';
-                }
-            }
+    document.getElementById('registration-form').addEventListener('input', function() {
+        const usernameField = document.querySelector('[name="username"]');
+        const password1Field = document.querySelector('[name="password1"]');
+        const password2Field = document.querySelector('[name="password2"]');
+        const submitButton = document.getElementById('submit-button');
+        
+        const usernameError = document.getElementById('username-error');
+        const password1Error = document.getElementById('password1-error');
+        const password2Error = document.getElementById('password2-error');
+        
+        let isValid = true;
 
-            if (passwordField2) {
-                const passwordValue1 = passwordField1.value;
-                const passwordValue2 = passwordField2.value;
-                const passwordMatchError = document.querySelector('#passwordMatchError');
-                if (passwordValue1 !== passwordValue2) {
-                    passwordMatchError.textContent = 'As senhas não coincidem.';
-                    hasError = true;
-                } else {
-                    passwordMatchError.textContent = '';
-                }
-            }
+        // Username validation
+        const usernameValue = usernameField.value;
+        if (/[^a-z0-9]/.test(usernameValue)) {
+            usernameField.classList.add('error');
+            usernameError.style.display = 'block';
+            isValid = false;
+        } else {
+            usernameField.classList.remove('error');
+            usernameError.style.display = 'none';
+        }
 
-            // Phone number validation
-            if (phoneField) {
-                const phoneValue = phoneField.value;
-                const phoneError = document.querySelector('#phoneError');
-                if (!phoneValue) {
-                    phoneError.textContent = 'O número de telefone é obrigatório.';
-                    hasError = true;
-                } else {
-                    phoneError.textContent = '';
-                }
-            }
+        // Password1 validation
+        const password1Value = password1Field.value;
+        if (password1Value.length < 8 || !/[A-Z]/.test(password1Value)) {
+            password1Field.classList.add('error');
+            password1Error.style.display = 'block';
+            isValid = false;
+        } else {
+            password1Field.classList.remove('error');
+            password1Error.style.display = 'none';
+        }
 
-            // Toggle button state based on error presence
-            if (hasError) {
-                submitButton.classList.add('disabled-button');
-                submitButton.disabled = true;
-            } else {
-                submitButton.classList.remove('disabled-button');
-                submitButton.disabled = false;
-            }
-        });
+        // Password2 validation
+        const password2Value = password2Field.value;
+        if (password1Value !== password2Value) {
+            password2Field.classList.add('error');
+            password2Error.style.display = 'block';
+            isValid = false;
+        } else {
+            password2Field.classList.remove('error');
+            password2Error.style.display = 'none';
+        }
 
-        const fileInput = document.querySelector('#register-file');
-        const fileLabel = document.querySelector('#file-label');
+        // Enable/disable submit button
+        submitButton.disabled = !isValid;
+        submitButton.classList.toggle('opacity-50', !isValid);
+        submitButton.classList.toggle('cursor-not-allowed', !isValid);
+    });
 
-        fileLabel.addEventListener('click', function() {
-            fileInput.click();
-        });
+    document.getElementById('toggle-password1').addEventListener('click', function() {
+        const passwordField = document.getElementById('password1');
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
+        this.classList.toggle('feather-eye-off');
+    });
 
-        fileInput.addEventListener('change', function() {
-            if (fileInput.files.length > 0) {
-                fileLabel.textContent = `Arquivo selecionado: ${fileInput.files[0].name}`;
-            } else {
-                fileLabel.textContent = 'Upload de seus arquivos de marca';
-            }
-        });
-    </script>
+    document.getElementById('toggle-password2').addEventListener('click', function() {
+        const passwordField = document.getElementById('password2');
+        const type = passwordField.type === 'password' ? 'text' : 'password';
+        passwordField.type = type;
+        this.classList.toggle('feather-eye-off');
+    });
+</script>
 </body>
-</html>

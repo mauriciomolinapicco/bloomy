@@ -133,6 +133,7 @@ class Order(models.Model):
     def __str__(self):
         return f'Pedido de {self.specification} by {self.user.username}'
 
+    
 
     def new_ajuste(self):
         if self.ajustes_counter < 2:
@@ -157,6 +158,7 @@ class Delivery(models.Model):
 
     def __str__(self):
         return f'Delivery {self.id} for Order {self.order.id}'
+    
 
 
 class Ajuste(models.Model):

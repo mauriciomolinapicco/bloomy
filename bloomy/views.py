@@ -11,6 +11,7 @@ from .util.payment_util import *
 from .util.others_util import validate_password
 from django.urls import reverse
 
+
 @login_required(login_url='login')
 def aprove_order(request, order_id):
     order = Order.objects.get(pk=order_id)
@@ -35,6 +36,7 @@ def new_ajuste(request, order_id):
             ajuste.order = order
             ajuste.save()
             order.status = 'EM_AJUSTE'
+            order.new_ajuste()
             order.save()
             messages.success(request, 'O ajuste foi enviado corretamente')
             return redirect('user_orders')
@@ -69,7 +71,10 @@ def complete_order(request, order_id):
             file=file
         )
         delivery.save()
-        order.status = 'EM_APROVACAO'
+        if order.has_ajustes_left():
+            order.status = 'EM_APROVACAO'
+        else:
+            order.status = 'ENTREGUE'
         order.save()
 
         delivered_order_email(order)
@@ -92,6 +97,7 @@ def single_order(request, order_id):
     order = order = Order.objects.get(id=order_id)
     return render(request, "bloomy/single_order.html", {"order":order})
 
+
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def cancel_order(request, order_id):
@@ -113,8 +119,16 @@ def provider_view(request):
 @login_required(login_url='login')
 def user_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-date')
-    completed_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
-    context = {'orders':orders, 'completed_orders':completed_orders}
+    orders_with_delivery = []
+    
+    for order in orders:
+        recent_delivery = order.deliveries.order_by('-delivery_date').first()
+        orders_with_delivery.append({
+            'order': order,
+            'delivery': recent_delivery
+        })
+    
+    context = {'orders':orders, 'orders_with_delivery':orders_with_delivery}
     return render(request, "bloomy/user_orders.html", context)
 
 
