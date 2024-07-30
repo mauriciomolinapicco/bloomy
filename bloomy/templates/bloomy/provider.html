@@ -1,37 +1,74 @@
 {% extends "bloomy/layout.html" %}
 {% block body %}
-<div class="bg-purple-200 min-h-screen flex flex-col">
-    <h1 class="text-2xl font-bold mb-4">Lista de Pedidos</h1>
-    <form method="get">
-    </form>
-    <table class="min-w-full border border-gray-200">
+{% load widget_tweaks %}
+<div class="bg-gray-700 min-h-screen flex flex-col">
+    <h1 class="text-2xl font-bold mb-4 text-white text-center mt-4">Lista de Pedidos</h1>
+    <div id="filter" class="text-blue-500 cursor-pointer text-center mb-4"><u>Ver filtros</u></div>
+    <div id="filter-div" class="hidden container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4 text-center text-white">Filtrar Pedidos</h1>
+        <form method="get" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="mb-2 relative">
+                    <label for="id_status" class="block text-sm font-medium text-white">Status</label>
+                    {% render_field filter.form.status placeholder=filter.form.status.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_user" class="block text-sm font-medium text-white">Usuário</label>
+                    {% render_field filter.form.user placeholder=filter.form.user.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_nome" class="block text-sm font-medium text-white">Nome</label>
+                    {% render_field filter.form.nome placeholder=filter.form.nome.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_specification" class="block text-sm font-medium text-white">Especificação</label>
+                    {% render_field filter.form.specification placeholder=filter.form.specification.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_start_date" class="block text-sm font-medium text-white">Data Inicial</label>
+                    {% render_field filter.form.start_date placeholder=filter.form.start_date.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_end_date" class="block text-sm font-medium text-white">Data Final</label>
+                    {% render_field filter.form.end_date placeholder=filter.form.end_date.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+                <div class="mb-2 relative">
+                    <label for="id_ticket_id" class="block text-sm font-medium text-white">ID do Ticket</label>
+                    {% render_field filter.form.ticket_id placeholder=filter.form.ticket_id.label class=" border border-yellow-400 rounded-full px-4 py-2 w-full text-white bg-gray-700 focus:outline-none focus:border-yellow-600" %}
+                </div>
+            </div>
+            <button type="submit" class="bg-purple-600 hover:bg-purple-400 text-white px-4 py-2 rounded">Filtrar</button>
+        </form>
+    </div>
+
+    <table class="min-w-full border border-white">
         <thead>
             <tr>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Ticket ID
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     User
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Nome
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Briefing
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Texto Sugerido
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Data
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Status
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Especificaçao
                 </th>
-                <th class="px-6 py-3 border-b border-gray-200  text-left text-xs leading-4 font-medium text-gray-600 uppercase tracking-wider">
+                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Açoes
                 </th>
             </tr>
@@ -39,32 +76,32 @@
         <tbody class="">
             {% for order in orders %}
                 <tr>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.ticket_id }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.user.username }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.name }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.briefing }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.suggestedText }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.date }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.get_status_display }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.specification.name }}
                     </td>
-                    <td class="px-6 py-4 border-b border-gray-200 text-sm leading-5 text-gray-900">
-                        <a href="{% url 'provider_single_order' order.id %}"><button class="bg-blue-500 text-white px-4 py-2 rounded">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
+                        <a href="{% url 'provider_single_order' order.id %}"><button class="bg-purple-600 hover:bg-purple-400 text-white px-4 py-2 rounded">
                             Ver Pedido
                         </button></a>
                     </td>
@@ -73,4 +110,19 @@
         </tbody>
     </table>
 </div>
+<script>
+    document.getElementById('filter').addEventListener('click', function() {
+        var div = document.getElementById('filter-div');
+        if (div.classList.contains('hidden')) {
+            div.classList.remove('hidden')
+            div.classList.add('block')
+            this.textContent = 'Esconder filtros'
+        } else if (div.classList.contains('block')) {
+            div.classList.remove('block')
+            div.classList.add('hidden')
+            this.textContent = 'Ver filtros'
+        }
+        
+    })
+</script>
 {% endblock %}

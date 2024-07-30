@@ -10,6 +10,7 @@ from .util.email_util import *
 from .util.payment_util import *
 from .util.others_util import validate_password
 from django.urls import reverse
+from .filters import OrderFilter
 
 
 @login_required(login_url='login')
@@ -112,8 +113,10 @@ def cancel_order(request, order_id):
 @allowed_users(allowed_roles=['admin'])
 def provider_view(request):
     orders = Order.objects.all().order_by('-date')
-    #filter = OrderFilter()
-    return render(request, "bloomy/provider.html", {"orders":orders})
+    filter = OrderFilter(request.GET, queryset=orders)
+    #filter orders (filters.queryset)
+    orders = filter.qs
+    return render(request, "bloomy/provider.html", {"orders":orders, 'filter':filter})
 
 
 @login_required(login_url='login')
