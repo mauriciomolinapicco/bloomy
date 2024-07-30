@@ -129,11 +129,15 @@ class Order(models.Model):
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
     pixel_size = models.CharField(max_length=100, null=True, blank=True)
     ajustes_counter = models.IntegerField(default=0)
+    ticket_id = models.CharField(max_length=8, editable=False, unique=True)
+
+    def save(self, *args, **kwargs):
+        if not self.ticket_id:
+            self.ticket_id = str(self.id).replace('-', '')[:8]
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f'Pedido de {self.specification} by {self.user.username}'
-
-    
+        return f'Pedido de {self.specification} by {self.user.username}'    
 
     def new_ajuste(self):
         if self.ajustes_counter < 2:
@@ -141,7 +145,6 @@ class Order(models.Model):
             self.save()
         else:
             raise Exception("O usuario nao tem mais ajustes disponiveis")
-
 
     def has_ajustes_left(self):
         return self.ajustes_counter < 2

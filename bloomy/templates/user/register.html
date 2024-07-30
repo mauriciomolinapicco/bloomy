@@ -57,27 +57,32 @@
 
             <div class="mb-4 relative">
                 {% render_field form.username placeholder=form.username.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                <span id="username-error" class="error-message text-sm">O nome de usuário não pode conter espaços, letras maiúsculas ou caracteres especiais.</span>
             </div>
+            <span id="username-error" class="error-message text-sm mb-4">O nome de usuário não pode conter espaços, letras maiúsculas ou caracteres especiais.</span>
+
             
             <div class="mb-4">
                 {% render_field form.email placeholder=form.email.label class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
             </div>
             
-            <div class="mb-4 relative">
+            <div class="relative mb-4">
                 {% render_field form.password1 placeholder="Senha" id="password1" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                <span id="toggle-password1" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                <button id="toggle-password1" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
                     <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
-                </span>
-                <span id="password1-error" class="error-message text-sm">A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula.</span>
+                </button>
             </div>
+            <span id="password1-error" class="error-message text-sm mb-4 ">A senha deve ter pelo menos 8 caracteres e conter pelo menos uma letra maiúscula.</span>
             
-            <div class="mb-4 relative">
+            <div class="relative mb-4">
                 {% render_field form.password2 placeholder="Confirmar senha" id="password2" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-                <span id="password2-error" class="error-message text-sm">As senhas não coincidem.</span>
-                <span id="toggle-password2" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                <button id="toggle-password2" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
                     <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
-                </span>
+                </button>
+            </div>
+            <div id="password2-error" class="error-message text-sm mb-4">As senhas não coincidem.</div>
+
+            <div class="mb-4">
+                {% render_field form.phone_number placeholder="Telefone" id="telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
             </div>
             
             <div class="mb-4">
@@ -92,12 +97,8 @@
                 {% render_field form.CNPJ placeholder="CNPJ" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
             </div>
             
-            <div class="mb-4">
-                {% render_field form.phone_number placeholder="Telefone" class+="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-            </div>
-            
-            <div class="mb-4 mt-6">
-                <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-full px-4 py-2 text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
+            <div class="mb-4 mt-6 flex justify-between">
+                <label id="file-label" for="register-file" class="w-full bg-yellow-400 rounded-full text-center px-4 py-2 justify-center text-pink-600 hover:bg-yellow-200 cursor-pointer placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
                     Upload de seus arquivos de marca
                 </label>
                 {% render_field form.userFiles placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}

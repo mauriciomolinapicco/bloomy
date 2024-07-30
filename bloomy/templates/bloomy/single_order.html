@@ -9,13 +9,15 @@
             <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
-            {% if order.delivery.file %}
+            {% if order.deliveries.file %}
                 <a href="{{ order.delivery.file.url }}" class="text-xl text-white hover:text-blue-400"><u>Download do arquivo</u></a>
             {% endif %}
             
         </div>
         <div class="mt-8">
             {% if order.status == 'EM_APROVACAO' %}
+                <b class="text-white mb-4">Voce tem {{ order.ajustes_counter | add:"2" }} ajustes restantes</b>
+                <p class="text-white mb-4">Pode aprovar a peca ou pedir um ajuste</p>
                 <a href="{% url 'aprove_order' order.id %}" class="text-white bg-green-500 rounded-full p-4">Aprovar entregue</a>
                 <a class="text-white bg-red-500 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar ajuste</a>
             {% endif %}
