@@ -1,11 +1,15 @@
 {% extends "bloomy/layout.html" %}
 {% load static %}
 
-{% block title %}Novo pedido{% endblock %}
+{% block title %} - Meus pedidos{% endblock %}
 {% block body %}
     <style>
 #carousel-item {
     width: 100%;
+}
+
+#card {
+    height: 250px;
 }
 
 /* Estilos para pantallas grandes (768px y mayores) */
@@ -13,6 +17,7 @@
     #carousel-item {
         width: calc(100% / 3);
     }
+
 }        
     </style>
     <!-- Dismissable alert -->
@@ -40,7 +45,7 @@
 </div> -->
 
 <div class="bg-gray-600">
-    <div class="container mx-auto py-8 block" style=>
+    <div class="container mx-auto py-8 block">
         <div class="flex items-center mb-4">
             <h2 class="text-2xl text-white mr-4">Quadro de demandas</h2>
             <img src="../../../static/yellow-thunder.webp" alt="thunder" class="h-12">
@@ -56,21 +61,18 @@
                 <div id="inner-carousel" class="flex transition-transform duration-300"> 
                     {% for order in orders %}
                     <div class="w-full flex-shrink-0" id="carousel-item"> 
-                        <div class="border-2 border-yellow-400 text-white rounded-lg overflow-hidden shadow-lg mx-2 p-6" style="height: 200px;">
+                        <div id="card" class="border-2 border-yellow-400 text-white rounded-lg overflow-hidden shadow-lg mx-2 p-6 relative">
                             <div class="text-center">
                                 <div class="font-bold mb-2">{{ order.name }}</div>
                                 <div class="text-l mb-2">Data do pedido: {{ order.date|date:"d/m/Y" }}</div>
                                 <p>Status:</p>
                                 <p class="{%if order.status == 'ENTREGUE'%}text-yellow-300{% else %}text-pink-400{% endif %} text-base font-semibold">{{ order.get_status_display }}</p>
-                                
-                                
-                                <a href="{% url 'single_order' order.id %}">
-                                    <button class="bg-pink-600 hover:bg-pink-400 text-white py-2 px-4 rounded mt-2">
-                                        Ver Pedido
-                                    </button>
-                                </a>
-                                
                             </div>
+                            <a href="{% url 'single_order' order.id %}" class="absolute left-1/2 transform -translate-x-1/2 bottom-4">
+                                <button class="bg-pink-600 hover:bg-pink-400 text-white py-2 px-4 rounded">
+                                    Ver Pedido
+                                </button>
+                            </a>
                         </div>
                     </div>
                     {% empty %}
@@ -88,6 +90,8 @@
         </div>
         <br>
     </div>
+</div>
+
     <div class="bg-purple-600">
         <div class="px-4 py-6 sm:px-6 md:px-16">
             <p class="text-center text-white text-2xl sm:text-3xl mb-4">Peças que você precisa abaixar</p>
@@ -112,7 +116,7 @@
                             {% if item.delivery %}
                                 <tr>
                                     <td class="px-4 py-2 text-sm text-white">
-                                        {{ item.order.name }}
+                                        {{ item.order.name }} 
                                     </td>
                                     <td class="px-4 py-2 text-sm text-white hidden md:block">
                                         {{ item.delivery.delivery_date }}
@@ -137,8 +141,7 @@
     </div>
     
 
-<script>
-   document.addEventListener('DOMContentLoaded', function() {
+<script>document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('carousel');
     const innerCarousel = document.getElementById('inner-carousel');
     const prevButton = document.getElementById('prev');
@@ -154,11 +157,20 @@
         } else {
             itemsPerPage = 3;
         }
+        updateCarousel(); // Actualiza el carrusel después de ajustar itemsPerPage
     }
 
     function updateCarousel() {
-        const offset = -(currentPage * carousel.clientWidth / itemsPerPage);
+        const itemWidth = carousel.clientWidth / itemsPerPage;
+        const maxPage = items.length - itemsPerPage;
+        const offset = -currentPage * itemWidth;
+
+        // Ajusta el desplazamiento del carrusel
         innerCarousel.style.transform = `translateX(${offset}px)`;
+
+        // Habilita o deshabilita los botones según sea necesario
+        prevButton.disabled = currentPage === 0;
+        nextButton.disabled = currentPage >= maxPage;
     }
 
     prevButton.addEventListener('click', () => {
@@ -169,7 +181,8 @@
     });
 
     nextButton.addEventListener('click', () => {
-        if (currentPage < Math.ceil(items.length / itemsPerPage) - 1) {
+        const maxPage = items.length - itemsPerPage;
+        if (currentPage < maxPage) {
             currentPage++;
             updateCarousel();
         }
@@ -177,13 +190,9 @@
 
     // Inicializa los valores
     updateItemsPerPage();
-    updateCarousel();
 
     // Ajusta el número de elementos por página al redimensionar la ventana
-    window.addEventListener('resize', () => {
-        updateItemsPerPage();
-        updateCarousel();
-    });
+    window.addEventListener('resize', updateItemsPerPage);
 
     // Dismissable alert functionality
     const dismissButton = document.getElementById('dismiss-alert');
@@ -192,6 +201,7 @@
         alert.style.display = 'none';
     });
 });
+
 
 </script>
 
