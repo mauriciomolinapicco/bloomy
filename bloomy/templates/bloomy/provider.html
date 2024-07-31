@@ -54,12 +54,6 @@
                     Nome
                 </th>
                 <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
-                    Briefing
-                </th>
-                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
-                    Texto Sugerido
-                </th>
-                <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
                     Data
                 </th>
                 <th class="px-6 py-3 border-b border-white  text-left text-xs leading-4 font-medium text-white uppercase tracking-wider">
@@ -82,17 +76,11 @@
                     <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.user.username }}
                     </td>
-                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
+                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white max-w-xxs truncate nome-text">
                         {{ order.name }}
                     </td>
                     <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
-                        {{ order.briefing }}
-                    </td>
-                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
-                        {{ order.suggestedText }}
-                    </td>
-                    <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
-                        {{ order.date }}
+                        {{ order.date | date:"d F Y"}}
                     </td>
                     <td class="px-6 py-4 border-b border-white text-sm leading-5 text-white">
                         {{ order.get_status_display }}
@@ -111,6 +99,17 @@
     </table>
 </div>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var nomeElements = document.querySelectorAll('.nome-text');
+        
+        nomeElements.forEach(function(element) {
+            var text = element.textContent.trim(); // Asegúrate de eliminar espacios en blanco
+            if (text.length > 20) {
+                element.textContent = text.substring(0, 20) + '...';
+            }
+        });
+    })
+
     document.getElementById('filter').addEventListener('click', function() {
         var div = document.getElementById('filter-div');
         if (div.classList.contains('hidden')) {

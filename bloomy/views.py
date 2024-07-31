@@ -122,16 +122,15 @@ def provider_view(request):
 @login_required(login_url='login')
 def user_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-date')
-    orders_with_delivery = []
+    deliveries = Delivery.objects.filter(order__in=orders)
     
-    for order in orders:
+    '''for order in orders:
         recent_delivery = order.deliveries.order_by('-delivery_date').first()
-        orders_with_delivery.append({
-            'order': order,
-            'delivery': recent_delivery
-        })
+        deliveries.append({
+            recent_delivery
+        })'''
     
-    context = {'orders':orders, 'orders_with_delivery':orders_with_delivery}
+    context = {'orders':orders, 'deliveries':deliveries}
     return render(request, "bloomy/user_orders.html", context)
 
 
