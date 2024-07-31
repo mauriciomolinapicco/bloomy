@@ -16,7 +16,7 @@
         </div>
         <div class="mt-8">
             {% if order.status == 'EM_APROVACAO' %}
-                <b class="text-white mb-4">Voce tem {{ order.ajustes_counter | add:"2" }} ajustes restantes</b>
+                <b class="text-white mb-4">Voce tem {{remaining_ajustes}} ajuste/s restante/s</b>
                 <p class="text-white mb-4">Pode aprovar a peca ou pedir um ajuste</p>
                 <a href="{% url 'aprove_order' order.id %}" class="text-white bg-green-500 rounded-full p-4">Aprovar entregue</a>
                 <a class="text-white bg-red-500 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar ajuste</a>

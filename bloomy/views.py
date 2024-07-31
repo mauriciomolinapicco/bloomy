@@ -96,7 +96,8 @@ def provider_single_order(request, order_id):
 @login_required(login_url='login')
 def single_order(request, order_id):
     order = order = Order.objects.get(id=order_id)
-    return render(request, "bloomy/single_order.html", {"order":order})
+    context = {"order":order, "remaining_ajustes": 2 - order.ajustes_counter}
+    return render(request, "bloomy/single_order.html", context)
 
 
 @login_required(login_url='login')
