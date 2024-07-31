@@ -3,9 +3,21 @@
 
 {% block title %}Novo pedido{% endblock %}
 {% block body %}
+    <style>
+#carousel-item {
+    width: 100%;
+}
+
+/* Estilos para pantallas grandes (768px y mayores) */
+@media (min-width: 768px) {
+    #carousel-item {
+        width: calc(100% / 3);
+    }
+}        
+    </style>
     <!-- Dismissable alert -->
     <div class="inset-x-0 bg-yellow-400 text-white p-4 shadow-lg flex items-center justify-between">
-        <div class="flex items-center">
+        <div class="flex items-center mx-auto">
             <img src="../../../static/pink-thunder.webp" class="h-10 mr-4 text-lg" alt="">
             <i class="">
                 Guardamos as suas peças por 72 horas, depois disso ela não estará mais disponível em nosso sistema!
@@ -43,17 +55,14 @@
             <div id="carousel" class="overflow-hidden">
                 <div id="inner-carousel" class="flex transition-transform duration-300"> 
                     {% for order in orders %}
-                    <div class="w-full flex-shrink-0" style="width: calc(100% / 3);"> 
+                    <div class="w-full flex-shrink-0" id="carousel-item"> 
                         <div class="border-2 border-yellow-400 text-white rounded-lg overflow-hidden shadow-lg mx-2 p-6" style="height: 200px;">
                             <div class="text-center">
-                                <div class="font-bold text-2xl mb-2">{{ order.name }}</div>
+                                <div class="font-bold mb-2">{{ order.name }}</div>
                                 <div class="text-l mb-2">Data do pedido: {{ order.date|date:"d/m/Y" }}</div>
                                 <p>Status:</p>
-                                {% if order.status == 'ENTREGUE' %}
-                                    <p class="text-yellow-300 text-base font-semibold">{{ order.get_status_display }}</p>
-                                {% else %}
-                                    <p class="text-pink-400 text-base font-semibold">{{ order.get_status_display }}</p>
-                                {% endif %}
+                                <p class="{%if order.status == 'ENTREGUE'%}text-yellow-300{% else %}text-pink-400{% endif %} text-base font-semibold">{{ order.get_status_display }}</p>
+                                
                                 
                                 <a href="{% url 'single_order' order.id %}">
                                     <button class="bg-pink-600 hover:bg-pink-400 text-white py-2 px-4 rounded mt-2">
@@ -129,43 +138,61 @@
     
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const carousel = document.getElementById('carousel');
-        const innerCarousel = document.getElementById('inner-carousel');
-        const prevButton = document.getElementById('prev');
-        const nextButton = document.getElementById('next');
-        const items = innerCarousel.children;
-        const itemsPerPage = 3;
-        let currentPage = 0;
+   document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('carousel');
+    const innerCarousel = document.getElementById('inner-carousel');
+    const prevButton = document.getElementById('prev');
+    const nextButton = document.getElementById('next');
+    const items = innerCarousel.children;
 
-        function updateCarousel() {
-            const offset = -(currentPage * carousel.clientWidth);
-            innerCarousel.style.transform = `translateX(${offset}px)`;
+    let itemsPerPage;
+    let currentPage = 0;
+
+    function updateItemsPerPage() {
+        if (window.innerWidth < 768) {
+            itemsPerPage = 1;
+        } else {
+            itemsPerPage = 3;
         }
+    }
 
-        prevButton.addEventListener('click', () => {
-            if (currentPage > 0) {
-                currentPage--;
-                updateCarousel();
-            }
-        });
+    function updateCarousel() {
+        const offset = -(currentPage * carousel.clientWidth / itemsPerPage);
+        innerCarousel.style.transform = `translateX(${offset}px)`;
+    }
 
-        nextButton.addEventListener('click', () => {
-            if (currentPage < Math.ceil(items.length / itemsPerPage) - 1) {
-                currentPage++;
-                updateCarousel();
-            }
-        });
-
-        updateCarousel();
-
-        // Dismissable alert functionality
-        const dismissButton = document.getElementById('dismiss-alert');
-        const alert = dismissButton.parentElement;
-        dismissButton.addEventListener('click', () => {
-            alert.style.display = 'none';
-        });
+    prevButton.addEventListener('click', () => {
+        if (currentPage > 0) {
+            currentPage--;
+            updateCarousel();
+        }
     });
+
+    nextButton.addEventListener('click', () => {
+        if (currentPage < Math.ceil(items.length / itemsPerPage) - 1) {
+            currentPage++;
+            updateCarousel();
+        }
+    });
+
+    // Inicializa los valores
+    updateItemsPerPage();
+    updateCarousel();
+
+    // Ajusta el número de elementos por página al redimensionar la ventana
+    window.addEventListener('resize', () => {
+        updateItemsPerPage();
+        updateCarousel();
+    });
+
+    // Dismissable alert functionality
+    const dismissButton = document.getElementById('dismiss-alert');
+    const alert = dismissButton.parentElement;
+    dismissButton.addEventListener('click', () => {
+        alert.style.display = 'none';
+    });
+});
+
 </script>
 
 {% endblock %}

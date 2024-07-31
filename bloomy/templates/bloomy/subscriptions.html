@@ -1,8 +1,7 @@
 {% extends "bloomy/layout.html" %}
 
 {% block body %}
-<div class="bg-pink-600 min-h-screen max-w-screen overflow-hidden relative">
-    
+<div class="bg-pink-600 min-h-screen overflow-hidden relative">
     {% if user.is_authenticated %}
     <div class="container mx-auto text-center my-10">
         <h1 class="text-3xl font-bold text-yellow-300 mb-6 m-4">Você tem {{ user.remaining_usages }} usos restantes</h1>
