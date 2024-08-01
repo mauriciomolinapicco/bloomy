@@ -19,19 +19,19 @@
 {% load widget_tweaks %}
 {% load static %}
 <body>
-    <div class="relative flex justify-center items-center bg-pink-600 h-screen">
-        <div class="absolute hidden lg:block -right-16 -top-40 bg-red-500 w-72 h-72 rounded-full"></div>
-        <div class="absolute hidden lg:block -left-16 -bottom-100 bg-yellow-400 w-72 h-72 rounded-full"></div>
+    <div class="flex justify-center items-center bg-rosa h-screen">
+        <div class="absolute hidden lg:block -right-16 -top-40 bg-laranja w-72 h-72 rounded-full"></div>
+        <div class="absolute hidden lg:block -left-16 -bottom-100 bg-amarelo w-72 h-72 rounded-full"></div>
             
         <div class="max-w-md mx-auto p-6">
-            <img src="{% static 'logo-login (1).webp' %}" alt="bloomy logo">
+            <img src="{% static 'logo-login (1).webp' %}" alt="bloomy logo" class="transform transition duration-300 hover:scale-110">
             <div class="container mx-auto">
                 {% if messages %}
                     {% for message in messages %}
                         <div class="my-4 p-4 rounded-lg 
                             {% if message.tags == 'success' %} bg-green-300 border border-green-400 text-green-700 
                             {% elif message.tags == 'error' %} bg-red-300 border border-red-400 text-red-700 
-                            {% elif message.tags == 'warning' %} bg-yellow-300 border border-yellow-400 text-yellow-700 
+                            {% elif message.tags == 'warning' %} bg-yellow-300 border border-amarelo text-yellow-700 
                             {% elif message.tags == 'info' %} bg-blue-300 border border-blue-400 text-blue-700 
                             {% else %} bg-gray-100 border border-gray-400 text-gray-700 
                             {% endif %}">
@@ -41,24 +41,24 @@
                 {% endif %}
             </div>
             <br>
-            <h3 class="text-center text-xl text-white mb-4">Bem vindo a Bloomy</h3>
+            <h3 class="text-center text-xl text-branco mb-4 transform transition duration-300 hover:scale-110">Bem vindo a Bloomy</h3>
         
             <form action="" method="post">
                 {% csrf_token %}
-                <input type="text" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600 mb-4" name="username" placeholder="Nome de usuário">
+                <input type="text" class="bg-transparent border border-amarelo rounded-full px-4 py-2 w-full text-amarelo placeholder-amarelo focus:border-2 focus:outline-none mb-4" name="username" placeholder="Nome de usuário">
                 
                 <div class="relative mb-4">
-                    <input id="password" type="password" class="bg-transparent border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" name="password" placeholder="Senha">
+                    <input id="password" type="password" class="bg-transparent border border-amarelo rounded-full px-4 py-2 w-full text-amarelo placeholder-amarelo focus:outline-none focus:border-2" name="password" placeholder="Senha">
                     <span id="toggle-password" class="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
-                        <i id="eye-icon" class="fas fa-eye text-yellow-400"></i>
+                        <i id="eye-icon" class="fas fa-eye text-amarelo"></i>
                     </span>
                 </div>
             
-                <input type="submit" class="w-full bg-yellow-400 text-pink-600 hover:bg-yellow-500 font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block" value="Entrar">
+                <input type="submit" class="w-full bg-amarelo text-preto hover:bg-yellow-200 font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block" value="Entrar">
             </form>
            
-            <br><hr><br><a href="{% url 'register' %}" class="text-center text-yellow-400 hover:text-yellow-600 block mb-4">Cadastre-se</a>
-            <a href="{% url 'reset_password' %}" class="text-center text-yellow-400 hover:text-yellow-600 block">Esqueceu a senha?</a>
+            <br><hr><br><a href="{% url 'register' %}" class="text-center text-amarelo hover:text-yellow-200 block mb-4">Cadastre-se</a>
+            <a href="{% url 'reset_password' %}" class="text-center text-amarelo hover:text-yellow-200 block">Esqueceu a senha?</a>
             
             <br><br>
         </div>

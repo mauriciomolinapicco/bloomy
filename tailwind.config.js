@@ -8,10 +8,10 @@ module.exports = {
       colors: {
         'preto': '#444344',
         'purpura': '#9A66A4',
-        'laranja': '#C6D758',
+        'laranja': '#E16B42',
+        'amarelo': '#C6D758',
         'rosa': '#DB426F',
         'branco': '#FCFBF7',
-       
       },
     },
   },

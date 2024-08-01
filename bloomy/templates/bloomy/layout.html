@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloomy{% block title %} {% endblock %}</title>
-    <!-- <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> 
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css" rel="stylesheet" /> -->
     <link rel="stylesheet" href="{% static 'output.css' %}">
     
     <style>
@@ -18,19 +16,19 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <nav class="bg-purple-800 border-gray-200 dark:bg-gray-900">
+    <nav class="bg-purpura border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="../../../static/logo-navbar.webp" class="h-12 transform transition duration-300 hover:scale-110" alt="Bloomy Logo" />
             </a>
-            <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+            <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
                 </svg>
             </button>
             <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-                <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-900">
+                <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
                     {% if user.is_authenticated %}
                         <li class="text-white flex items-center">
                             E aí, <b> {{ request.user }}!</b>
@@ -38,57 +36,54 @@
                     {% endif %}
                     {% if user.is_staff %}
                         <li class="flex items-center">
-                            <a href="{% url 'provider' %}" class="block py-2 px-3 {%if request.path == '/provider' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Fornecedor</a>
+                            <a href="{% url 'provider' %}" class="block py-2 px-3 {%if request.path == '/provider' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Fornecedor</a>
                         </li>
                     {% endif %}
                     <li class="flex items-center">
-                        <a href="{% url 'index' %}" class="block py-2 px-3 {%if request.path == '/' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Inicio</a>
+                        <a href="{% url 'index' %}" class="block py-2 px-3 {%if request.path == '/' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Inicio</a>
                     </li>
                     <li class="flex items-center">
-                        <a href="{% url 'packages' %}" class="block py-2 px-3 {%if request.path == '/packages' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Comprar creditos</a>
+                        <a href="{% url 'packages' %}" class="block py-2 px-3 {%if request.path == '/packages' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Comprar creditos</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="flex items-center">
-                            <a href="{% url 'subscriptions' %}" class="block py-2 px-3 {%if request.path == '/subscriptions' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Meus creditos</a>
+                            <a href="{% url 'subscriptions' %}" class="block py-2 px-3 {%if request.path == '/subscriptions' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Meus creditos</a>
                         </li>
                         <li class="flex items-center">
-                            <a href="{% url 'user_orders' %}" class="block py-2 px-3 {%if request.path == '/user_orders' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Meus pedidos</a>
+                            <a href="{% url 'user_orders' %}" class="block py-2 px-3 {%if request.path == '/user_orders' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Meus pedidos</a>
                         </li>
                         <li class="flex items-center">
-                            <a href="{% url 'create_order' %}" class="block py-2 px-3 {%if request.path == '/create_order' %} text-blue-400 {%else%}text-yellow-300 {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-400 md:p-0 dark:text-white md:dark:hover:text-blue-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Novo pedido</a>
+                            <a href="{% url 'create_order' %}" class="block py-2 px-3 {%if request.path == '/create_order' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Novo pedido</a>
                         </li>
                         <li class="flex items-center">
-                            <button type="button" class="flex items-center justify-center text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 transform transition duration-300 hover:scale-110" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                            <button type="button" class="flex items-center justify-center text-sm rounded-full md:me-0 focus:ring-4 focus:ring-preto transform transition duration-300 hover:scale-110" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                                 <span class="sr-only">Open user menu</span>
-                                <p class="w-10 h-10 rounded-full text-xl text-white flex items-center justify-center bg-yellow-400">
+                                <p class="w-10 h-10 rounded-full text-xl text-preto flex items-center justify-center bg-amarelo">
                                     {{ user.username|slice:":1"|upper }}
                                 </p>
                             </button>                            
                         </li>
-                        <!-- <li>
-                            <a href="{% url 'logout' %}" class="block py-2 px-3 text-yellow-300 font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</a>
-                        </li> -->
                     {% else %}
                         <li class="flex items-center">
-                            <a href="{% url 'login' %}" class="block py-2 px-3 text-yellow-300 font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ingressar</a>
+                            <a href="{% url 'login' %}" class="block py-2 px-3 text-amarelo font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Ingressar</a>
                         </li>
                         <li class="flex items-center">
-                            <a href="{% url 'register' %}" class="block py-2 px-3 text-yellow-300 font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Cadastre-se</a>
+                            <a href="{% url 'register' %}" class="block py-2 px-3 text-amarelo font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0">Cadastre-se</a>
                         </li>
                     {% endif %}
                 </ul>
     
-                <div class="z-50 hidden my-4 text-white list-none bg-purple-700 border border-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+                <div class="z-50 hidden my-4 text-white list-none bg-purpura border border-white divide-y divide-gray-100 rounded-lg shadow" id="user-dropdown">
                     <div class="px-4 py-3">
-                      <span class="block text-sm dark:text-white">{{ user }}</span>
-                      <span class="block text-sm truncate dark:text-gray-400">{{ user.email }}</span>
+                      <span class="block text-sm">{{ user }}</span>
+                      <span class="block text-sm truncate">{{ user.email }}</span>
                     </div>
                     <ul class="py-2" aria-labelledby="user-menu-button">
                       <li>
-                        <a href="{% url 'update_profile' %}" class="block px-4 py-2 hover:bg-purple-800 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Editar perfil</a>
+                        <a href="{% url 'update_profile' %}" class="block px-4 py-2 hover:bg-preto">Editar perfil</a>
                       </li>
                       <li>
-                        <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-purple-800 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Logout</a>
+                        <a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-preto">Logout</a>
                       </li>
                     </ul>
                 </div>
@@ -104,7 +99,7 @@
                         {% if message.tags == 'success' %} bg-green-100 border border-green-400 text-green-700 
                         {% elif message.tags == 'error' %} bg-red-100 border border-red-400 text-red-700 
                         {% elif message.tags == 'warning' %} bg-yellow-100 border border-yellow-400 text-yellow-700 
-                        {% elif message.tags == 'info' %} bg-blue-100 border border-blue-400 text-blue-700 
+                        {% elif message.tags == 'info' %} bg-blue-100 border border-preto text-blue-700 
                         {% else %} bg-gray-100 border border-gray-400 text-gray-700 
                         {% endif %}">
                         <span class="absolute top-0 right-0 mt-2 mr-2 text-2xl cursor-pointer text-gray-500 hover:text-gray-800" onclick="this.parentElement.remove();">&times;</span>
@@ -115,22 +110,20 @@
         {% endif %}
     </div>    
     
-        {% block body %}
-        {% endblock %}    
+    {% block body %}
+    {% endblock %}    
     
-        
-
-    <footer class="bg-red-500 py-4 mt-auto w-full flex justify-center">
+    <!-- Footer -->
+    <footer class="bg-laranja py-4 mt-auto w-full flex justify-center">
         <div class="container mx-auto flex justify-center">
             <a href="https://www.instagram.com/design.bloomy" target="_blank" rel="noopener noreferrer" class="text-white hover:text-gray-200">
-                <img src="{% static 'ig-logo.webp' %}" alt="Instagram Logo" class="h-10 mr-2">
+                <img src="{% static 'ig-logo.webp' %}" alt="Instagram Logo" class="h-10 mr-4 transform transition duration-300 hover:scale-125">
             </a>
             <a href="">
-                <img src="{% static 'white-thunder.webp' %}" alt="White Thunder Logo" class="h-10">
+                <img src="{% static 'white-thunder.webp' %}" alt="White Thunder Logo" class="h-10 transform transition duration-300 hover:scale-125">
             </a>
         </div>
     </footer>
-    
     
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
 </body>

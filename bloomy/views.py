@@ -128,7 +128,7 @@ def user_orders(request):
     
     delivered_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
     for order in delivered_orders:
-        deliveries.append(order.delivery.newest())
+        pass#deliveries.append(order.delivery.newest())
 
     '''for order in orders:
         recent_delivery = order.deliveries.order_by('-delivery_date').first()
@@ -140,7 +140,7 @@ def user_orders(request):
 
 @login_required(login_url='login')
 def subscriptions(request):
-    subscriptions = Subscription.objects.filter(user=request.user)
+    subscriptions = Subscription.objects.filter(user=request.user).order_by('-start_date')
     return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
 
 
@@ -152,16 +152,14 @@ def redirect_to_payment(request, package_pk):
         try:
             user = request.user
             package = Package.objects.get(id=package_pk)
-            
+
             if user.stripe_customer_id is None:
                 user.create_stripe_account()
             
-            print(user.stripe_customer_id)
             
             customer_id = user.stripe_customer_id
             price_id = package.stripe_product_id #check if its not none
 
-            print(request, customer_id, price_id, package.id, user.id)
             checkout_url = create_checkout_session_url(request, customer_id, price_id, package.id, user.id)
             return redirect(checkout_url)
 

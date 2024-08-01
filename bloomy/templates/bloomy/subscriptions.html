@@ -1,16 +1,16 @@
 {% extends "bloomy/layout.html" %}
 
 {% block body %}
-<div class="bg-pink-600 min-h-screen overflow-hidden relative">
+<div class="bg-rosa min-h-screen overflow-hidden relative">
     {% if user.is_authenticated %}
     <div class="container mx-auto text-center my-10">
-        <h1 class="text-3xl font-bold text-yellow-300 mb-6 m-4">Você tem {{ user.remaining_usages }} usos restantes</h1>
-        <a href="{% url 'packages' %}" class="text-yellow-300 underline">Consiga mais usos clicando aqui</a>
+        <h1 class="text-3xl font-bold text-amarelo mb-6 m-4">Você tem {{ user.remaining_usages }} usos restantes</h1>
+        <a href="{% url 'packages' %}" class="text-amarelo underline hover:text-yellow-200">Consiga mais usos clicando aqui</a>
         <div class="mt-10">
             <p class="text-white">Seu historico de pacotes adquiridos</p>
             {% for subscription in subscriptions %}
-            <div class="max-w-md mx-auto p-6 bg-transparent border border-yellow-300 rounded-lg my-10">
-                <h2 class="text-2xl font-bold text-yellow-300 mb-2">Pacote de {{ subscription.package.allowed_usages }} usos</h2>
+            <div class="max-w-md mx-auto p-6 bg-transparent border border-amarelo rounded-lg my-10">
+                <h2 class="text-2xl font-bold text-amarelo mb-2">Pacote de {{ subscription.package.allowed_usages }} usos</h2>
                 <p class="text-white mb-4">Data de inscrição: {{ subscription.start_date|date:"d/m/Y" }} as {{ subscription.start_date|date:"H:i" }}</p>
             </div>
             {% empty %}
