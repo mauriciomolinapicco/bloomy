@@ -114,6 +114,7 @@ def cancel_order(request, order_id):
 @allowed_users(allowed_roles=['admin'])
 def provider_view(request):
     orders = Order.objects.all().order_by('-date')
+
     filter = OrderFilter(request.GET, queryset=orders)
     #filter orders (filters.queryset)
     orders = filter.qs
@@ -125,11 +126,13 @@ def user_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-date')
     deliveries = Delivery.objects.filter(order__in=orders)
     
+    delivered_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
+    for order in delivered_orders:
+        deliveries.append(order.delivery.newest())
+
     '''for order in orders:
         recent_delivery = order.deliveries.order_by('-delivery_date').first()
-        deliveries.append({
-            recent_delivery
-        })'''
+        deliveries.append(recent_delivery)'''
     
     context = {'orders':orders, 'deliveries':deliveries}
     return render(request, "bloomy/user_orders.html", context)
