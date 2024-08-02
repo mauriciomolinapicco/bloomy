@@ -4,32 +4,35 @@
 <div class="bg-preto">
     <div class="container mx-auto text-center my-10">
         <h1 class="text-3xl font-bold text-white mb-6">Pedido: {{ order.name }}</h1>
-        <div class="border border-amarelo rounded-lg w-100 p-4">
+        <div class="border border-amarelo rounded-lg p-4">
             <div class="text-xl text-white"><b>Status:</b> {{ order.get_status_display }}</div>
             <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
-            {% if order.deliveries.file %}
-                <a href="{{ order.delivery.file.url }}" class="text-xl text-white hover:text-blue-400"><u>Download do arquivo</u></a>
+            {% if delivery %}
+                <div class="mt-4 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto text-center">
+                    <p class="text-2xl font-bold text-preto animate-bounce">Seu pedido foi entregue!</p>
+                    <a href="{{ delivery.file.url }}" class="mt-2 inline-block bg-preto hover:bg-gray-600 text-amarelo font-bold py-2 px-4 rounded-full">
+                        Baixar Arquivo
+                    </a>
+                </div>
             {% endif %}
             
         </div>
         <div class="mt-8">
             {% if order.status == 'EM_APROVACAO' %}
-                <b class="text-white mb-4">Voce tem {{remaining_ajustes}} ajuste/s restante/s</b>
-                <p class="text-white mb-4">Pode aprovar a peca ou pedir um ajuste</p>
-                <a href="{% url 'aprove_order' order.id %}" class="text-white bg-green-500 rounded-full p-4">Aprovar entregue</a>
-                <a class="text-white bg-red-500 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar ajuste</a>
+                <b class="text-white mb-4">Você tem {{remaining_ajustes}} ajuste(s) restante(s)</b>
+                <p class="text-white mb-4">Pode aprovar a peça ou pedir um ajuste</p>
+                <a href="{% url 'aprove_order' order.id %}" class="text-preto font-bold bg-amarelo hover:bg-yellow-300 rounded-full p-4">Aprovar Entregue</a>
+                <a class="text-preto font-bold bg-laranja hover:bg-red-600 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar Ajuste</a>
             {% endif %}
         </div>
     </div> 
     <div class="hidden md:block"> 
-        <img src="../../../static/three-rows.webp" class="w-full">
+        <img src="{% static 'three-rows.webp' %}" class="w-full">
     </div>
     <div class="md:hidden"> 
-        <img src="../../../static/three-rows-sm.webp" class="w-full">
+        <img src="{% static 'three-rows-sm.webp' %}" class="w-full">
     </div>
 </div>
-
-
 {% endblock %}

@@ -66,11 +66,17 @@
                                 <div class="font-bold mb-2">{{ order.name }}</div>
                                 <div class="text-l mb-2">Data do pedido: {{ order.date|date:"d/m/Y" }}</div>
                                 <p>Status:</p>
-                                <p class="{%if order.status == 'ENTREGUE'%}text-amarelo{% else %}text-rosa{% endif %} text-base font-semibold">{{ order.get_status_display }}</p>
+                                {% if order.status == 'EM_APROVACAO' %} 
+                                    <p class="bg-amarelo text-preto rounded-lg py-2 px-4 rounded animate-pulse text-sm">Pedido em aprovação! Clique abaixo para aprovar ou solicitar ajustes</p>
+                                {% else %}
+                                    <p class="{%if order.status == 'ENTREGUE'%}text-amarelo{% else %}text-rosa{% endif %} text-base font-semibold">{{ order.get_status_display }}</p>
+                                {%endif%}
+
+                                
                             </div>
                             <a href="{% url 'single_order' order.id %}" class="absolute left-1/2 transform -translate-x-1/2 bottom-4">
                                 <button class="bg-rosa hover:bg-pink-400 text-branco py-2 px-4 rounded">
-                                    Ver Pedido
+                                   Ver Pedido
                                 </button>
                             </a>
                         </div>
@@ -121,7 +127,7 @@
                                         {{ item.delivery_date }}
                                     </td>
                                     <td class="px-4 py-2 text-sm font-medium">
-                                        <a href="{{ item.file.url }}" class="text-branco hover:text-blue-300">Download do arquivo</a>
+                                        <a href="{{ item.file.url }}" class="text-branco hover:text-blue-300" download>Download do arquivo</a>
                                     </td>
                                 </tr>
                            

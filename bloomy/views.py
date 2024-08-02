@@ -11,6 +11,8 @@ from .util.payment_util import *
 from .util.others_util import validate_password
 from django.urls import reverse
 from .filters import OrderFilter
+from django.core.paginator import Paginator
+from django.core.serializers import serialize
 
 
 @login_required(login_url='login')
@@ -95,8 +97,9 @@ def provider_single_order(request, order_id):
 
 @login_required(login_url='login')
 def single_order(request, order_id):
-    order = order = Order.objects.get(id=order_id)
-    context = {"order":order, "remaining_ajustes": 2 - order.ajustes_counter}
+    order = Order.objects.get(id=order_id)
+    delivery = order.deliveries.order_by('-delivery_date').first()
+    context = {"order":order, "remaining_ajustes": 2 - order.ajustes_counter, "delivery":delivery}
     return render(request, "bloomy/single_order.html", context)
 
 
@@ -116,19 +119,31 @@ def provider_view(request):
     orders = Order.objects.all().order_by('-date')
 
     filter = OrderFilter(request.GET, queryset=orders)
-    #filter orders (filters.queryset)
     orders = filter.qs
-    return render(request, "bloomy/provider.html", {"orders":orders, 'filter':filter})
+
+    paginator = Paginator(orders, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    # Pasar los parámetros del filtro a la plantilla
+    query_params = request.GET.copy()
+    if 'page' in query_params:
+        del query_params['page']
+    query_string = query_params.urlencode()
+
+    return render(request, "bloomy/provider.html", {"orders": orders, 'filter': filter, 'page_obj': page_obj, 'query_string': query_string})
 
 
 @login_required(login_url='login')
 def user_orders(request):
     orders = Order.objects.filter(user=request.user).order_by('-date')
-    deliveries = Delivery.objects.filter(order__in=orders)
-    
+
     delivered_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
+    deliveries = []
     for order in delivered_orders:
-        pass#deliveries.append(order.delivery.newest())
+        latest_delivery = order.deliveries.order_by("-delivery_date").first()
+        if latest_delivery:
+            deliveries.append(latest_delivery)
 
     '''for order in orders:
         recent_delivery = order.deliveries.order_by('-delivery_date').first()
