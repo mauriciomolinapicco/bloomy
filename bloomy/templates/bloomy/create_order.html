@@ -11,18 +11,18 @@
                 
                 <div class="mb-4">
                     <p class="text-white text-l"><b>Nome da peça</b></p>
-                    {% render_field form.name class+="bg-transparent rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-amarelo" %}
+                    {% render_field form.name class+="bg-transparent rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
                 </div>
 
                 <div class="mb-4">
                     <p class="text-white text-l"><b>Formato</b></p>
-                    {% render_field form.specification class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-amarelo" %}
+                    {% render_field form.specification class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
                 </div>
 
                 <div class="mb-4">
                     <p class="text-white text-l"><b>Tamanho da peça</b></p>
                     <p class="text-white">(Opcional) Se quiser um tamanho específico para sua peça pode especificar. De outro modo a peça será de tamanho padrao</p>
-                        {% render_field form.pixel_size class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-amarelo" %}
+                        {% render_field form.pixel_size class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
                     </div>
 
                 <div class="mb-4">
@@ -30,20 +30,20 @@
                     <p class="text-white">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais informações o material 
                         precisa conter, se há alguma imagem específica que precisa ser utilizada, se há cores que prefere ou que são 
                         proibidas, etc. Deixe-nos saber de tudo que for necessário para acertarmos em cheio no seu material!</p>
-                        {% render_field form.briefing class+="rounded-lg bg-transparent border border-amarelo px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-amarelo" %}
+                        {% render_field form.briefing class+="rounded-lg bg-transparent border border-amarelo px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-2" %}
                 </div>
 
                 <div class="mb-4">
                     <p class="text-white text-l"><b>Texto sugerido</b></p>
                     <p class="text-white">Quais são os textos que precisam estar no material?</p>
-                    {% render_field form.suggestedText class+="bg-transparent rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-amarelo" %}
+                    {% render_field form.suggestedText class+="bg-transparent rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
                 </div>
 
                 <div class="mb-4">
                     <p class="text-white text-l"><b>Upload de imagens</b></p>
                     <p class="text-white mb-4">Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
                         abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
-                    <label id="file-upload-label" for="file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-amarelo">Selecionar arquivo</label>
+                    <label id="file-upload-label" for="file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2">Selecionar arquivo</label>
                     {% render_field form.file id='file-upload' class+="bg-transparent hidden rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-400" %}
                 </div>
 

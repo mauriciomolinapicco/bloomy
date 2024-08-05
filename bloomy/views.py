@@ -42,6 +42,7 @@ def new_ajuste(request, order_id):
             order.new_ajuste()
             order.save()
             messages.success(request, 'O ajuste foi enviado corretamente')
+            new_ajuste_email_user(ajuste)
             return redirect('user_orders')
         
     else:
@@ -166,7 +167,6 @@ def redirect_to_payment(request, package_pk):
 
             if user.stripe_customer_id is None:
                 user.create_stripe_account()
-            
             
             customer_id = user.stripe_customer_id
             price_id = package.stripe_product_id #check if its not none

@@ -1,25 +1,27 @@
 {% extends 'bloomy/layout.html' %}
 {% load widget_tweaks %}
 {% block body %}
-<form action="" method="post" enctype="multipart/form-data" class="bg-gray-600 flex flex-col items-center">
-    <p class="text-3xl flex justify-center text-yellow-300"><b>Novo ajuste</b></p>
-    {% csrf_token %}
-    <div class="mb-4 mt-6">
-        <p class="text-xl flex justify-center text-yellow-300">Qual ajuste voce deseja?</p>
-        {% render_field form.description placeholder="" class+="bg-transparent border border-yellow-400 rounded-lg px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
-    </div>
-    
-    <div class="mb-4 mt-6">
-        <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-md px-4 py-2 text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
-            (Opcional) Upload de arquivos de referenca
-        </label>
-        {% render_field form.file placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}
-    </div>
-    <div class="mt-4 mb-4 flex justify-center">
-        <input type="submit" value="Enviar ajuste" class="bg-yellow-500 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none" id="submit-button">
-    </div></form>
+<div class="bg-gray-600 flex flex-col items-center">
+    <form action="" method="post" enctype="multipart/form-data" class="">
+        <p class="text-3xl flex justify-center text-yellow-300 pt-8"><b>Novo ajuste</b></p>
+        {% csrf_token %}
+        <div class="mb-4 mt-6">
+            <p class="text-xl flex justify-center text-yellow-300">Qual ajuste voce deseja?</p>
+            {% render_field form.description placeholder="" class+="bg-transparent border border-yellow-400 rounded-lg px-4 py-2 w-full text-yellow-400 placeholder-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        
+        <div class="mb-4 mt-6">
+            <label id="file-label" for="register-file" class="w-full bg-transparent border border-yellow-400 rounded-md px-4 py-2 text-yellow-300 placeholder-yellow-400 focus:outline-none focus:border-yellow-600">
+                (Opcional) Upload de arquivos de referenca
+            </label>
+            {% render_field form.file placeholder="Arquivos" id="register-file" class+="bg-transparent hidden border border-yellow-400 rounded-full px-4 py-2 w-full text-yellow-400 focus:outline-none focus:border-yellow-600" %}
+        </div>
+        <div class="mt-8 mb-4 flex justify-center">
+            <input type="submit" value="Enviar ajuste" class="bg-yellow-500 mb-8 hover:bg-yellow-400 text-white font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none" id="submit-button">
+        </div>
+</form>
+</div>
     <img src="../../../static/tira-cuadrados.webp" alt="">
-    
 <script>
     document.getElementById('register-file').addEventListener('change', function() {
         var label = document.getElementById('file-label');

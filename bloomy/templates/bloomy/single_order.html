@@ -9,7 +9,7 @@
             <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
-            {% if delivery %}
+            {% if delivery and order.status != 'EM_AJUSTE' %}
                 <div class="mt-4 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto text-center">
                     <p class="text-2xl font-bold text-preto animate-bounce">Seu pedido foi entregue!</p>
                     <a href="{{ delivery.file.url }}" class="mt-2 inline-block bg-preto hover:bg-gray-600 text-amarelo font-bold py-2 px-4 rounded-full">

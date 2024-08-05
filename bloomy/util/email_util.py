@@ -55,6 +55,13 @@ def payment_success_email(subscription):
     send_email(email, subject, html_content)
 
 
+def new_ajuste_email_user(ajuste):
+    subject = "Ajuste enviado com sucesso"
+    email = ajuste.order.user.email
+    context = {'ajuste': ajuste}
+    html_content = render_to_string("emails/new_ajuste_email_user.html", context)
+    send_email(email, subject, html_content)
+
 
 def welcome_email(user_email):
     subject = "Bem-vindo ao Bloomy"

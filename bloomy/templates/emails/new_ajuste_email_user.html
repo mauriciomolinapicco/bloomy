@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajuste corretamente enviado</title>
+</head>
+<body>
+    <h2>Seu ajuste foi enviado com sucesso!</h2>
+    <p>Olá {{ajuste.order.user}},</p>
+    <p>Estamos felizes em informar que seu ajuste foi enviado com sucesso. Abaixo estão os detalhes do seu ajuste:</p>
+
+    <ul>
+        <li>Ticket ID do pedido a ajustar #{{ ajuste.order.ticket_id }}</li>
+        <li>Briefing do ajuste: {{ ajuste.description }}</li>
+    </ul>
+    <p>Nossa equipe está trabalhando para processar seu ajuste o mais rápido possível. Você será notificado assim que o ajuste for concluído.</p>
+    <hr>
+    <p>Pode ver mais informacao no sistema da Bloomy</p> <a href="https://bloomy-dcdfca068a83.herokuapp.com/login">Acessar Bloomy</a>
+    <p>Se tiver qualquer dúvida ou precisar de assistência, não hesite em entrar em contato com nossa equipe de suporte.</p>
+    <p>Atenciosamente,<br>Equipe Bloomy</p>
+
+</body>
+</html>
