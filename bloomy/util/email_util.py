@@ -47,6 +47,15 @@ def created_order_email(user, order):
     send_email(user_email, subject_user, html_content_user)
 
 
+def payment_success_email(subscription):
+    subject = "Confirmação de Compra"
+    email = subscription.user.email
+    context = {'subscription': subscription}
+    html_content = render_to_string("emails/payment_success_email.html", context)
+    send_email(email, subject, html_content)
+
+
+
 def welcome_email(user_email):
     subject = "Bem-vindo ao Bloomy"
     html_content = render_to_string('emails/welcome_email.html')

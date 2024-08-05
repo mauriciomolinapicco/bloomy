@@ -144,10 +144,6 @@ def user_orders(request):
         latest_delivery = order.deliveries.order_by("-delivery_date").first()
         if latest_delivery:
             deliveries.append(latest_delivery)
-
-    '''for order in orders:
-        recent_delivery = order.deliveries.order_by('-delivery_date').first()
-        deliveries.append(recent_delivery)'''
     
     context = {'orders':orders, 'deliveries':deliveries}
     return render(request, "bloomy/user_orders.html", context)
@@ -161,7 +157,7 @@ def subscriptions(request):
 
 def redirect_to_payment(request, package_pk):
     if not request.user.is_authenticated:
-        messages.error(request, 'Faça login para adquirir um pacote!')
+        messages.info(request, 'Faça login para adquirir um pacote!')
         return redirect('login')
     if request.method == 'POST':
         try:
@@ -206,6 +202,10 @@ def payment_success(request):
         )
         subscription.save()
         subscription.addUsesToUser()
+
+        #Send email
+        payment_success_email(subscription)
+
         
         return render(request, "payment/payment_success.html")
     else:

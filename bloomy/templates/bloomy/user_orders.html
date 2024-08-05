@@ -83,7 +83,7 @@
                     </div>
                     {% empty %}
                     <div class="flex items-center m-16">
-                        <a href="{% url 'create_order' %}" class="text-branco">Ainda nao tem pedidos registrados. <b> Clicke aqui e faça seu primeiro pedido agora!</b></a>
+                        <a href="{% url 'create_order' %}" class="text-branco">Ainda nao tem pedidos registrados. <b> Clique aqui e faça seu primeiro pedido agora!</b></a>
                     </div>
                     {% endfor %}
                 </div>
@@ -124,7 +124,7 @@
                                         {{ item.order.name }} 
                                     </td>
                                     <td class="px-4 py-2 text-sm text-branco hidden md:block">
-                                        {{ item.delivery_date }}
+                                        {{ item.delivery_date | date:"d/m/Y"  }}
                                     </td>
                                     <td class="px-4 py-2 text-sm font-medium">
                                         <a href="{{ item.file.url }}" class="text-branco hover:text-blue-300" download>Download do arquivo</a>

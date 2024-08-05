@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Compra</title>
+</head>
+<body>
+    <h2>Olá {{ subscription.user }},</h2>
+    <p>Obrigado por sua compra! 🎉</p>
+    <p>Estamos felizes em confirmar que sua compra do pacote de <strong>{{ subscription.package.allowed_usages }} usos</strong> foi realizada com sucesso. Abaixo, você encontrará um resumo dos detalhes da sua compra:</p>
+    
+    <h3>Detalhes da Compra:</h3>
+    <p><strong>Produto:</strong> Pacote de {{ subscription.package.allowed_usages }} Usos de Design Gráfico</p>
+    <!-- <p><strong>Número do Pedido:</strong> [Número do Pedido]</p> -->
+    <p><strong>Data da Compra:</strong> {{ subscription.start_date | date:"d/m/Y H:i"}} </p>
+    <p><strong>Valor Total:</strong> {{ subscription.package.price }} reais</p>
+    
+    <h3>O que vem a seguir?</h3>
+    <p>Você pode acessar seus usos de design gráfico diretamente através da sua conta no nosso site. Se você tiver alguma dúvida ou precisar de assistência adicional, não hesite em nos contatar.</p>
+    
+    <p><a href="https://bloomy-dcdfca068a83.herokuapp.com/login" class="button">Acessar Conta</a></p>
+    
+    <div class="footer">
+        <p>Se precisar de ajuda ou tiver qualquer outra questão, entre em contato com nossa equipe de suporte através do email <a href="mailto:[email de suporte]">bloomy@rooster.dev.br</a></p>
+        <p>Agradecemos por escolher nossos serviços.</p>
+        <p>Atenciosamente,<br>Equipe da Bloomy <br></p>
+    </div>
+</div>
+
+</body>
+</html>
