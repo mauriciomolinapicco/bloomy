@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo ajuste</title>
+</head>
+<body>
+    <h2>Tem um novo ajuste na bloomy!</h2>
+    <p>Olá,</p>
+    <p>O cliente <strong> {{ajuste.order.user}} </strong> pidiu um ajuste de peca</p>
+
+    <ul>
+        <li>Ticket ID do pedido a ajustar #{{ ajuste.order.ticket_id }}</li>
+        <li>Briefing do ajuste: {{ ajuste.description }}</li>
+    </ul>
+    <hr>
+    <p>Pode ver mais informacao no sistema na aba de pedidos filtrando pelo <strong>Ticket ID</strong> na aba de fornecedor. </p> <a href="https://bloomy-dcdfca068a83.herokuapp.com/">Acessar Bloomy</a>
+
+</body>
+</html>

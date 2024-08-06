@@ -702,6 +702,14 @@ video {
   top: 130px;
 }
 
+.top-20 {
+  top: 5rem;
+}
+
+.top-10 {
+  top: 2.5rem;
+}
+
 .z-10 {
   z-index: 10;
 }

@@ -63,6 +63,14 @@ def new_ajuste_email_user(ajuste):
     send_email(email, subject, html_content)
 
 
+def new_ajuste_email_admin(ajuste):
+    subject = "Novo ajuste na bloomy"
+    email = 'mauricio.molina@rooster.dev.br'
+    context = {'ajuste': ajuste}
+    html_content = render_to_string("emails/new_ajuste_email_admin.html", context)
+    send_email(email, subject, html_content)
+
+
 def welcome_email(user_email):
     subject = "Bem-vindo ao Bloomy"
     html_content = render_to_string('emails/welcome_email.html')

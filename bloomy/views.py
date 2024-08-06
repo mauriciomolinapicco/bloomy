@@ -42,6 +42,7 @@ def new_ajuste(request, order_id):
             order.new_ajuste()
             order.save()
             messages.success(request, 'O ajuste foi enviado corretamente')
+            new_ajuste_email_admin(ajuste)
             new_ajuste_email_user(ajuste)
             return redirect('user_orders')
         
