@@ -1,3 +1,23 @@
 {% extends "bloomy/layout.html" %}
+{% load static %}
 {% block body %}
+    <div class="bg-purpura flex flex-col items-center p-8">
+        <img src="{% static 'raio-border.webp' %}" alt="" class="absolute top-[130px] left-[-50px] w-[350px] hidden md:block">
+        <img src="{% static 'logo-login (1).webp' %}" alt="logo bloomy" class="py-4 w-[300px]">
+        <h2 class="text-2xl text-amarelo py-4">Bem vindo ao <strong>fast design</strong></h2>
+        <p class="text-branco w-[450px] py-4 text-center">Selecione a quantidade de materiais desejados e faça seu briefing de forma simplificada. A proposta da Bloomy é viabilizar ideias de forma simples e rápida!</p>
+        <a href="" class="bg-amarelo text-preto rounded-full my-4 py-4 px-8 hover:bg-yellow-200 transform transition-transform duration-300 hover:scale-105">Conheça os pacotes</a>
+    </div>
+
+    <div class="bg-preto flex flex-col items-center p-8 text-branco">
+        <div class="flex items-center">
+            <img src="{% static 'pink-thunder.webp' %}" alt="Thunder" class="w-8 mr-2">
+            <p class="text-2xl text-center w-[400px]">
+                Veja algumas <strong>pecas que voce pode pedir!</strong>
+            </p>
+        </div>
+        <p class="pt-6 pb-4 text-amarelo w-[600px] text-center">Posts de Instagram | Arte para Stories |  Capa de Reels | Banner para site  | Arte para What’s App | Flyer digital | Cartão de visita digital | Timbrado digital | Assinatura de e-mail | Banner para site e muito mais.</p>
+
+        <a href="" class="bg-laranja  py-4 px-8 my-4 rounded-full hover:bg-red-400 transform transition-transform duration-300 hover:scale-105">Fale com um Bloomer</a>
+    </div>
 {% endblock %}
