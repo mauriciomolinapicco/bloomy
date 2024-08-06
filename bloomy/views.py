@@ -68,8 +68,8 @@ def update_profile(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def complete_order(request, order_id):
+    order = Order.objects.get(id=order_id)    
     if request.method == 'POST':
-        order = Order.objects.get(id=order_id)
         file = request.FILES['file']
         delivery = Delivery(
             order=order,
@@ -100,6 +100,9 @@ def provider_single_order(request, order_id):
 @login_required(login_url='login')
 def single_order(request, order_id):
     order = Order.objects.get(id=order_id)
+    if request.user != order.user:
+        return redirect('user_orders')
+
     delivery = order.deliveries.order_by('-delivery_date').first()
     context = {"order":order, "remaining_ajustes": 2 - order.ajustes_counter, "delivery":delivery}
     return render(request, "bloomy/single_order.html", context)
