@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bloomy{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'output.css' %}">
+    <link rel="icon" href="{% static 'yellow-thunder.webp' %}" type="image/x-icon">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap');
@@ -19,7 +20,7 @@
     <nav class="bg-purpura border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
             <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="../../../static/logo-navbar.webp" class="h-12 transform transition duration-300 hover:scale-110" alt="Bloomy Logo" />
+                <img src="{% static 'logo-navbar.webp'%}" class="h-12 transform transition duration-300 hover:scale-110" alt="Bloomy Logo" />
             </a>
             <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
                 <span class="sr-only">Open main menu</span>

@@ -20,4 +20,101 @@
 
         <a href="" class="bg-laranja  py-4 px-8 my-4 rounded-full hover:bg-red-400 transform transition-transform duration-300 hover:scale-105">Fale com um Bloomer</a>
     </div>
+
+    <!--Portfolio-->
+    <div class="bg-preto flex flex-col items-center p-8 text-branco rounded-lg shadow-lg">
+        <h3 class="text-3xl font-bold mb-6 text-amarelo">Inspire-se com Nossos Trabalhos</h3>
+        <div class="w-full md:w-[900px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 1" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 1</p>
+                </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 2" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 2</p>
+                </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 3" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 3</p>
+                </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 4" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 4</p>
+                </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 5" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 5</p>
+                </div>
+            </div>
+            <div class="group relative overflow-hidden rounded-lg shadow-lg">
+                <img src="{% static 'exterior.webp' %}" alt="Projeto 6" class="w-full h-auto transition-transform duration-300 group-hover:scale-105">
+                <div class="absolute inset-0 bg-preto bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <p class="text-lg text-branco font-semibold">Projeto 6</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="relative bg-black text-branco overflow-hidden">
+        <!-- Video de fondo -->
+        <video autoplay loop muted class="absolute w-full h-full object-cover opacity-50">
+            <source src="{% static 'example-vid.mp4' %}" type="video/mp4">
+        </video>
+        <div class="relative z-10 flex flex-col items-center p-12 space-y-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-amarelo">Transformamos Suas Ideias em Realidade</h1>
+            <p class="text-xl md:text-2xl">Veja o que podemos fazer por você!</p>
+            <a href="#" class="bg-laranja text-branco font-bold py-4 px-8 rounded-full hover:bg-red-400 transform transition-transform duration-300 hover:scale-105">Conheça Nosso Trabalho</a>
+        </div>
+    </div>
+    
+    
+    <!-- Sección de Testimonios -->
+    <div class="bg-purpura text-branco p-12">
+        <h2 class="text-3xl font-bold mb-8 text-center text-amarelo">O Que Nossos Clientes Dizem</h2>
+        <div class="space-y-6">
+            <div class="flex items-center space-x-4">
+                <img src="{% static 'paola.jpg' %}" alt="Cliente 1" class="w-16 h-16 rounded-full">
+                <div>
+                    <p class="text-xl font-semibold">Cliente 1</p>
+                    <p class="text-gray-200">"O serviço foi excelente! Os designs são impressionantes e superaram minhas expectativas."</p>
+                </div>
+            </div>
+            <!-- Repite el bloque de testimonios para más clientes -->
+        </div>
+    </div>   
+
+
+    <!-- FAQ -->
+    <div class="bg-purpura flex flex-col items-center p-8 text-branco rounded-lg shadow-lg">
+        <h3 class="text-3xl font-bold mb-6 text-amarelo">Perguntas Frequentes</h3>
+        <div class="w-full md:w-[600px] space-y-4">
+            <details class="group bg-preto rounded-lg p-4 transition-all duration-300 hover:bg-gray-800">
+                <summary class="cursor-pointer font-semibold text-xl text-branco group-hover:text-laranja flex justify-between items-center">
+                    <span>Quanto tempo leva para receber meu design?</span>
+                    <span class="text-xl group-open:rotate-180 transition-transform duration-300">⮟</span>
+                </summary>
+                <p class="pl-4 mt-2 text-lg text-gray-200 group-hover:text-branco">Normalmente leva de 1 a 3 dias úteis, dependendo da complexidade.</p>
+            </details>
+            <details class="group bg-preto rounded-lg p-4 transition-all duration-300 hover:bg-gray-800">
+                <summary class="cursor-pointer font-semibold text-xl text-branco group-hover:text-laranja flex justify-between items-center">
+                    <span>Posso pedir revisões?</span>
+                    <span class="text-xl group-open:rotate-180 transition-transform duration-300">⮟</span>
+                </summary>
+                <p class="pl-4 mt-2 text-lg text-gray-200 group-hover:text-branco">Sim, oferecemos até dois ajustes para que você esteja 100% satisfeito com a entregue.</p>
+            </details>
+        </div>
+        </div>
+    
+    
+    
 {% endblock %}
