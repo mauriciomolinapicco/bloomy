@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -17,7 +17,7 @@ from django.core.serializers import serialize
 
 @login_required(login_url='login')
 def aprove_order(request, order_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     order.status = 'ENTREGUE'
     order.save()
     messages.success(request, "A entrega foi confirmada com sucesso")
@@ -26,7 +26,7 @@ def aprove_order(request, order_id):
 
 @login_required(login_url='login')
 def new_ajuste(request, order_id):
-    order = Order.objects.get(pk=order_id)
+    order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
         
         if not order.has_ajustes_left():
@@ -99,7 +99,7 @@ def provider_single_order(request, order_id):
 
 @login_required(login_url='login')
 def single_order(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id)
     if request.user != order.user:
         return redirect('user_orders')
 
@@ -111,7 +111,7 @@ def single_order(request, order_id):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def cancel_order(request, order_id):
-    order = Order.objects.get(id=order_id)
+    order = get_object_or_404(Order, id=order_id)
     order.status = 'CANCELADO'
     order.save()
     order_cancelled_email(order)
@@ -265,7 +265,7 @@ def login_view(request):
 
         user = authenticate(request, username=username, password=password)
 
-        if user is not None:
+        if user:
             login(request, user)
             return redirect('index')
         else:

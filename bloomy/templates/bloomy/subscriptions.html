@@ -14,9 +14,9 @@
                 <p class="text-white mb-4">Data de inscrição: {{ subscription.start_date|date:"d/m/Y" }} as {{ subscription.start_date|date:"H:i" }}</p>
             </div>
             {% empty %}
-            <div class="flex items-center">
+            <div class="flex items-center mx-auto">
                 <p class="text-white font-bold">Você ainda nao adquiriu pecas</p> <br>
-                <a href="{% url 'packages' %}" class="text-white">Clicke aqui compre as primeras pecas!</a>
+                <a href="{% url 'packages' %}" class="text-white">Clique aqui compre as primeras pecas!</a>
             </div>
             {% endfor %}
         </div>

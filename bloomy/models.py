@@ -127,7 +127,9 @@ class Order(models.Model):
     ])
     specification = models.ForeignKey(Specification, on_delete=models.SET_NULL, null=True)
     file = models.FileField(null=True, blank=True, upload_to='order_files/')
+    for_peca_file = models.FileField(null=True, blank=True, upload_to='for_peca_order_files/')
     pixel_size = models.CharField(max_length=100, null=True, blank=True)
+    prefered_colors = models.CharField(max_length=100, null=True, blank=True)
     ajustes_counter = models.IntegerField(default=0)
     ticket_id = models.CharField(max_length=8, editable=False, unique=True)
 

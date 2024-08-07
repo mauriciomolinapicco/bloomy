@@ -20,7 +20,7 @@ class SignUpForm(UserCreationForm):
 class OrderForm(ModelForm):
     class Meta:
         model = Order 
-        fields = ('name','briefing','suggestedText', 'specification', 'file', 'pixel_size')
+        fields = ('name','briefing','suggestedText', 'specification', 'prefered_colors','file', 'for_peca_file','pixel_size')
 
 
 class DeliveryForm(ModelForm):
