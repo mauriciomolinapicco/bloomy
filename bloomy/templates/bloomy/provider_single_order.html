@@ -33,16 +33,16 @@
                     {% endif %}
                     <div class="text-xl text-branco">Descricao do ajuste: {{ajuste.description}}</div>
                     {%if ajuste.file %}
-                        <a href="{{ ajuste.file.url }}" class="text-blue-500" download><u>Abaixar arquivo adjunto do ajuste</u></a>
+                        <a href="{{ ajuste.file.url }}" class="text-amarelo" download><u>Abaixar arquivo adjunto do ajuste</u></a>
                     {% else %}
-                        <p class="text-blue-500"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
+                        <p class="text-amarelo"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
                     {% endif %}
                     <br>
                 {% endfor %}
             {% endif %}
 
             <div class="mt-6">
-                {% if order.status != 'ENTREGUE' and order.status != 'CANCELADO' %}
+                {% if order.status == 'PRODUZINDO' or order.status == 'EM_AJUSTE' %}
                     <hr> <br>
                     <form id="complete-order-form" action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
@@ -52,9 +52,7 @@
                         <br>
                         <button type="submit" id="btn-completado" class="hidden">Completar Pedido</button>
 
-                        {% if order.status == 'EM_APROVACAO' %}
-                            <div class="text-branco">(O arquivo ja foi enviado e esta em espera de aprovacao do usuario)</div>
-                        {% endif %}
+                        
                     </form>
                 
                     <a id="cancel-order" href="{% url 'cancel_order' order.id %}"><button class="button bg-laranja hover:bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
@@ -65,6 +63,9 @@
                     {% if order.status == 'CANCELADO' %}
                         <p class="font-bold text-2xl text'branco">Esse pedido foi cancelado</p>
                     {% endif %}
+                {% endif %}
+                {% if order.status == 'EM_APROVACAO' %}
+                    <strong class="text-branco">(O arquivo ja foi enviado e esta em espera de aprovacao do usuario)</strong>
                 {% endif %}
 
             </div>

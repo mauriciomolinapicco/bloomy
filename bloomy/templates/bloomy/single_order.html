@@ -20,20 +20,27 @@
                     </a>
                 </div>
             {% endif %}
+            {% if order.status == 'EM_APROVACAO' or order.status == 'EM_AJUSTE' %}
+            <div class="bg-amarelo text-preto p-4 mt-6 text-center rounded-lg shadow-lg">
+                <p class="text-xl font-semibold mb-4">Estamos trabalhando no seu pedido!</p>
+                <p class="text-md">Em breve, você será notificado quando seu pedido estiver completo.</p>
+            </div>            
+            {% endif %}
             
-        </div>
+        
         <div class="mt-8">
             <b class="text-white mb-4">Você tem {{remaining_ajustes}} ajuste(s) restante(s)</b>
             {% if order.status == 'EM_APROVACAO' %}
-                
                 <p class="text-white mb-4">Pode aprovar a peça ou pedir um ajuste</p>
                 <a href="{% url 'aprove_order' order.id %}" class="text-preto font-bold bg-amarelo hover:bg-yellow-300 rounded-full p-4">Aprovar Entregue</a>
                 <a class="text-preto font-bold bg-laranja hover:bg-red-600 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar Ajuste</a>
             {% endif %}
+
         </div>
     </div> 
+</div>
     <div class="hidden md:block"> 
-        <img src="{% static 'three-rows.webp' %}" class="w-full">
+        <img src="{% static 'BLOOMY_ID_MARCA-17.webp' %}" class="w-full">
     </div>
     <div class="md:hidden"> 
         <img src="{% static 'three-rows-sm.webp' %}" class="w-full">
