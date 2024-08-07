@@ -20,12 +20,6 @@
                 </div>
 
                 <div class="mb-4">
-                    <p class="text-white text-l"><b>Tamanho da peça</b></p>
-                    <p class="text-white">(Opcional) Se quiser um tamanho específico para sua peça pode especificar. De outro modo a peça será de tamanho padrao</p>
-                        {% render_field form.pixel_size class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
-                    </div>
-
-                <div class="mb-4">
                     <p class="text-white text-l"><b>Briefing</b></p>
                     <p class="text-white">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais informações o material 
                         precisa conter, se há alguma imagem específica que precisa ser utilizada, se há cores que prefere ou que são 
@@ -40,9 +34,26 @@
                 </div>
 
                 <div class="mb-4">
+                    <p class="text-white text-l"><b>(Opcional) Preferencia de cores</b></p>
+                    {% render_field form.prefered_colors class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-white text-l"><b>Tamanho da peça</b></p>
+                    <p class="text-white">(Opcional) Se quiser um tamanho específico para sua peça pode especificar. De outro modo a peça será de tamanho padrao</p>
+                        {% render_field form.pixel_size class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-4">
                     <p class="text-white text-l"><b>Upload de imagens</b></p>
                     <p class="text-white mb-4">Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
                         abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
+                    <label id="for-peca-file-upload-label" for="for-peca-file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2">Selecionar arquivo</label>
+                    {% render_field form.for_peca_file id='for-peca-file-upload' class+="bg-transparent hidden rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-400" %}
+                </div>
+
+                <div class="mb-4 mt-6">
+                    <p class="text-white text-l mb-3"><b>Arquivos de referencia</b></p>
                     <label id="file-upload-label" for="file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2">Selecionar arquivo</label>
                     {% render_field form.file id='file-upload' class+="bg-transparent hidden rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-400" %}
                 </div>
@@ -62,6 +73,19 @@
 
         document.getElementById('file-upload').addEventListener('change', function() {
             var label = document.getElementById('file-upload-label');
+            if (this.files.length > 0) {
+                let fileName = this.files[0].name; 
+                if (fileName.length > 20) {
+                    fileName = fileName.substring(0, 20)
+                }
+                label.textContent = 'Arquivo selecionado: ' + fileName + '...';
+            } else {
+                label.textContent = 'Selecionar arquivo';
+            }
+        });
+
+        document.getElementById('for-peca-file-upload').addEventListener('change', function() {
+            var label = document.getElementById('for-peca-file-upload-label');
             if (this.files.length > 0) {
                 let fileName = this.files[0].name; 
                 if (fileName.length > 20) {

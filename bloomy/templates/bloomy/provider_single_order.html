@@ -7,14 +7,20 @@
             <div class="text-2xl text-branco mb-4"><b>Status:</b> <u>{{ order.get_status_display }}</u></div>
             <div class="text-xl text-branco"><b>Ticket ID:</b> {{ order.ticket_id }}</div>
             <div class="text-xl text-branco"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
-            <div class="text-xl text-branco"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-branco"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-branco"><b>Texto sugerido:</b> {{ order.suggested_text }}</div>
-            {% if order.file %}
-                <a href="{{ order.file.url }}" class="text-xl text-branco hover:text-blue-800" download><u>Download do arquivo</u></a>
+            <div class="text-xl text-branco"><b>Tamanho sugerido:</b> {{ order.pixel_size }}</div>
+            <ul>{% if order.file %}
+                <li><a href="{{ order.file.url }}" class="text-xl text-branco hover:text-amarelo" download><u>Arquivo de referencia</u></a></li>
             {% else %}
-                <div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos para esse pedido</i></div>
+                <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos de referencia para esse pedido</i></div></li>
             {% endif %}
+
+            {% if order.for_peca_file %}
+                <li><a href="{{ order.for_peca_file.url }}" class="text-xl text-branco hover:text-amarelo" download><u>Imagens para usar na peca</u></a></li>
+            {% else %}
+                <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos para usar na peca</i></div></li>
+            {% endif %} </ul>
 
             {% if ajustes %}
             <br><hr>
@@ -38,7 +44,7 @@
             <div class="mt-6">
                 {% if order.status != 'ENTREGUE' and order.status != 'CANCELADO' %}
                     <hr> <br>
-                    <form action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
+                    <form id="complete-order-form" action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
                         <div class="block text-xl text-branco mb-6">Fazer entregue do pedido</div> 
                         <label id="file-label" for="form-file" class="text-lg text-preto p-4 bg-amarelo rounded-full mt-4 transform transition duration-300 hover:scale-110 cursor-pointer">Subir trabalho</label>
@@ -51,7 +57,7 @@
                         {% endif %}
                     </form>
                 
-                    <a href="{% url 'cancel_order' order.id %}"><button class="button bg-laranja hover:bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
+                    <a id="cancel-order" href="{% url 'cancel_order' order.id %}"><button class="button bg-laranja hover:bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                 {% else %}
                     {% if order.status == 'ENTREGUE' %}
                         <p class="font-bold text-2xl text'branco">Esse pedido ja foi entregue</p>
@@ -66,21 +72,37 @@
         </div>
     </div>
     <script>
-        document.getElementById('form-file').addEventListener('change', function() {
+    document.getElementById('form-file').addEventListener('change', function() {
         var label = document.getElementById('file-label');
         const btn = document.getElementById('btn-completado');
         if (this.files.length > 0) {
             let fileName = this.files[0].name; 
             btn.classList = 'block button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 mt-6';
             if (fileName.length > 20) {
-                 fileName = fileName.substring(0, 20)
+                fileName = fileName.substring(0, 20);
             }
             label.textContent = 'Arquivo selecionado: ' + fileName + '...';
         } else {
             label.textContent = 'Subir trabalho';
             btn.classList = 'hidden button bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded m-2 mt-6';
         }
-        });
+    });
+
+    // confirmación antes de enviar
+    document.getElementById('complete-order-form').addEventListener('submit', function(event) {
+        var confirmation = confirm('Tem certeza de que deseja completar este pedido?');
+        if (!confirmation) {
+            event.preventDefault();
+        }
+    });
+
+    // confirmación antes de cancelar
+    document.getElementById('cancel-order').addEventListener('click', function(event) {
+        var confirmation = confirm('Tem certeza de que deseja cancelar este pedido?');
+        if (!confirmation) {
+            event.preventDefault();
+        }
+    });
 
     </script>
 {% endblock %}

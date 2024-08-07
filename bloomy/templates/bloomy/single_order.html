@@ -9,6 +9,9 @@
             <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
             <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
             <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
+            <div class="text-xl text-white"><b>Tamanho sugerido:</b> {{ order.pixel_size }}</div>
+            <div class="text-xl text-white"><b>Preferencia de cores:</b> {{ order.prefered_colors }}</div>
+
             {% if delivery and order.status != 'EM_AJUSTE' %}
                 <div class="mt-4 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto text-center">
                     <p class="text-2xl font-bold text-preto animate-bounce">Seu pedido foi entregue!</p>
