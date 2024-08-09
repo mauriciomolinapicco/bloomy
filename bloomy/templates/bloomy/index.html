@@ -14,15 +14,17 @@
     <div class="bg-preto py-16 px-8 sm:px-16 md:px-24 lg:px-48 xl:px-64 text-white">
         <h2 class="text-2xl font-extrabold mb-10 text-center text-amarelo">Como funciona o trabalho da Bloomy?</h2>
         <p class=" text-center">Selecionamos algumas peças que são as queridinhas das empresas para você parar de sofrer com prazos enormes e custos altos! Aqui, você vai ter acesso a um espaço só seu, para colocar a identidade do seu negócio as artes que forem necessárias para fazer suas ideias ganharem corpo na internet.</p>
-        <div class="text-center mt-8 ">
-            <a href="" class="bg-laranja mt-4 py-4 px-8 my-4 rounded-full hover:bg-red-400 transform transition-transform duration-300 hover:scale-105">Fale com um Bloomer</a>
+        <div class="text-center my-8 ">
+            <a href="" class="bg-laranja transform transition-transform duration-300 hover:scale-105 mt-4 py-4 px-8 my-4 rounded-full hover:bg-red-400">
+                Fale com um Bloomer
+            </a>            
         </div>
         <div class="flex justify-center mt-8 space-x-4 mt-20">
-            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 object-cover">
-            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 object-cover">
-            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 object-cover">
-            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 object-cover">
-            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 object-cover">
+            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
         </div>
         <div class="flex mt-8 justify-center">
             <img src="{% static 'pink-thunder.webp' %}" alt="" class="w-8 mr-4">
@@ -33,34 +35,53 @@
     
 
     <!-- algumas pecas q pode pedir -->
-    <div class="bg-amarelo flex flex-col items-center p-8 text-branco">
-        <div class="flex items-center">
-            <img src="{% static 'pink-thunder.webp' %}" alt="Thunder" class="w-8 mr-2">
-            <p class="text-2xl text-center w-[400px]">
-                Veja algumas <strong>pecas que voce pode pedir!</strong>
-            </p>
+    <div class="bg-amarelo flex flex-col items-center p-8 text-preto">
+        <div class="flex flex-col md:flex-row items-center w-full max-w-5xl mx-auto">
+            <!-- Contenedor de la imagen y el título -->
+            <div class="flex items-center mb-6 md:mb-0 md:w-1/2">
+                <img src="{% static 'pink-thunder.webp' %}" alt="Thunder" class="w-12 md:w-16 mr-6 transform transition-transform duration-300 hover:scale-105">
+                <p class="text-2xl md:text-3xl text-left">
+                    Veja algumas <strong>pecas que voce pode pedir!</strong>
+                </p>
+            </div>
+            <!-- Separador vertical -->
+            <div class="border border-rosa h-40 mx-6 hidden md:block md:mx-8"></div>
+            <!-- Contenedor de párrafos separados -->
+            <div class="md:w-1/2 text-lg md:text-xl text-preto">
+                <p>Posts de Instagram</p>
+                <p>Arte para Stories</p>
+                <p>Capa de Reels</p>
+                <p>Banner para site</p>
+                <p>Arte para What’s App</p>
+                <p>Flyer digital</p>
+                <p>Cartão de visita digital</p>
+                <p>Timbrado digital</p>
+                <p>Assinatura de e-mail</p>
+                <p>Banner para site e muito mais.</p>
+                <strong>Muito mais!</strong>
+            </div>
         </div>
-        <p class="pt-6 pb-4 text-preto px-8 sm:px-16 md:px-24 lg:px-48 xl:px-64 text-center">Posts de Instagram | Arte para Stories |  Capa de Reels | Banner para site  | Arte para What’s App | Flyer digital | Cartão de visita digital | Timbrado digital | Assinatura de e-mail | Banner para site e muito mais.</p>
-
-        <a href="" class="bg-laranja  py-4 px-8 my-4 rounded-full hover:bg-red-400 transform transition-transform duration-300 hover:scale-105">Fale com um Bloomer</a>
+        <a href="" class="bg-laranja text-amarelo py-4 px-8 my-4 rounded-full hover:bg-red-400">
+            Contrate suas peças!
+        </a>
     </div>
-
+    
     
    <!-- Sección de Testimonios -->
     <div class="bg-purpura text-branco py-16 px-8">
         <h2 class="text-2xl font-extrabold mb-10 text-center text-amarelo">O Que Nossos Clientes Dizem</h2>
         <div class="flex flex-col md:flex-row justify-center gap-4">
-            <div class="bg-branco text-purpura p-6 rounded-lg shadow-md flex-1 max-w-sm">
+            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm">
                 <p class="text-lg font-semibold mb-2">Paola Ribeiro</p>
-                <p class="text-lg text-gray-700 italic">"O serviço foi excelente! Os designs são impressionantes e superaram minhas expectativas."</p>
+                <p class="text-lg text-branco italic">"O serviço foi excelente! Os designs são impressionantes e superaram minhas expectativas."</p>
             </div>
-            <div class="bg-branco text-purpura p-6 rounded-lg shadow-md flex-1 max-w-sm">
+            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm">
                 <p class="text-lg font-semibold mb-2">Carlos Souza</p>
-                <p class="text-lg text-gray-700 italic">"A qualidade e atenção ao detalhe foram incríveis. Recomendo fortemente!"</p>
+                <p class="text-lg text-branco italic">"A qualidade e atenção ao detalhe foram incríveis. Recomendo fortemente!"</p>
             </div>
-            <div class="bg-branco text-purpura p-6 rounded-lg shadow-md flex-1 max-w-sm">
+            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm">
                 <p class="text-lg font-semibold mb-2">Ana Lima</p>
-                <p class="text-lg text-gray-700 italic">"Profissionais extremamente talentosos e dedicados. Não poderia estar mais satisfeita."</p>
+                <p class="text-lg text-branco italic">"Profissionais extremamente talentosos e dedicados. Não poderia estar mais satisfeita."</p>
             </div>
         </div>
     </div>
