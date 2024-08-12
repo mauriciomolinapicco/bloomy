@@ -1,26 +1,44 @@
 {% extends "bloomy/layout.html" %}
-
+{% load static %}
 {% block body %}
 <div class="bg-rosa min-h-screen overflow-hidden relative">
-    {% if user.is_authenticated %}
+    <img src="{% static 'yellow-thunder-border.webp' %}" alt="" class="absolute w-[400px] top-20 -right-10 hidden lg:block">
     <div class="container mx-auto text-center my-10">
-        <h1 class="text-3xl font-bold text-amarelo mb-6 m-4">Você tem {{ user.remaining_usages }} usos restantes</h1>
-        <a href="{% url 'packages' %}" class="text-amarelo underline hover:text-yellow-200">Consiga mais usos clicando aqui</a>
-        <div class="mt-10">
-            <p class="text-white">Seu historico de pacotes adquiridos</p>
-            {% for subscription in subscriptions %}
-            <div class="max-w-md mx-auto p-6 bg-transparent border border-amarelo rounded-lg my-10">
-                <h2 class="text-2xl font-bold text-amarelo mb-2">Pacote de {{ subscription.package.allowed_usages }} usos</h2>
-                <p class="text-white mb-4">Data de inscrição: {{ subscription.start_date|date:"d/m/Y" }} as {{ subscription.start_date|date:"H:i" }}</p>
+        <h2 class="text-3xl text-amarelo mt-12 mb-12 m-4">Você tem <strong>{{ user.remaining_usages }}</strong> usos restantes</h2>
+        <a href="{% url 'packages' %}" class="text-pink bg-amarelo rounded-full mt-6 py-4 px-12 hover:bg-yellow-200">Compre mais peças</a>
+        <div class="mt-10 flex flex-col items-center">
+            <div class="flex mt-10 items-center">
+                <img src="{% static 'purple-thunder.webp' %}" class="w-8 h-12 mr-2" alt="">
+                <p class="text-branco text-2xl">Historico de compras</p>
             </div>
-            {% empty %}
-            <div class="flex items-center mx-auto">
-                <p class="text-white font-bold">Você ainda nao adquiriu pecas</p> <br>
-                <a href="{% url 'packages' %}" class="text-white">Clique aqui compre as primeras pecas!</a>
-            </div>
-            {% endfor %}
+            {% if subscriptions %}
+                <table class="table-auto w-1/2 divide-y divide-branco mt-10">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="px-4 py-2 text-xs font-medium text-branco uppercase tracking-wider">
+                                Oferta
+                            </th>
+                            <th scope="col" class="px-4 py-2 text-xs font-medium text-branco uppercase tracking-wider">
+                                Compra em
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for subscription in subscriptions %}
+                            <tr>
+                                <td class="px-4 py-2 text-sm text-branco">
+                                    {{ subscription.package }} 
+                                </td>
+                                <td class="px-4 py-2 text-sm text-branco">
+                                    {{ subscription.start_date|date:"d/m/Y" }} às {{ subscription.start_date|date:"H:i" }}                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-white font-semibold mt-12">Ainda não há um histórico</p> <br>
+            {% endif %}
         </div>
     </div>
-    {% endif %}
 </div>
 {% endblock %}

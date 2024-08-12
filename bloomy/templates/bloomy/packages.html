@@ -13,20 +13,19 @@
         
         <div class="flex justify-center flex-wrap gap-4 mb-8">
             {% for p in packages %}
-                <div class="bg-transparent border border-amarelo rounded-lg w-60 h-50 flex flex-col justify-between items-center py-6">
+                <div class="bg-transparent border border-2 border-amarelo rounded-xl w-60 h-50 flex flex-col justify-between items-center py-6">
                     <div class="text-center">
-                        <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-extrabold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>
+                        <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>
                     </div>
 
-                    <div class="relative -bottom-10 w-52 flex justify-center">
+                    <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105">
                         <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
                             {% csrf_token %}
-                            <input type="submit" value="R$ {{p.price}}" class="font-bold text-lg cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
+                            <input type="submit" value="R$ {{p.price}}" class="font-bold text-lg cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
                         </form>
                     </div>
                 </div>
             {% endfor %}
-
         </div>
     </div>
 
