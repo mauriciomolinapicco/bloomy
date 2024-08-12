@@ -2,26 +2,31 @@
 {% load static %}
 {% block title %} - Pacotes {% endblock%}
 {% block body %}
-    <img src="../../../static/tira-cuadrados.webp" alt="">
-    <div class="bg-purpura">
-        <br><br>
-        <div class="flex justify-center">
-            <h1 class="text-2xl text-branco">Selecione o melhor pacote para você</h1>
-            <br><br>
-        </div>
+<div class="absolute hidden lg:block -right-16 top-[100px] bg-rosa w-72 h-72 rounded-full"></div>
+<div class="absolute hidden lg:block -left-32 top-[300px] bg-amarelo z-0 w-72 h-72 rounded-full"></div>
+
+    <div class="bg-purpura flex flex-col items-center">
+
+        <img src="{% static 'logo-login (1).webp' %}" class="w-72 h-auto my-8" alt="">
+        <h1 class="text-2xl text-branco mb-4">Bem-vindo à Bloomy.</h1>
+        <h1 class="text-lg text-branco mb-6">Selecione abaixo a sua escolha de peças!</h1>
+        
         <div class="flex justify-center flex-wrap gap-4 mb-8">
             {% for p in packages %}
-                <div class="bg-transparent border border-amarelo rounded-lg w-60 h-50 flex flex-col justify-center items-center">
-                    <div class="p-5">
-                        <h5 class="mb-2 text-2xl text-branco font-bold">Pacote de {{p.allowed_usages}} usos</h5>
-                        <p class="mb-3 font-normal text-branco">${{p.price}}</p>
-                        <form action="{% url 'new_subscription' p.id %}" method="post">
+                <div class="bg-transparent border border-amarelo rounded-lg w-60 h-50 flex flex-col justify-between items-center py-6">
+                    <div class="text-center">
+                        <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-extrabold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>
+                    </div>
+
+                    <div class="relative -bottom-10 w-52 flex justify-center">
+                        <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
                             {% csrf_token %}
-                            <input type="submit" value="Peça agora" class="font-bold cursor-pointer text-amarelo border border-amarelo bg-purpura hover:bg-amarelo focus:ring-4 hover:text-purpura font-medium rounded-lg text-sm px-5 py-2.5 mb-2 bg-purpura hover:bg-amarelo hover:text-purpura">
+                            <input type="submit" value="R$ {{p.price}}" class="font-bold text-lg cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-4 font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
                         </form>
                     </div>
                 </div>
             {% endfor %}
+
         </div>
     </div>
 

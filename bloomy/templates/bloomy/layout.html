@@ -48,7 +48,7 @@
                     </li>
                     {% if user.is_authenticated %}
                         <li class="flex items-center">
-                            <a href="{% url 'subscriptions' %}" class="block py-2 px-3 {%if request.path == '/subscriptions' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Meus creditos</a>
+                            <a href="{% url 'subscriptions' %}" class="block py-2 px-3 {%if request.path == '/subscriptions' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Meus créditos</a>
                         </li>
                         <li class="flex items-center">
                             <a href="{% url 'user_orders' %}" class="block py-2 px-3 {%if request.path == '/user_orders' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Meus pedidos</a>

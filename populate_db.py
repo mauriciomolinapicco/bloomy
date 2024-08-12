@@ -5,21 +5,15 @@ def create_packages():
         {
             'name': 'Pacote 1',
             'allowed_usages': 10,
-            'price': 1000,
+            'price': 1500,
             'stripe_product_id': 'price_1PYRuERwrwuuCK4afvgJ4te3',
         },
         {
             'name': 'Pacote 2',
             'allowed_usages': 20,
-            'price': 1800,
+            'price': 2600,
             'stripe_product_id': 'price_1PYS75RwrwuuCK4aM9ejFn4W',
-        }, 
-        {
-            'name': 'Pacote 3',
-            'allowed_usages': 30,
-            'price': 2400,
-            'stripe_product_id': 'price_1PYS82RwrwuuCK4aESpT2ToB',
-        }
+        },
     ]
 
     for package_data in packages:
