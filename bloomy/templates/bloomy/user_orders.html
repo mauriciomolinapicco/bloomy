@@ -3,51 +3,28 @@
 
 {% block title %} - Meus pedidos{% endblock %}
 {% block body %}
-    <style>
-#carousel-item {
-    width: 100%;
-}
-
-#card {
-    height: 250px;
-}
-
-/* Estilos para pantallas grandes (768px y mayores) */
-@media (min-width: 768px) {
+<style>
     #carousel-item {
-        width: calc(100% / 3);
+        width: 100%;
     }
 
-}        
-    </style>
-    <!-- Dismissable alert -->
-    <div class="inset-x-0 bg-amarelo text-preto p-4 shadow-lg flex items-center justify-between">
-        <div class="flex items-center mx-auto">
-            <img src="../../../static/pink-thunder.webp" class="h-10 mr-4 text-lg" alt="">
-            <i class="">
-                Guardamos as suas peças por 72 horas, depois disso ela não estará mais disponível em nosso sistema!
-            </i>
-        </div>
-        <button id="dismiss-alert" class="text-preto focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-        </button>
-    </div>
+    #card {
+        height: 250px;
+    }
 
-<!--<div class="bg-purpura flex flex-col md:flex-row items-center justify-between p-8">
-    <div class="text-xl text-branco mb-4 md:mb-0">
-        E aí, <b class="text-2xl md:text-3xl">{{request.user}}</b>
-    </div>
-    <div class="text-center">
-        <a class="bg-amarelo text-preto rounded-full p-4 hover:bg-amarelo" href="{% url 'create_order' %}">Novo briefing</a>
-    </div>
-</div> -->
-<div class="h-screen bg-purpura">
+    /* Estilos para pantallas grandes (768px y mayores) */
+    @media (min-width: 768px) {
+        #carousel-item {
+            width: calc(100% / 3);
+        }
+
+    }        
+</style>
+
     <div class="bg-preto ">
         <div class="container mx-auto py-8 block">
-            <div class="flex items-center mb-4">
-                <h2 class="text-2xl text-branco mr-4">Quadro de demandas</h2>
+            <div class="flex mx-auto justify-center items-center mb-4">
+                <h2 class="text-xl text-branco mr-4">Quadro de demandas</h2>
                 <img src="../../../static/yellow-thunder.webp" alt="thunder" class="h-12 transform transition duration-300 hover:scale-125">
             </div>
             
@@ -82,8 +59,9 @@
                             </div>
                         </div>
                         {% empty %}
-                        <div class="flex items-center m-16">
-                            <a href="{% url 'create_order' %}" class="text-branco">Ainda nao tem pedidos registrados. <b> Clique aqui e faça seu primeiro pedido agora!</b></a>
+                        <div class="flex flex-col items-center mx-auto text-branco py-12">
+                            <p class="mb-4">Ainda nao tem pedidos registrados.</p>
+                            <a href="{% url 'create_order' %}" class="bg-amarelo text-preto hover:bg-yellow-200 rounded-full py-2 px-4 transform transition duration-300 hover:scale-105">Clique aqui e faça seu primeiro pedido!</a>
                         </div>
                         {% endfor %}
                     </div>
@@ -100,7 +78,7 @@
 
     <div class="bg-purpura">
         <div class="px-4 py-6 sm:px-6 md:px-16">
-            <p class="text-center text-branco text-2xl sm:text-3xl mb-4">Peças que você precisa abaixar</p>
+            <p class="text-center text-branco text-xl mb-4">Peças que você precisa baixar</p>
             <div class="overflow-x-auto">
                 <div class="inline-block min-w-full">
                     <table class="table-auto min-w-full divide-y divide-branco">
@@ -130,11 +108,10 @@
                                         <a href="{{ item.file.url }}" class="text-branco hover:text-blue-300" download>Download do arquivo</a>
                                     </td>
                                 </tr>
-                           
                             {% empty %}
                             <tr>
-                                <td colspan="3" class="px-4 py-2 text-sm text-branco text-center">
-                                    Não tem pedidos entregues disponíveis
+                                <td colspan="3" class="px-4 text-sm text-branco text-center">
+                                    <div class="mt-12 mb-12">Não tem pedidos entregues disponíveis</div>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -144,8 +121,21 @@
             </div>
         </div>
     </div>
-</div>
-
+    <div class="bg-purpura">
+        <div class="alert alert-dismissable bg-amarelo text-preto mt-4 inset-x-0 flex items-center p-4 justify-between">
+            <div class="flex items-center mx-auto">
+                <img src="../../../static/pink-thunder.webp" class="h-10 mr-4 text-lg" alt="">
+                <i>
+                    Guardamos as suas peças por 72 horas, depois disso ela não estará mais disponível em nosso sistema!
+                </i>
+            </div>
+                    <button id="dismiss-alert" class="close-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-preto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
 <script>document.addEventListener('DOMContentLoaded', function() {
     const carousel = document.getElementById('carousel');
     const innerCarousel = document.getElementById('inner-carousel');
@@ -203,11 +193,9 @@
     const dismissButton = document.getElementById('dismiss-alert');
     const alert = dismissButton.parentElement;
     dismissButton.addEventListener('click', () => {
-        alert.style.display = 'none';
+        alert.style.opacity = 0;
     });
 });
-
-
 </script>
 
 {% endblock %}
