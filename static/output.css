@@ -616,14 +616,14 @@ video {
   position: relative;
 }
 
-.inset-y-0 {
-  top: 0px;
-  bottom: 0px;
-}
-
 .inset-x-0 {
   left: 0px;
   right: 0px;
+}
+
+.inset-y-0 {
+  top: 0px;
+  bottom: 0px;
 }
 
 .-bottom-12 {
@@ -754,11 +754,6 @@ video {
   margin-bottom: 2rem;
 }
 
-.mx-4 {
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -777,6 +772,10 @@ video {
 
 .mb-4 {
   margin-bottom: 1rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 
 .mb-6 {
@@ -837,34 +836,6 @@ video {
 
 .mt-auto {
   margin-top: auto;
-}
-
-.mb-16 {
-  margin-bottom: 4rem;
-}
-
-.mt-16 {
-  margin-top: 4rem;
-}
-
-.mb-20 {
-  margin-bottom: 5rem;
-}
-
-.mb-28 {
-  margin-bottom: 7rem;
-}
-
-.mb-40 {
-  margin-bottom: 10rem;
-}
-
-.mb-60 {
-  margin-bottom: 15rem;
-}
-
-.mb-5 {
-  margin-bottom: 1.25rem;
 }
 
 .block {
@@ -1039,12 +1010,18 @@ video {
   flex-shrink: 0;
 }
 
-.flex-grow {
-  flex-grow: 1;
-}
-
 .table-auto {
   table-layout: auto;
+}
+
+.border-separate {
+  border-collapse: separate;
+}
+
+.border-spacing-0 {
+  --tw-border-spacing-x: 0px;
+  --tw-border-spacing-y: 0px;
+  border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y);
 }
 
 .-translate-x-1\/2 {
@@ -1456,9 +1433,9 @@ video {
   padding-right: 2rem;
 }
 
-.py-10 {
-  padding-top: 2.5rem;
-  padding-bottom: 2.5rem;
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 .py-16 {
@@ -1496,11 +1473,6 @@ video {
   padding-bottom: 2rem;
 }
 
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
-}
-
 .pl-4 {
   padding-left: 1rem;
 }
@@ -1529,6 +1501,11 @@ video {
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
+}
+
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-6xl {
@@ -1975,12 +1952,12 @@ video {
   color: rgb(225 107 66 / var(--tw-text-opacity));
 }
 
-@media (min-width: 640px) {
-  .sm\:mx-6 {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-  }
+.group:hover .group-hover\:text-amarelo {
+  --tw-text-opacity: 1;
+  color: rgb(198 215 88 / var(--tw-text-opacity));
+}
 
+@media (min-width: 640px) {
   .sm\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
@@ -1990,22 +1967,12 @@ video {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
-
-  .sm\:text-3xl {
-    font-size: 1.875rem;
-    line-height: 2.25rem;
-  }
 }
 
 @media (min-width: 768px) {
   .md\:mx-8 {
     margin-left: 2rem;
     margin-right: 2rem;
-  }
-
-  .md\:mx-16 {
-    margin-left: 4rem;
-    margin-right: 4rem;
   }
 
   .md\:mb-0 {

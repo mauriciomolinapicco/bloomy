@@ -13,9 +13,9 @@
         
         <div class="flex justify-center flex-wrap gap-4 mb-8">
             {% for p in packages %}
-                <div class="bg-transparent border border-2 border-amarelo rounded-xl w-60 h-50 flex flex-col justify-between items-center py-6">
+                <div class="bg-transparent border border-2 border-amarelo rounded-xl w-60 h-50 flex flex-col justify-between items-center py-6 mb-4">
                     <div class="text-center">
-                        <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>
+                        {% if p.allowed_usages == 1 %} <h2 class="text-3xl text-white text-left">Peças</h2> <h1 class="text-3xl text-white">avulsas</h1>  {%else%} <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>{% endif%}
                     </div>
 
                     <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105">
@@ -27,6 +27,18 @@
                 </div>
             {% endfor %}
         </div>
+
+    <!-- Pecas avulsas -->
+    <div class="flex justify-center flex-wrap gap-4 mb-8">
+        {% for p in packages %} {% if p.allowed_usages == 1 %}
+            <form action="{% url 'new_subscription' p.id %}" method="post">
+                {% csrf_token %}
+                <input type="number" name="quantity" id="" value="1" min="1" max="9">
+                <input type="submit" name="" id="">
+            </form>
+        {% endif %}{% endfor %} 
+    </div>
+
     </div>
 
     <!--Section video -->

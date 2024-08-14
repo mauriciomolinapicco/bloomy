@@ -8,11 +8,12 @@ from .decorators import unauthenticated_user, allowed_users
 from .models import Package, Subscription, User, Order, Delivery
 from .util.email_util import *
 from .util.payment_util import *
-from .util.others_util import validate_password
+from .util.others_util import validate_password, validate_quantity
 from django.urls import reverse
 from .filters import OrderFilter
 from django.core.paginator import Paginator
 from django.core.serializers import serialize
+from django.core.exceptions import ValidationError
 
 
 @login_required(login_url='login')
@@ -164,10 +165,16 @@ def redirect_to_payment(request, package_pk):
     if not request.user.is_authenticated:
         messages.info(request, 'Faça login para adquirir um pacote!')
         return redirect('login')
+    
     if request.method == 'POST':
         try:
             user = request.user
             package = Package.objects.get(id=package_pk)
+            quantity = request.POST.get('quantity', 1)
+            try:
+                validate_quantity(quantity)
+            except ValidationError as e:
+                return redirect('packages')
 
             if user.stripe_customer_id is None:
                 user.create_stripe_account()
@@ -175,8 +182,10 @@ def redirect_to_payment(request, package_pk):
             customer_id = user.stripe_customer_id
             price_id = package.stripe_product_id #check if its not none
 
-            checkout_url = create_checkout_session_url(request, customer_id, price_id, package.id, user.id)
-            return redirect(checkout_url)
+            if price_id is not None:
+                checkout_url = create_checkout_session_url(request, customer_id, price_id, package.id, user.id, quantity)
+                return redirect(checkout_url)
+            return redirect('packages')
 
         except Exception as e:
             return redirect('packages')
@@ -190,7 +199,7 @@ def payment_success(request):
 
     session = retrieve_checkout_session(checkout_session_id)
     if confirm_payment(session):
-        user_id, package_id = extract_user_and_plan_id(session)
+        user_id, package_id, quantity = extract_user_and_plan_id(session)
 
         user = User.objects.get(id=user_id)
         package = Package.objects.get(id=package_id)
@@ -202,7 +211,8 @@ def payment_success(request):
         subscription = Subscription(
             user=user,
             package=package,
-            stripe_session_id=checkout_session_id
+            stripe_session_id=checkout_session_id,
+            quantity=quantity
         )
         subscription.save()
         subscription.addUsesToUser()

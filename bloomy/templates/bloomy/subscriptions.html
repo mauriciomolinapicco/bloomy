@@ -15,10 +15,10 @@
                 <table class="table-auto w-1/2 divide-y divide-branco mt-10">
                     <thead>
                         <tr>
-                            <th scope="col" class="px-4 py-2 text-xs font-medium text-branco uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-2 text-md font-medium text-branco uppercase tracking-wider">
                                 Oferta
                             </th>
-                            <th scope="col" class="px-4 py-2 text-xs font-medium text-branco uppercase tracking-wider">
+                            <th scope="col" class="px-4 py-2 text-md font-medium text-branco uppercase tracking-wider">
                                 Compra em
                             </th>
                         </tr>
@@ -27,10 +27,15 @@
                         {% for subscription in subscriptions %}
                             <tr>
                                 <td class="px-4 py-2 text-sm text-branco">
-                                    {{ subscription.package }} 
+                                    {% if subscription.package.allowed_usages == 1%}
+                                        {{subscription.quantity }} peças avulsas
+                                    {%else%}
+                                        {{ subscription.package }} 
+                                    {% endif %}
                                 </td>
                                 <td class="px-4 py-2 text-sm text-branco">
-                                    {{ subscription.start_date|date:"d/m/Y" }} às {{ subscription.start_date|date:"H:i" }}                            </td>
+                                    {{ subscription.start_date|date:"d/m/Y" }} às {{ subscription.start_date|date:"H:i" }}   
+                                </td>
                             </tr>
                         {% endfor %}
                     </tbody>

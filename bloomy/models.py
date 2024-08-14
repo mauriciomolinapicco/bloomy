@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 import stripe
 import uuid
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 class User(AbstractUser):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
@@ -93,9 +95,23 @@ class Subscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.SET_NULL, null=True)
     start_date = models.DateTimeField(auto_now_add=True)
     stripe_session_id = models.CharField(max_length=255, null=True, blank=True)
+    quantity = models.IntegerField(
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(9)
+        ]
+    )
 
     def addUsesToUser(self):
-        self.user.remaining_usages += self.package.allowed_usages
+        additional_uses = int(self.package.allowed_usages) * int(self.quantity)
+        
+        # Asegúrate de que remaining_usages sea un entero
+        remaining_usages = int(self.user.remaining_usages)
+        print(additional_uses)
+        print(remaining_usages)
+        
+        # Actualiza el campo remaining_usages
+        self.user.remaining_usages = remaining_usages + additional_uses
         self.user.save()
         return
 

@@ -1,7 +1,7 @@
 from django.urls import reverse
 import stripe
 
-def create_checkout_session_url(request, customer_id, price_id, package_id, user_id):
+def create_checkout_session_url(request, customer_id, price_id, package_id, user_id, quantity):
     success_url = request.build_absolute_uri(reverse('payment_success'))
     cancel_url = request.build_absolute_uri(reverse('payment_cancel'))
 
@@ -11,30 +11,31 @@ def create_checkout_session_url(request, customer_id, price_id, package_id, user
             payment_method_types=['card'],
             line_items=[{
                 'price': price_id,
-                'quantity': 1,
+                'quantity': quantity,
             }],
             mode='payment',
             success_url=success_url + '?session_id={CHECKOUT_SESSION_ID}',
             cancel_url=cancel_url,
             metadata={
                 'user_id': str(user_id),
-                'package_id': str(package_id)
+                'package_id': str(package_id),
+                'quantity': quantity
             },
         )
 
         return session.url
  
     except stripe.error.InvalidRequestError as e:
-        print(f"Error de solicitud inválida en Stripe: {e}")
-        raise Exception("Error al crear la sesión de checkout en Stripe.")
+        print(f"Erro de solicitação inválida no Stripe: {e}")
+        raise Exception("Erro ao criar a sessão de checkout no Stripe.")
 
     except stripe.error.StripeError as e:
-        print(f"Error de Stripe: {e}")
-        raise Exception("Error al interactuar con Stripe.")
+        print(f"Erro do Stripe: {e}")
+        raise Exception("Erro ao interagir com o Stripe.")
 
     except Exception as e:
-        print(f"Error inesperado: {e}")
-        raise Exception("Error inesperado al crear la sesión de checkout.")
+        print(f"Erro inesperado: {e}")
+        raise Exception("Erro inesperado ao criar a sessão de checkout.")
 
 
 def retrieve_checkout_session(session_id):
@@ -51,4 +52,5 @@ def confirm_payment(checkout_session):
 def extract_user_and_plan_id(checkout_session):
         user_id = checkout_session.metadata['user_id']
         package_id = checkout_session.metadata['package_id']
-        return user_id, package_id
+        quantity = checkout_session.metadata['quantity']
+        return user_id, package_id, quantity

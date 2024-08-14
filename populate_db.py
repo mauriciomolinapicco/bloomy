@@ -3,16 +3,10 @@ from bloomy.models import Package, Specification
 def create_packages():
     packages = [
         {
-            'name': 'Pacote 1',
-            'allowed_usages': 10,
-            'price': 1500,
-            'stripe_product_id': 'price_1PYRuERwrwuuCK4afvgJ4te3',
-        },
-        {
-            'name': 'Pacote 2',
-            'allowed_usages': 20,
-            'price': 2600,
-            'stripe_product_id': 'price_1PYS75RwrwuuCK4aM9ejFn4W',
+            'name': 'Peça avulsa',
+            'allowed_usages': 1,
+            'price': 170,
+            'stripe_product_id': 'price_1PngLnRwrwuuCK4atCTyeoHJ',
         },
     ]
 
