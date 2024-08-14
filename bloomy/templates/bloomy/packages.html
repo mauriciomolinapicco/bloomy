@@ -33,8 +33,15 @@
         {% for p in packages %} {% if p.allowed_usages == 1 %}
             <form action="{% url 'new_subscription' p.id %}" method="post">
                 {% csrf_token %}
-                <input type="number" name="quantity" id="" value="1" min="1" max="9">
-                <input type="submit" name="" id="">
+                <div class="flex items-center justify-center">
+                    <p class="text-branco pr-8">Quantidade personalizada</p>
+                    <input type="number" name="quantity" id="input-pieces" value="1" min="1" max="9" class="bg-transparent rounded-full focus:outline-laranja text-branco text-lg font-bold border border-2 border-amarelo px-4 py-2">
+                    <input type="submit" name="" value="Comprar" class="px-4 py-2 bg-amarelo text-purpura rounded-full ml-4 hover:bg-transparent border border-amarelo hover:text-amarelo cursor-pointer">
+                </div>
+                <div class="flex flex-col items-center">
+                    <p class="rounded-full border border-2 border-laranja text-amarelo px-4 py-2 bg-transparent" id="pieces-price">RS 0</p>
+                </div>
+                
             </form>
         {% endif %}{% endfor %} 
     </div>
@@ -50,4 +57,26 @@
         <video controls src="{% static 'video.mp4' %}" type="video/mp4" width="800"></video>
     </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const quantityInput = document.getElementById('input-pieces');
+        const priceDisplay = document.getElementById('pieces-price');
+
+        function updatePrice() {
+            const quantity = parseInt(quantityInput.value, 10);
+            const totalPrice = quantity * 170;
+            if (isNaN(totalPrice)) {
+                priceDisplay.textContent = `RS -`;
+            } else{
+                priceDisplay.textContent = `RS ${totalPrice}`;
+            }
+            
+        }
+
+        quantityInput.addEventListener('input', updatePrice)
+
+        updatePrice();
+    })
+    
+</script>
 {% endblock %}
