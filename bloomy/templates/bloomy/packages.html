@@ -19,10 +19,16 @@
                     </div>
 
                     <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105">
-                        <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
-                            {% csrf_token %}
-                            <input type="submit" value="R$ {{p.price}}" class="font-bold text-lg cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
-                        </form>
+                        {% if p.allowed_usages == 1 %} 
+                            <div class="font-bold text-xl text-preto border border-amarelo bg-amarelo focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
+                                <p class="text-center">R$ <span class="text-xl">170</span> cada</p>
+                            </div>
+                        {% else %}
+                            <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
+                                {% csrf_token %}
+                                <input type="submit" value="R$ {{p.price}}" class="font-bold text-xl cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
+                            </form>
+                        {% endif %}
                     </div>
                 </div>
             {% endfor %}
@@ -38,11 +44,11 @@
                     <p class="text-branco pr-8 text-xl">Quantidade personalizada</p>
                 </div>
                 <div class="flex items-center justify-center">
-                    <input type="number" name="quantity" id="input-pieces" value="1" min="1" max="9" class="bg-transparent rounded-full focus:outline-laranja text-branco text-lg font-bold border border-2 border-amarelo px-4 py-2">
+                    <input type="number" name="quantity" id="input-pieces" value="1" min="1" max="8" class="bg-transparent rounded-full focus:outline-laranja text-branco text-lg font-bold border border-2 border-amarelo px-4 py-2">
                     <input type="submit" name="" value="Comprar" class="px-4 py-2 bg-amarelo text-purpura rounded-full ml-4 hover:bg-transparent border border-amarelo hover:text-amarelo cursor-pointer">
                 </div>
-                <div class="flex flex-col items-center">
-                    <p class="text-lg rounded-full border border-2 border-laranja text-amarelo px-4 py-2 bg-transparent" id="pieces-price">RS 0</p>
+                <div class="flex flex-col items-center mt-4">
+                    <p class="text-xl rounded-lg bg-laranja text-branco px-4 py-2" id="pieces-price">RS 0</p>
                 </div>
                 
             </form>
@@ -68,7 +74,7 @@
         function updatePrice() {
             const quantity = parseInt(quantityInput.value, 10);
             const totalPrice = quantity * 170;
-            if (isNaN(totalPrice) || !(quantity >= 1 && quantity <= 9)) {
+            if (isNaN(totalPrice) || !(quantity >= 1 && quantity <= 8)) {
                 priceDisplay.textContent = `RS -`;
             } else{
                 priceDisplay.textContent = `RS ${totalPrice}`;

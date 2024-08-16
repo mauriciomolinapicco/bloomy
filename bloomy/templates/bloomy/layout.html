@@ -32,7 +32,7 @@
                 <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
                     {% if user.is_authenticated %}
                         <li class="text-white flex items-center">
-                            E aí, <b> {{ request.user }}!</b>
+                            <div class=""> E aí, <span class="ml-2 font-bold">{{ request.user }}!</span></div>
                         </li>
                     {% endif %}
                     {% if user.is_staff %}

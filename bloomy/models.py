@@ -98,7 +98,7 @@ class Subscription(models.Model):
     quantity = models.IntegerField(
         validators=[
             MinValueValidator(1),
-            MaxValueValidator(9)
+            MaxValueValidator(8)
         ]
     )
 
@@ -107,8 +107,6 @@ class Subscription(models.Model):
         
         # Asegúrate de que remaining_usages sea un entero
         remaining_usages = int(self.user.remaining_usages)
-        print(additional_uses)
-        print(remaining_usages)
         
         # Actualiza el campo remaining_usages
         self.user.remaining_usages = remaining_usages + additional_uses
