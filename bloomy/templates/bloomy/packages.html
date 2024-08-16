@@ -9,13 +9,13 @@
 
         <img src="{% static 'logo-login (1).webp' %}" class="w-72 h-auto my-8" alt="">
         <h1 class="text-2xl text-branco mb-4">Bem-vindo à Bloomy.</h1>
-        <h1 class="text-lg text-branco mb-6">Selecione abaixo a sua escolha de peças!</h1>
+        <h1 class="text-lg text-branco mb-6 sm:px-2 text-center">Selecione abaixo a sua escolha de peças!</h1>
         
         <div class="flex justify-center flex-wrap gap-4 mb-8">
             {% for p in packages %}
                 <div class="bg-transparent border border-2 border-amarelo rounded-xl w-60 h-50 flex flex-col justify-between items-center py-6 mb-4">
                     <div class="text-center">
-                        {% if p.allowed_usages == 1 %} <h2 class="text-3xl text-white text-left">Peças</h2> <h1 class="text-3xl text-white">avulsas</h1>  {%else%} <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>{% endif%}
+                        {% if p.allowed_usages == 1 %} <br><h2 class="text-3xl text-white text-left pl-4">Peças <span class="text-5xl">avulsas</span></h2>  {%else%} <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>{% endif%}
                     </div>
 
                     <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105">
@@ -33,13 +33,16 @@
         {% for p in packages %} {% if p.allowed_usages == 1 %}
             <form action="{% url 'new_subscription' p.id %}" method="post">
                 {% csrf_token %}
+                <div class="flex items-center justify-center mb-6">
+                    <img src="{% static 'yellow-thunder.webp' %}" class="h-12 mr-4" alt="">
+                    <p class="text-branco pr-8 text-xl">Quantidade personalizada</p>
+                </div>
                 <div class="flex items-center justify-center">
-                    <p class="text-branco pr-8">Quantidade personalizada</p>
                     <input type="number" name="quantity" id="input-pieces" value="1" min="1" max="9" class="bg-transparent rounded-full focus:outline-laranja text-branco text-lg font-bold border border-2 border-amarelo px-4 py-2">
                     <input type="submit" name="" value="Comprar" class="px-4 py-2 bg-amarelo text-purpura rounded-full ml-4 hover:bg-transparent border border-amarelo hover:text-amarelo cursor-pointer">
                 </div>
                 <div class="flex flex-col items-center">
-                    <p class="rounded-full border border-2 border-laranja text-amarelo px-4 py-2 bg-transparent" id="pieces-price">RS 0</p>
+                    <p class="text-lg rounded-full border border-2 border-laranja text-amarelo px-4 py-2 bg-transparent" id="pieces-price">RS 0</p>
                 </div>
                 
             </form>
@@ -65,7 +68,7 @@
         function updatePrice() {
             const quantity = parseInt(quantityInput.value, 10);
             const totalPrice = quantity * 170;
-            if (isNaN(totalPrice)) {
+            if (isNaN(totalPrice) || !(quantity >= 1 && quantity <= 9)) {
                 priceDisplay.textContent = `RS -`;
             } else{
                 priceDisplay.textContent = `RS ${totalPrice}`;

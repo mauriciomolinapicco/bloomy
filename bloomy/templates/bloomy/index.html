@@ -5,7 +5,7 @@
         <img src="{% static 'raio-border.webp' %}" alt="" class="absolute top-[130px] left-[-50px] w-[350px] hidden md:block">
         <img src="{% static 'logo-login (1).webp' %}" alt="logo bloomy" class="py-4 w-[300px]">
         <h2 class="text-2xl text-amarelo py-4">Bem-vindo ao <strong>fast design</strong></h2>
-        <p class="text-branco w-[450px] py-4 text-center">Selecione a quantidade de materiais desejados e faça seu briefing de forma simplificada. A proposta da Bloomy é viabilizar ideias de forma simples e rápida!</p>
+        <p class="text-branco lg:w-[450px] mx-4 py-4 text-center">Selecione a quantidade de materiais desejados e faça seu briefing de forma simplificada. A proposta da Bloomy é viabilizar ideias de forma simples e rápida!</p>
         <a href="" class="bg-amarelo text-preto rounded-full my-4 py-4 px-8 hover:bg-yellow-200 transform transition-transform duration-300 hover:scale-105">Conheça os pacotes</a>
     </div>
 
@@ -19,15 +19,15 @@
                 Fale com um Bloomer
             </a>            
         </div>
-        <div class="flex justify-center mt-8 space-x-4 mt-20">
-            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 object-cover transform transition-transform duration-300 hover:scale-105">
-        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center mt-8">
+            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+        </div>        
         <div class="flex mt-8 justify-center">
-            <img src="{% static 'pink-thunder.webp' %}" alt="" class="w-8 mr-4">
+            <img src="{% static 'pink-thunder.webp' %}" alt="" class="w-8 h-12 mr-4">
             <p class="text-center text-lg">Exemplo: Carrossel para Instagram construído com 5 peças!</p>
         </div>
     
@@ -48,17 +48,17 @@
             <div class="border border-rosa h-40 mx-6 hidden md:block md:mx-8"></div>
             <!-- Contenedor de párrafos separados -->
             <div class="md:w-1/2 text-lg md:text-xl text-preto">
-                <p>Posts de Instagram</p>
-                <p>Arte para Stories</p>
-                <p>Capa de Reels</p>
-                <p>Banner para site</p>
-                <p>Arte para What’s App</p>
-                <p>Flyer digital</p>
-                <p>Cartão de visita digital</p>
-                <p>Timbrado digital</p>
-                <p>Assinatura de e-mail</p>
-                <p>Banner para site e muito mais.</p>
-                <strong>Muito mais!</strong>
+                <p class="text-center md:text-left">Posts de Instagram</p>
+                <p class="text-center md:text-left">Arte para Stories</p>
+                <p class="text-center md:text-left">Capa de Reels</p>
+                <p class="text-center md:text-left">Banner para site</p>
+                <p class="text-center md:text-left">Arte para What’s App</p>
+                <p class="text-center md:text-left">Flyer digital</p>
+                <p class="text-center md:text-left">Cartão de visita digital</p>
+                <p class="text-center md:text-left">Timbrado digital</p>
+                <p class="text-center md:text-left">Assinatura de e-mail</p>
+                <p class="text-center md:text-left">Banner para site e muito mais.</p>
+                <strong class="text-center md:text-left">Muito mais!</strong>
             </div>
         </div>
         <a href="" class="bg-rosa text-amarelo py-4 px-8 my-4 rounded-full hover:bg-red-400">
