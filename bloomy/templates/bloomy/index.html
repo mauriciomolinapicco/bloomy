@@ -6,7 +6,7 @@
         <img src="{% static 'logo-login (1).webp' %}" alt="logo bloomy" class="py-4 w-[300px]">
         <h2 class="text-2xl text-amarelo py-4">Bem-vindo ao <strong>fast design</strong></h2>
         <p class="text-branco lg:w-[450px] mx-4 py-4 text-center">Selecione a quantidade de materiais desejados e faça seu briefing de forma simplificada. A proposta da Bloomy é viabilizar ideias de forma simples e rápida!</p>
-        <a href="" class="bg-amarelo text-preto rounded-full my-4 py-4 px-8 hover:bg-yellow-200 transform transition-transform duration-300 hover:scale-105">Conheça os pacotes</a>
+        <a href="{% url 'packages' %}" class="bg-amarelo text-preto rounded-full my-4 py-4 px-8 hover:bg-yellow-200 transform transition-transform duration-300 hover:scale-105">Conheça os pacotes</a>
     </div>
 
 
@@ -19,12 +19,12 @@
                 Fale com um Bloomer
             </a>            
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-items-center mt-8">
-            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
-            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 sm:w-32 sm:h-32 object-cover transform transition-transform duration-300 hover:scale-105">
+        <div class="flex items-center justify-center mt-8 flex-wrap">
+            <img src="{% static '1.CARROSSEL.webp' %}" alt="Imagem 1" class="w-40 h-40 sm:w-32 sm:h-32 mx-2 mt-2 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '2.CARROSSEL.webp' %}" alt="Imagem 2" class="w-40 h-40 sm:w-32 sm:h-32 mx-2 mt-2 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '3.CARROSSEL.webp' %}" alt="Imagem 3" class="w-40 h-40 sm:w-32 sm:h-32 mx-2 mt-2 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '4.CARROSSEL.webp' %}" alt="Imagem 4" class="w-40 h-40 sm:w-32 sm:h-32 mx-2 mt-2 object-cover transform transition-transform duration-300 hover:scale-105">
+            <img src="{% static '5.CARROSSEL.webp' %}" alt="Imagem 5" class="w-40 h-40 sm:w-32 sm:h-32 mx-2 mt-2 object-cover transform transition-transform duration-300 hover:scale-105">
         </div>        
         <div class="flex mt-8 justify-center">
             <img src="{% static 'pink-thunder.webp' %}" alt="" class="w-8 h-12 mr-4">
@@ -58,7 +58,7 @@
                 <p class="text-center md:text-left">Timbrado digital</p>
                 <p class="text-center md:text-left">Assinatura de e-mail</p>
                 <p class="text-center md:text-left">Banner para site e muito mais.</p>
-                <strong class="text-center md:text-left">Muito mais!</strong>
+                <p class="text-center md:text-left font-bold">Muito mais!</p>
             </div>
         </div>
         <a href="" class="bg-rosa text-amarelo py-4 px-8 my-4 rounded-full hover:bg-red-400">
@@ -71,15 +71,15 @@
     <div class="bg-purpura text-branco py-16 px-8">
         <h2 class="text-2xl font-extrabold mb-10 text-center text-amarelo">O que nossos clientes dizem</h2>
         <div class="flex flex-col md:flex-row justify-center gap-4">
-            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
+            <div class="bg-transparent border border-2 border-amarelo text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
                 <p class="text-lg font-semibold mb-2">Luisa Aldinucci</p>
                 <p class="text-lg text-branco italic">"Trabalhar com a Bloomy facilitou muito a minha vida porque agora tenho materiais padronizados na minha identidade visual por um preço que achei super acessível. Tendo uma identidade visual, pode deixar o resto com a Bloomy!"</p>
             </div>
-            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
+            <div class="bg-transparent border border-2 border-amarelo text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
                 <p class="text-lg font-semibold mb-2">Sarah Figueiredo</p>
                 <p class="text-lg text-branco italic">"Gostei muito do cuidado da Bloomy em atender os meus objetivos, mas, acima de tudo, reconheço a praticidade! Resolver tudo online e ter em mãos os meus pedidos com rapidez foi uma ótima experiência". </p>
             </div>
-            <div class="bg-preto text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
+            <div class="bg-transparent border border-2 border-amarelo text-amarelo p-6 rounded-lg shadow-md flex-1 max-w-sm transform transition-transform duration-300 hover:scale-105">
                 <p class="text-lg font-semibold mb-2">Andrius Bisolo</p>
                 <p class="text-lg text-branco italic">"A Bloomy criou meu material comercial com agilidade e ofereceu um atendimento rápido e facilitado. Não precisei gastar horas em reuniões e apontamentos; todo o contato foi fácil e superou minhas expectativas."</p>
             </div>
