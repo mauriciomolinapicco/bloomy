@@ -32,7 +32,7 @@
     </style>
 </head>
 {% load widget_tweaks %}
-<body class="bg-rosa">
+<body class="bg-rosa min-h-screen">
     <div class="relative overflow-hidden flex justify-center items-center">
         <div class="absolute hidden lg:block -right-16 -top-40 bg-laranja w-72 h-72 rounded-full"></div>
         <div class="absolute hidden lg:block -left-16 -bottom-100 bg-amarelo w-72 h-72 rounded-full"></div>
@@ -111,8 +111,15 @@
             </div>
             
             <a href="{% url 'login' %}" class="text-center text-amarelo hover:text-yellow-200 block">Já tem uma conta?</a>
+
+            <br><hr><br>
+            <a href="{% url 'index' %}" class="text-center text-amarelo hover:text-yellow-200 block">Voltar pro inicio</a>
+            <br><br>
         </form>
+        
     </div>
+   
+
 
 <script>
     document.getElementById('register-file').addEventListener('change', function() {

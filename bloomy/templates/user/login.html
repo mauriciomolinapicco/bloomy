@@ -20,7 +20,7 @@
 {% load widget_tweaks %}
 {% load static %}
 <body>
-    <div class="flex justify-center items-center bg-rosa h-screen">
+    <div class="flex justify-center items-center bg-rosa min-h-screen">
         <div class="absolute hidden lg:block -right-16 -top-40 bg-laranja w-72 h-72 rounded-full"></div>
         <div class="absolute hidden lg:block -left-16 -bottom-100 bg-amarelo w-72 h-72 rounded-full"></div>
             
@@ -58,10 +58,13 @@
                 <input type="submit" class="w-full bg-amarelo text-preto hover:bg-yellow-200 font-bold py-2 px-4 rounded-full cursor-pointer focus:outline-none inline-block" value="Entrar">
             </form>
            
-            <br><hr><br><a href="{% url 'register' %}" class="text-center text-amarelo hover:text-yellow-200 block mb-4">Cadastre-se</a>
+            <br><a href="{% url 'register' %}" class="text-center text-amarelo hover:text-yellow-200 block mb-4">Cadastre-se</a>
             <a href="{% url 'reset_password' %}" class="text-center text-amarelo hover:text-yellow-200 block">Esqueceu a senha?</a>
             
+            <br><hr><br>
+            <a href="{% url 'index' %}" class="text-center text-amarelo hover:text-yellow-200 block">Voltar pro inicio</a>
             <br><br>
+
         </div>
     </div>
 
