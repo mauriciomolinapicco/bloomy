@@ -7,7 +7,7 @@
     <title>Bloomy{% block title %} {% endblock %}</title>
     <link rel="stylesheet" href="{% static 'output.css' %}">
     <link rel="icon" href="{% static 'yellow-thunder.webp' %}" type="image/x-icon">
-    
+    <link href="https://unpkg.com/@heroicons/vue@2.0.10/outline/index.js" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&display=swap');
         body {
@@ -19,16 +19,21 @@
 
     <nav class="bg-purpura border-gray-200">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <!-- Logo -->
             <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="{% static 'logo-navbar.webp'%}" class="h-12 transform transition duration-300 hover:scale-110" alt="Bloomy Logo" />
             </a>
-            <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-amarelo rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200" aria-controls="navbar-default" aria-expanded="false">
-                <span class="sr-only">Open main menu</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+    
+            <!-- Toggle Button for Mobile Sidebar -->
+            <button id="sidebar-toggle" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-amarelo rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                <span class="sr-only">Open sidebar</span>
+                <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
                 </svg>
             </button>
-            <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+    
+            <!-- Desktop Navbar -->
+            <div class="hidden w-full md:block md:w-auto">
                 <ul class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
                     {% if user.is_authenticated %}
                         <li class="text-white flex items-center">
@@ -90,7 +95,103 @@
                 </div>
             </div>
         </div>
+    
+        <!-- Mobile Sidebar -->
+        <aside id="default-sidebar" class="fixed top-0 hidden md:hidden left-0 z-[10000] w-64 h-screen bg-preto text-white" aria-label="Sidebar">
+            <div class="h-full px-3 py-4 overflow-y-auto bg-preto">
+                <ul class="space-y-2 font-medium">
+                    <li class="text-white flex items-center my-4">
+                        <img src="{% static 'logo-navbar.webp'%}" class="h-12" alt="">
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="text-white flex items-center mb-4">
+                            <div class="flex items-center p-2"> E aí, <span class="ml-2 font-bold text-amarelo">{{ request.user }}!</span></div>
+                        </li>
+                    {% endif %}
+                    {% if user.is_staff %}
+                        <li>
+                            <a href="{% url 'provider' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                               
+                                Fornecedor
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'index' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                            <svg class="flex-shrink-0 w-5 h-5 mr-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.707 1.293a1 1 0 0 0-1.414 0l-7 7A1 1 0 0 0 3 10h1v7a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-4h2v4a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-7h1a1 1 0 0 0 .707-1.707l-7-7Z"/>
+                              </svg>
+                              
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'packages' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                            <svg class="flex-shrink-0 mr-3 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
+                                <path d="M17 5.923A1 1 0 0 0 16 5h-3V4a4 4 0 1 0-8 0v1H2a1 1 0 0 0-1 .923L.086 17.846A2 2 0 0 0 2.08 20h13.84a2 2 0 0 0 1.994-2.153L17 5.923ZM7 9a1 1 0 0 1-2 0V7h2v2Zm0-5a2 2 0 1 1 4 0v1H7V4Zm6 5a1 1 0 1 1-2 0V7h2v2Z"/>
+                             </svg>
+                            Comprar créditos
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'subscriptions' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg class="flex-shrink-0 mr-3 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M18 2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM2 18V7h6.7l.4-.409A4.309 4.309 0 0 1 15.753 7H18v11H2Z"/>
+                                    <path d="M8.139 10.411 5.289 13.3A1 1 0 0 0 5 14v2a1 1 0 0 0 1 1h2a1 1 0 0 0 .7-.288l2.886-2.851-3.447-3.45ZM14 8a2.463 2.463 0 0 0-3.484 0l-.971.983 3.468 3.468.987-.971A2.463 2.463 0 0 0 14 8Z"/>
+                                </svg>                               
+                                Meus créditos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_orders' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg class="flex-shrink-0 mr-3 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
+                                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z"/>
+                                 </svg>
+                                Meus pedidos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'create_order' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg class="flex-shrink-0 mr-3 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9 19V.352A3.451 3.451 0 0 0 7.5 0a3.5 3.5 0 0 0-3.261 2.238A3.5 3.5 0 0 0 2.04 6.015a3.518 3.518 0 0 0-.766 1.128c-.042.1-.064.209-.1.313a3.34 3.34 0 0 0-.106.344 3.463 3.463 0 0 0 .02 1.468A4.016 4.016 0 0 0 .3 10.5l-.015.036a3.861 3.861 0 0 0-.216.779A3.968 3.968 0 0 0 0 12a4.032 4.032 0 0 0 .107.889 4 4 0 0 0 .2.659c.006.014.015.027.021.041a3.85 3.85 0 0 0 .417.727c.105.146.219.284.342.415.072.076.148.146.225.216.1.091.205.179.315.26.11.081.2.14.308.2.02.013.039.028.059.04v.053a3.506 3.506 0 0 0 3.03 3.469 3.426 3.426 0 0 0 4.154.577A.972.972 0 0 1 9 19Zm10.934-7.68a3.956 3.956 0 0 0-.215-.779l-.017-.038a4.016 4.016 0 0 0-.79-1.235 3.417 3.417 0 0 0 .017-1.468 3.387 3.387 0 0 0-.1-.333c-.034-.108-.057-.22-.1-.324a3.517 3.517 0 0 0-.766-1.128 3.5 3.5 0 0 0-2.202-3.777A3.5 3.5 0 0 0 12.5 0a3.451 3.451 0 0 0-1.5.352V19a.972.972 0 0 1-.184.546 3.426 3.426 0 0 0 4.154-.577A3.506 3.506 0 0 0 18 15.5v-.049c.02-.012.039-.027.059-.04.106-.064.208-.13.308-.2s.214-.169.315-.26c.077-.07.153-.14.225-.216a4.007 4.007 0 0 0 .459-.588c.115-.176.215-.361.3-.554.006-.014.015-.027.021-.041.087-.213.156-.434.205-.659.013-.057.024-.115.035-.173.046-.237.07-.478.073-.72a3.948 3.948 0 0 0-.066-.68Z"/>
+                                </svg>
+                                Novo pedido
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}" class="flex items-center p-2 text-laranja rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-7.5A2.25 2.25 0 003.75 5.25v13.5A2.25 2.25 0 006 21h7.5a2.25 2.25 0 002.25-2.25V15m-6-6l4.5 4.5m0 0l-4.5 4.5m4.5-4.5H9" />
+                                </svg>
+                                Logout
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="{% url 'login' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg class="flex-shrink-0 mr-3 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3"/>
+                                 </svg>
+                                Entrar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'register' %}" class="flex items-center p-2 text-white rounded-lg hover:bg-amarelo hover:text-preto focus:bg-amarelo focus:text-preto">
+                                <svg class="flex-shrink-0 w-5 h-5 mr-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z"/>
+                                    <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z"/>
+                                    <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z"/>
+                                 </svg>
+                                Registrar
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </aside>
     </nav>
+    
     
     <!-- Messages -->
     <div class="container mx-auto relative">
@@ -129,6 +230,16 @@
     
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
     <script>
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            const sidebar = document.getElementById('default-sidebar');
+            if (sidebar.classList.contains('block')) {
+                sidebar.classList.remove('block')
+                sidebar.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('hidden')
+                sidebar.classList.add('block');
+            }
+        });
             setTimeout(function() {
             document.querySelectorAll('.container .fixed').forEach(function(message) {
                 message.remove();
