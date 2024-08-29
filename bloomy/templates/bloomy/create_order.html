@@ -1,66 +1,76 @@
 {% extends "bloomy/layout.html" %}
 {% load widget_tweaks %}
+
 {% block body %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <div class="bg-preto">
-        <div class="mx-10 lg:mx-40">
+        <div class="mx-10 lg:mx-[300px]">
             <form id="order-form" action="{% url 'create_order' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                <br> <br>
-                <div class="flex flex-col items-center">
-                    <h3 class="text-left white text-2xl text-white font-bold">Bora lá!</h3>
-                    <h3 class="text-left white text-xl text-white mb-4">Qual material você deseja?</h3>    
+                <br>
+                <h3 class="text-left white text-2xl text-white font-bold">Bora lá!</h3>
+                <h3 class="text-left white text-xl text-white mb-4">Qual material você deseja?</h3>    
+
+                <!-- <div class="flex flex-col items-center">
+                </div> -->
+                
+                <div class="mb-5">
+                    <p class="text-white mb-2 text-l ">Nome da peça</p>
+                    {% render_field form.name class+=" bg-transparent font-300 rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-5">
+                    <p class="text-white mb-2 ">Formato</p>
+                    {% render_field form.specification class+="bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
+                </div>              
+
+                <div class="mb-5">
+                    <p class="text-white mb-1">Tamanho da peça</p>
+                    <p class="text-white mb-2 text-sm font-300">(Opcional) Se quiser um tamanho específico para sua peça pode especificar. De outro modo a peça será de tamanho padrao</p>
+                        {% render_field form.pixel_size class+=" bg-preto font-300 rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-5">
+                    <p class="text-white mb-2">Briefing</p>
+                    <p class="text-white text-sm mb-2 font-300">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais <b>informações o material 
+                        precisa conter, se há alguma imagem específica que precisa ser utilizada</b>, se há cores que prefere ou que são 
+                        proibidas, etc. Deixe-nos saber de tudo que for necessário para acertarmos em cheio no seu material!</p>
+                        {% render_field form.briefing class+="font-300 rounded-lg bg-transparent border border-amarelo px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-5">
+                    <p class="text-white mb-2">Texto sugerido</p>
+                    <p class="text-white mb-2 text-sm font-300">Quais são os textos que precisam estar no material?</p>
+                    {% render_field form.suggestedText class+=" font-300 bg-transparent rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
+                </div>
+
+                <div class="mb-5">
+                    <p class="text-white mb-2"><span class="font-300">(Opcional)</span> Preferencia de cores</p>
+                    {% render_field form.prefered_colors class+=" font-300 bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
+                </div>
+
+                <!-- Files upload -->
+                <div class="mb-5">
+                    <p class="text-white mb-2">Upload de imagens</p>
+                    <p class="font-light text-white text-sm font-300 mb-2">Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
+                        abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
+                    <div id="drop-area-peca" class="drop-area text-amarelo bg-preto border border-dashed p-8 border-amarelo rounded-lg h-32 flex items-center justify-center cursor-pointer">
+                        <i class="fas fa-upload text-2xl text-amarelo mr-2"></i> Arraste e solte arquivos aqui ou clique para selecionar
+                    </div>
+                    {% render_field form.for_peca_file id='for-peca-file-upload' class+=" hidden" %}
                 </div>
                 
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Nome da peça</b></p>
-                    {% render_field form.name class+="mb-4 bg-transparent rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
+                <div class="mb-5">
+                    <p class="text-white mb-2">Arquivos de referencia</p>
+                    <div id="drop-area" class="drop-area bg-preto border border-dashed p-8 border-amarelo rounded-lg h-32 flex items-center justify-center text-amarelo cursor-pointer">
+                        <i class="fas fa-upload text-2xl text-amarelo mr-2"></i>Arraste e solte arquivos aqui ou clique para selecionar
+                    </div>
+                    {% render_field form.file id='file-upload' class+=" hidden" %}
                 </div>
+                
 
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Formato</b></p>
-                    {% render_field form.specification class+="mb-4 bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Briefing</b></p>
-                    <p class="text-white mb-4">Conte para a gente o que você deseja no seu material! Não esqueça de mencionar quais informações o material 
-                        precisa conter, se há alguma imagem específica que precisa ser utilizada, se há cores que prefere ou que são 
-                        proibidas, etc. Deixe-nos saber de tudo que for necessário para acertarmos em cheio no seu material!</p>
-                        {% render_field form.briefing class+="mb-4 rounded-lg bg-transparent border border-amarelo px-4 py-2 w-full h-24 text-white placeholder-white focus:outline-none focus:border-2" %}
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Texto sugerido</b></p>
-                    <p class="text-white mb-4">Quais são os textos que precisam estar no material?</p>
-                    {% render_field form.suggestedText class+="mb-4 bg-transparent rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2" %}
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>(Opcional) Preferencia de cores</b></p>
-                    {% render_field form.prefered_colors class+="mb-4 bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Tamanho da peça</b></p>
-                    <p class="text-white mb-4">(Opcional) Se quiser um tamanho específico para sua peça pode especificar. De outro modo a peça será de tamanho padrao</p>
-                        {% render_field form.pixel_size class+="mb-4 bg-preto rounded-lg text-white border border-amarelo px-4 py-2 w-full focus:outline-none focus:border-2" %}
-                </div>
-
-                <div class="mb-4">
-                    <p class="text-white text-l mb-3"><b>Upload de imagens</b></p>
-                    <p class="text-white mb-5">Gostaria que usássemos alguma imagem específica no seu material? Caso sim, é só fazer o upload no campo
-                        abaixo. Caso prefira que a gente selecione uma imagem para você, basta deixar este campo em branco.</p>
-                    <label id="for-peca-file-upload-label" for="for-peca-file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2">Selecionar arquivo</label>
-                    {% render_field form.for_peca_file id='for-peca-file-upload' class+="mb-5 bg-transparent hidden rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-400" %}
-                </div>
-
-                <div class="mt-6">
-                    <p class="text-white text-l mb-3"><b>Arquivos de referencia</b></p>
-                    <label id="file-upload-label" for="file-upload" class="bg-transparent hover:text-preto hover:bg-amarelo cursor-pointer mt-4 rounded-lg border border-amarelo h-24 px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-2">Selecionar arquivo</label>
-                    {% render_field form.file id='file-upload' class+="mb-4 bg-transparent hidden rounded-lg border border-amarelo px-4 py-2 w-full text-white placeholder-white focus:outline-none focus:border-yellow-400" %}
-                </div>
-
-                <div class="flex justify-center">
+                <div class="flex justify-center mt-6 mb-2">
                     <input type="submit" value="Enviar briefing" id="submit-button" class="w-500px bg-amarelo hover:bg-yellow-200 text-preto font-bold py-2 px-4 rounded-full cursor-pointer transform transition duration-300 hover:scale-110">
                 </div>
                 <br>
@@ -69,34 +79,60 @@
     </div>
 
     <script>
-        document.getElementById('order-form').addEventListener('submit', function() {
-            document.getElementById('submit-button').disabled = true;
-        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropAreaPeca = document.getElementById('drop-area-peca');
+            const fileInputPeca = document.getElementById('for-peca-file-upload');
 
-        document.getElementById('file-upload').addEventListener('change', function() {
-            var label = document.getElementById('file-upload-label');
-            if (this.files.length > 0) {
-                let fileName = this.files[0].name; 
-                if (fileName.length > 20) {
-                    fileName = fileName.substring(0, 20)
-                }
-                label.textContent = 'Arquivo selecionado: ' + fileName + '...';
-            } else {
-                label.textContent = 'Selecionar arquivo';
-            }
-        });
+            dropAreaPeca.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                dropAreaPeca.classList.add('border-yellow-400');
+            });
 
-        document.getElementById('for-peca-file-upload').addEventListener('change', function() {
-            var label = document.getElementById('for-peca-file-upload-label');
-            if (this.files.length > 0) {
-                let fileName = this.files[0].name; 
-                if (fileName.length > 20) {
-                    fileName = fileName.substring(0, 20)
-                }
-                label.textContent = 'Arquivo selecionado: ' + fileName + '...';
-            } else {
-                label.textContent = 'Selecionar arquivo';
-            }
+            dropAreaPeca.addEventListener('dragleave', () => {
+                dropAreaPeca.classList.remove('border-yellow-400');
+            });
+
+            dropAreaPeca.addEventListener('drop', (event) => {
+                event.preventDefault();
+                dropAreaPeca.classList.remove('border-yellow-400');
+                fileInputPeca.files = event.dataTransfer.files;
+                dropAreaPeca.textContent = 'Arquivo selecionado: ' + event.dataTransfer.files[0].name;
+            });
+
+            dropAreaPeca.addEventListener('click', () => {
+                fileInputPeca.click();
+            });
+
+            fileInputPeca.addEventListener('change', () => {
+                dropAreaPeca.textContent = 'Arquivo selecionado: ' + fileInputPeca.files[0].name;
+            });
+
+            const dropArea = document.getElementById('drop-area');
+            const fileInput = document.getElementById('file-upload');
+
+            dropArea.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                dropArea.classList.add('border-yellow-400');
+            });
+
+            dropArea.addEventListener('dragleave', () => {
+                dropArea.classList.remove('border-yellow-400');
+            });
+
+            dropArea.addEventListener('drop', (event) => {
+                event.preventDefault();
+                dropArea.classList.remove('border-yellow-400');
+                fileInput.files = event.dataTransfer.files;
+                dropArea.textContent = 'Arquivo selecionado: ' + event.dataTransfer.files[0].name;
+            });
+
+            dropArea.addEventListener('click', () => {
+                fileInput.click();
+            });
+
+            fileInput.addEventListener('change', () => {
+                dropArea.textContent = 'Arquivo selecionado: ' + fileInput.files[0].name;
+            });
         });
     </script>
 {% endblock %}
