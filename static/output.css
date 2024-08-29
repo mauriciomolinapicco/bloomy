@@ -772,6 +772,11 @@ video {
   margin-bottom: 1.5rem;
 }
 
+.mx-20 {
+  margin-left: 5rem;
+  margin-right: 5rem;
+}
+
 .mb-10 {
   margin-bottom: 2.5rem;
 }
@@ -866,6 +871,10 @@ video {
 
 .mb-1 {
   margin-bottom: 0.25rem;
+}
+
+.mr-1 {
+  margin-right: 0.25rem;
 }
 
 .block {
@@ -1022,6 +1031,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[50px\] {
+  width: 50px;
+}
+
+.w-48 {
+  width: 12rem;
 }
 
 .min-w-full {
@@ -1441,6 +1458,26 @@ video {
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-3 {
+  padding: 0.75rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.p-\[8px\] {
+  padding: 8px;
+}
+
+.p-\[5px\] {
+  padding: 5px;
+}
+
+.p-\[3px\] {
+  padding: 3px;
 }
 
 .px-12 {

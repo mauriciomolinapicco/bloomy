@@ -3,19 +3,54 @@
 {% block body %}
 <div class="bg-preto min-h-screen">
     <div class="container mx-auto text-center my-10">
-        <h1 class="text-3xl font-bold text-white mb-6">Pedido: {{ order.name }}</h1>
         <div class="border border-amarelo rounded-lg p-4">
-            <div class="text-xl text-white"><b>Status:</b> {{ order.get_status_display }}</div>
-            <div class="text-xl text-white"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
-            <div class="text-xl text-white"><b>Briefing:</b> {{ order.briefing }}</div>
-            <div class="text-xl text-white"><b>Texto sugerido:</b> {{ order.suggestedText }}</div>
-            <div class="text-xl text-white"><b>Tamanho sugerido:</b> {{ order.pixel_size }}</div>
-            <div class="text-xl text-white"><b>Preferencia de cores:</b> {{ order.prefered_colors }}</div>
-
+            <h1 class="text-xl text-white mb-6">{{ order.name }}</h1>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center text-center">Status</span>
+                    <span>{{ order.get_status_display }}</span>
+                </div>
+            </div>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Data de pedido</span>
+                    <span>{{ order.date|date:"d/m/Y" }}</span>
+                </div>
+            </div>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Briefing</span>
+                    <span>{{ order.briefing }}</span>
+                </div>
+            </div>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Texto sugerido</span>
+                    <span>{{ order.suggestedText }}</span>
+                </div>
+            </div>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Tamanho sugerido</span>
+                    <span>{{ order.pixel_size }}</span>
+                </div>
+            </div>
+            
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Preferencia de cores</span>
+                    <span>{{ order.prefered_colors }}</span>
+                </div>
+            </div>
             {% if delivery and order.status != 'EM_AJUSTE' %}
-                <div class="mt-4 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto text-center">
-                    <p class="text-2xl font-bold text-preto animate-bounce">Seu pedido foi entregue!</p>
-                    <a href="{{ delivery.file.url }}" class="mt-2 inline-block bg-preto hover:bg-gray-600 text-amarelo font-bold py-2 px-4 rounded-full">
+                <div class="mt-6 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto">
+                    <p class="text-2xl font-bold text-preto animate-bounce mx-auto text-center">Seu pedido foi entregue!</p>
+                    <a href="{{ delivery.file.url }}" class="mt-2 inline-block bg-preto hover:bg-gray-600 mx-auto text-center text-amarelo font-bold py-2 px-4 rounded-full">
                         Baixar Arquivo
                     </a>
                 </div>
@@ -29,21 +64,21 @@
             
         
         <div class="mt-8 mb-8">
-            <b class="text-white mb-4">Você tem {{remaining_ajustes}} ajuste(s) restante(s)</b>
+            <p class="text-white mb-2">Você tem {{remaining_ajustes}} ajuste(s) restante(s)</p>
             {% if order.status == 'EM_APROVACAO' %}
-                <p class="text-white mb-4">Pode aprovar a peça ou pedir um ajuste</p>
+                <p class="text-white mb-6 font-300">Pode aprovar a peça ou pedir um ajuste</p>
                 <a href="{% url 'aprove_order' order.id %}" class="text-preto font-bold bg-amarelo hover:bg-yellow-300 rounded-full p-4">Aprovar Entregue</a>
                 <a class="text-preto font-bold bg-laranja hover:bg-red-400 rounded-full p-4" href="{% url 'new_ajuste' order.id %}">Solicitar Ajuste</a>
             {% endif %}
 
         </div>
     </div>
-    <div class="hidden md:block"> 
+    <!-- <div class="hidden md:block"> 
         <img src="{% static 'BLOOMY_ID_MARCA-17.webp' %}" class="w-full">
     </div>
     <div class="md:hidden"> 
         <img src="{% static 'three-rows-sm.webp' %}" class="w-full">
-    </div>
+    </div> -->
 </div>
     </div> 
 
