@@ -2,22 +2,56 @@
 {% block body %}
 {% load widget_tweaks %}
     <div class="bg-preto min-h-screen">
-        <div class="container mx-auto text-center my-10 border border-branco rounded-lg p-4">
-            <h1 class="text-3xl font-bold text-branco mb-6"><b>{{ order.name }}</b></h1>
-            <div class="text-2xl text-branco mb-4"><b>Status:</b> <u>{{ order.get_status_display }}</u></div>
-            <div class="text-xl text-branco"><b>Ticket ID:</b> {{ order.ticket_id }}</div>
-            <div class="text-xl text-branco"><b>Data de pedido:</b> {{ order.date|date:"d/m/Y" }}</div>
-            <div class="text-xl text-branco"><b>Briefing:</b> {{ order.briefing }}</div>
-            <div class="text-xl text-branco"><b>Texto sugerido:</b> {{ order.suggested_text }}</div>
-            <div class="text-xl text-branco"><b>Tamanho sugerido:</b> {{ order.pixel_size }}</div>
-            <ul>{% if order.file %}
-                <li><a href="{{ order.file.url }}" class="text-xl text-branco hover:text-amarelo" download><u>Arquivo de referencia</u></a></li>
+        <div class="bg-amarelo text-preto p-2 text-center mb-6">
+            <h2 class="text-xl font-bold">Página de Fornecedor</h2>
+        </div>
+
+        <div class="container mx-auto text-center my-10 border border-amarelo rounded-lg p-4">
+            <h1 class="text-3xl text-branco mb-6">{{ order.name }}</h1>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Status</span>
+                    <span>{{ order.get_status_display }}</span>
+                </div>
+            </div>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Ticket ID</span>
+                    <span>{{ order.ticket_id }}</span>
+                </div>
+            </div>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Data de pedido</span>
+                    <span>{{ order.date|date:"d/m/Y" }}</span>
+                </div>
+            </div>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Briefing</span>
+                    <span>{{ order.briefing }}</span>
+                </div>
+            </div>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Texto sugerido</span>
+                    <span>{{ order.suggestedText }}</span>
+                </div>
+            </div>
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Tamanho sugerido</span>
+                    <span>{{ order.pixel_size }}</span>
+                </div>
+            </div>
+                        <ul>{% if order.file %}
+                <li><a href="{{ order.file.url }}" class="text-branco hover:text-amarelo underline font-300" download>Arquivo de referencia</a></li>
             {% else %}
                 <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos de referencia para esse pedido</i></div></li>
             {% endif %}
 
             {% if order.for_peca_file %}
-                <li><a href="{{ order.for_peca_file.url }}" class="text-xl text-branco hover:text-amarelo" download><u>Imagens para usar na peca</u></a></li>
+                <li><a href="{{ order.for_peca_file.url }}" class="text-branco hover:text-amarelo underline font-300" download>Imagens para usar na peca</a></li>
             {% else %}
                 <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos para usar na peca</i></div></li>
             {% endif %} </ul>

@@ -4,7 +4,14 @@
 <div class="bg-preto min-h-screen">
     <div class="container mx-auto text-center my-10">
         <div class="border border-amarelo rounded-lg p-4">
-            <h1 class="text-xl text-white mb-6">{{ order.name }}</h1>
+            <h1 class="text-3xl text-white mb-6">{{ order.name }}</h1>
+
+            <div class="text-white mb-3 font-300 flex justify-center">
+                <div class="text-left w-[400px] flex items-center">
+                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center text-center">Ticket ID</span>
+                    <span>{{ order.ticket_id }}</span>
+                </div>
+            </div>
             
             <div class="text-white mb-3 font-300 flex justify-center">
                 <div class="text-left w-[400px] flex items-center">
@@ -34,19 +41,25 @@
                 </div>
             </div>
             
-            <div class="text-white mb-3 font-300 flex justify-center">
-                <div class="text-left w-[400px] flex items-center">
-                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Tamanho sugerido</span>
-                    <span>{{ order.pixel_size }}</span>
+            {% if order.pixel_size %}
+                <div class="text-white mb-3 font-300 flex justify-center">
+                    <div class="text-left w-[400px] flex items-center">
+                        <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Tamanho sugerido</span>
+                        <span>{{ order.pixel_size }}</span>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
             
-            <div class="text-white mb-3 font-300 flex justify-center">
-                <div class="text-left w-[400px] flex items-center">
-                    <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Preferencia de cores</span>
-                    <span>{{ order.prefered_colors }}</span>
+            {% if order.prefered_colors %}
+                <div class="text-white mb-3 font-300 flex justify-center">
+                    <div class="text-left w-[400px] flex items-center">
+                        <span class="border border-white p-[3px] rounded-lg mr-3 flex-shrink-0 w-48 text-center">Preferencia de cores</span>
+                        <span>{{ order.prefered_colors }}</span>
+                    </div>
                 </div>
-            </div>
+            {% endif %}
+
+
             {% if delivery and order.status != 'EM_AJUSTE' %}
                 <div class="mt-6 p-4 w-[400px] bg-amarelo text-white rounded-lg shadow-lg mx-auto">
                     <p class="text-2xl font-bold text-preto animate-bounce mx-auto text-center">Seu pedido foi entregue!</p>
@@ -55,6 +68,7 @@
                     </a>
                 </div>
             {% endif %}
+
             {% if order.status == 'EM_PRODUCAO' or order.status == 'EM_AJUSTE' %}
             <div class="bg-amarelo text-preto p-4 mt-6 text-center rounded-lg shadow-lg">
                 <p class="text-xl font-semibold mb-4">Estamos trabalhando no seu pedido!</p>
