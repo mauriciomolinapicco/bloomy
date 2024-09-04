@@ -32,7 +32,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'bloomy-dcdfca068a83.herokuapp.com', 
     '127.0.0.1', 
-    'https://www.bloomydesign.com', 
+    'www.bloomydesign.com', 
     'bloomydesign.com'
 ]
 
@@ -43,7 +43,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     'https://bloomy-dcdfca068a83.herokuapp.com/',
     'https://www.bloomydesign.com',
-    'bloomydesign.com'
+    'www.bloomydesign.com'
 ]
 
 NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
