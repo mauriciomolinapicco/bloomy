@@ -47,29 +47,29 @@
                         <ul>{% if order.file %}
                 <li><a href="{{ order.file.url }}" class="text-branco hover:text-amarelo underline font-300" download>Arquivo de referencia</a></li>
             {% else %}
-                <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos de referencia para esse pedido</i></div></li>
+                <li><div class="font-300 text-branco mt-6"><i>O usuario nao carregou arquivos de referencia para esse pedido</i></div></li>
             {% endif %}
 
             {% if order.for_peca_file %}
                 <li><a href="{{ order.for_peca_file.url }}" class="text-branco hover:text-amarelo underline font-300" download>Imagens para usar na peca</a></li>
             {% else %}
-                <li><div class="text-xl text-branco mt-6"><i>O usuario nao carregou arquivos para usar na peca</i></div></li>
+                <li><div class="font-300 text-branco mt-6"><i>O usuario nao carregou arquivos para usar na peca</i></div></li>
             {% endif %} </ul>
 
             {% if ajustes %}
             <br><hr>
-                <div class="text-2xl font-bold text-branco mb-6">O usuario pidiu ajuste/s, para esse pedido</div>
+                <div class="text-xl text-branco mb-6 mt-6">O usuario pidiu ajuste/s, para esse pedido</div>
                 {% for ajuste in ajustes %}
                     {% if forloop.counter == 1 %}
-                        <strong class="text-xl text-branco">Primeiro ajuste:</strong>
+                        <strong class="text-branco">Primeiro ajuste:</strong>
                     {% elif forloop.counter == 2 %}
-                        <strong class="text-xl text-branco">Segundo ajuste:</strong>
+                        <strong class="text-branco">Segundo ajuste:</strong>
                     {% endif %}
-                    <div class="text-xl text-branco">Descricao do ajuste: {{ajuste.description}}</div>
+                    <div class="text-branco font-300"> <span class="underline">Descricao do ajuste:</span> {{ajuste.description}}</div>
                     {%if ajuste.file %}
-                        <a href="{{ ajuste.file.url }}" class="text-amarelo" download><u>Abaixar arquivo adjunto do ajuste</u></a>
+                        <a href="{{ ajuste.file.url }}" class="text-amarelo mt-4" download><u>Abaixar arquivo adjunto do ajuste</u></a>
                     {% else %}
-                        <p class="text-amarelo"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
+                        <p class="text-amarelo mt-4"><i>O usuario nao subiu arquivos pro ajuste</i></p>    
                     {% endif %}
                     <br>
                 {% endfor %}
@@ -91,14 +91,14 @@
                     <a id="cancel-order" href="{% url 'cancel_order' order.id %}"><button class="button bg-laranja hover:bg-red-500 text-white font-bold py-2 px-4 rounded m-2">Cancelar Pedido</button></a>
                 {% else %}
                     {% if order.status == 'ENTREGUE' %}
-                        <p class="font-bold text-2xl text'branco">Esse pedido ja foi entregue</p>
+                        <p class="text-2xl text-preto bg-amarelo p-3 rounded-e-lg">Esse pedido ja foi entregue</p>
                     {% endif %}
                     {% if order.status == 'CANCELADO' %}
-                        <p class="font-bold text-2xl text'branco">Esse pedido foi cancelado</p>
+                        <p class="text-2xl text-branco">Esse pedido foi cancelado</p>
                     {% endif %}
                 {% endif %}
                 {% if order.status == 'EM_APROVACAO' %}
-                    <p class="text-preto font-bold p-4 bg-amarelo rounded-lg">(O arquivo ja foi enviado e esta em espera de aprovacao do usuario)</p>
+                    <p class="text-preto p-4 bg-amarelo rounded-lg">(O arquivo ja foi enviado e esta em espera de aprovacao do usuario)</p>
                 {% endif %}
 
             </div>
