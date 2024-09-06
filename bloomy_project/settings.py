@@ -199,3 +199,5 @@ DEFAULT_FROM_EMAIL = "bloomy@rooster.dev.br"
 
 
 stripe.api_key = os.getenv("STRIPE_API_KEY")
+
+SECURE_SSL_REDIRECT = True

@@ -18,11 +18,11 @@
                         {% if p.allowed_usages == 1 %} <br><h2 class="text-3xl text-white text-left pl-4">Peças <span class="text-5xl">avulsas</span></h2>  {%else%} <h2 class="text-xl text-branco">Pacote de</h2> <h2 class="text-6xl font-bold text-branco">{{p.allowed_usages}}</h2> <h2 class="text-xl text-branco">peças</h2>{% endif%}
                     </div>
 
-                    <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105">
+                    <div class="relative -bottom-12 w-52 flex justify-center transform transition-transform duration-300 hover:scale-105 cursor-pointer">
                         {% if p.allowed_usages == 1 %} 
-                            <div class="font-bold text-xl text-preto border border-amarelo bg-amarelo hover:scale-100 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
+                            <a href="#calculadora" class="font-bold text-xl text-preto border border-amarelo bg-amarelo hover:scale-100 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
                                 <p class="text-center">R$ <span class="text-xl">170</span> cada</p>
-                            </div>
+                            </a>
                         {% else %}
                             <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
                                 {% csrf_token %}
@@ -35,7 +35,7 @@
         </div>
 
     <!-- Pecas avulsas -->
-    <div class="flex justify-center flex-wrap gap-4 mb-8">
+    <div class="flex justify-center flex-wrap gap-4 mb-8" id="calculadora">
         {% for p in packages %} {% if p.allowed_usages == 1 %}
             <form action="{% url 'new_subscription' p.id %}" method="post">
                 {% csrf_token %}

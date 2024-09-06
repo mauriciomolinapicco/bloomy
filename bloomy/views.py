@@ -259,7 +259,7 @@ def create_order(request):
 
 
 def packages(request):
-    packages = Package.objects.all()
+    packages = Package.objects.all().order_by('allowed_usages')
     context = {'packages':packages}
     return render(request, 'bloomy/packages.html',context)
  
