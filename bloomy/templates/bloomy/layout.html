@@ -55,7 +55,7 @@
                         <a href="{% url 'index' %}" class="block py-2 px-3 {%if request.path == '/' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Inicio</a>
                     </li>
                     <li class="flex items-center">
-                        <a href="{% url 'packages' %}" class="block py-2 px-3 {%if request.path == '/packages' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Comprar creditos</a>
+                        <a href="{% url 'packages' %}" class="block py-2 px-3 {%if request.path == '/packages' %} text-preto {%else%}text-amarelo {% endif %} font-semibold rounded hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-preto md:p-0">Comprar créditos</a>
                     </li>
                     {% if user.is_authenticated %}
                         <li class="flex items-center">

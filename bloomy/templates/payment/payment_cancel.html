@@ -1,14 +1,30 @@
 {% extends "bloomy/layout.html" %}
 {% block body %}
 <div class="container mx-auto mt-8">
-    <div class="bg-white shadow-lg rounded-lg px-6 py-8 text-center bg-preto">
-        <h1 class="text-3xl font-bold text-red-600">Ocorreu um erro</h1>
-        <p class="text-gray-700 mt-4">Infelizmente, seu pagamento foi cancelado.</p>
-        <div class="mt-6">
-            <a href="{% url 'index' %}" class="inline-block bg-laranja text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-colors duration-300">
-                Voltar para a página inicial
+    <div class=" text-gray-700 bg-gray-200 shadow-lg rounded-lg px-6 py-8 text-center font-300">
+        <h1 class="text-3xl font-bold text-red-600">Pagamento Não Concluído</h1>
+        <p class="mt-4 font-medium mb-6">Parece que houve um problema ao processar seu pagamento. Não se preocupe, estamos aqui para ajudar!</p>
+        <p class="font-bold mb-4">O que pode ter ocorrido:</p>
+        <ul>
+            <li>•	O pagamento foi cancelado por você.</li>
+            <li>•	Ocorreu um erro na transação.</li>
+            <li>•	As informações de pagamento podem estar incorretas</li>
+        </ul>
+
+        <p class="font-bold mt-6">Próximos Passos:</p>
+        <p>1.	Verifique se os detalhes do cartão ou método de pagamento estão corretos.</p>
+        <p>2.	Tente realizar o pagamento novamente</p>
+        <p>3.	Se o problema persistir, entre em contato com o suporte para obter assistência.</p>
+
+        <p class="font-medium mt-4">Agradecemos pela sua paciência e compreensão. Estamos comprometidos em garantir que você tenha uma experiência tranquila e segura.</p>
+
+        <div class="mt-6 mb-2">
+            <a href="{% url 'index' %}" class="inline-block bg-laranja font-300 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition-colors duration-300">
+                Tentar novamente
             </a>
         </div>
+        <a href="https://wa.me/554388567343" class="inline-block bg-amarelo text-gray-700 font-300 font-semibold px-6 py-2 rounded-lg shadow-md transition-colors duration-300">Entrar em Contato com o Suporte</a>
+
     </div>
 </div>
 
