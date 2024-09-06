@@ -4,7 +4,7 @@
 <div class="bg-rosa min-h-screen overflow-hidden relative">
     <img src="{% static 'yellow-thunder-border.webp' %}" alt="" class="absolute w-[400px] top-20 -right-10 hidden lg:block">
     <div class="container mx-auto text-center my-10">
-        <h2 class="text-3xl text-amarelo mt-12 mb-12 m-4">Você tem <strong>{{ user.remaining_usages }}</strong> usos peças</h2>
+        <h2 class="text-3xl text-amarelo mt-12 mb-12 m-4">Você tem <strong>{{ user.remaining_usages }}</strong> peças restantes</h2>
         <a href="{% url 'packages' %}" class="text-pink bg-amarelo rounded-full mt-6 py-4 px-12 hover:bg-yellow-200">Compre mais peças</a>
         <div class="mt-10 flex flex-col items-center">
             <div class="flex mt-10 items-center">
