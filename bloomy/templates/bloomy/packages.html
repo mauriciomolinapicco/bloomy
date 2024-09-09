@@ -26,7 +26,7 @@
                         {% else %}
                             <form action="{% url 'new_subscription' p.id %}" method="post" class="w-full">
                                 {% csrf_token %}
-                                <input type="submit" value="R$ {{p.price}}" class="font-bold text-xl cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
+                                <input type="submit" value="R$ {{ p.price|floatformat:0 }}" class="font-bold text-xl cursor-pointer text-branco border border-laranja bg-laranja hover:bg-red-400 focus:ring-2 focus:ring-amarelo font-medium rounded-full text-sm px-5 py-2.5 mb-2 w-full">
                             </form>
                         {% endif %}
                     </div>
