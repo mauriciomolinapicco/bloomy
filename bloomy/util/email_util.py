@@ -27,7 +27,7 @@ def send_email(to_emails, subject, html_content):
 
 
 def created_order_email(user, order):
-    admin_email = 'mauricio.molina@rooster.dev.br'
+    admin_email = 'contato@pinacriacao.com'
     user_email = user.email
 
     subject_admin = "Novo pedido"
@@ -65,7 +65,7 @@ def new_ajuste_email_user(ajuste):
 
 def new_ajuste_email_admin(ajuste):
     subject = "Novo ajuste na bloomy"
-    email = 'mauricio.molina@rooster.dev.br'
+    email = 'contato@pinacriacao.com'
     context = {'ajuste': ajuste}
     html_content = render_to_string("emails/new_ajuste_email_admin.html", context)
     send_email(email, subject, html_content)
