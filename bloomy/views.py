@@ -18,6 +18,20 @@ from django.core.exceptions import ValidationError
 
 @login_required(login_url='login')
 def aprove_order(request, order_id):
+    """
+    View para aprovar e marcar um pedido como entregue.
+
+    Esta view lida com o processo de atualização do status de um pedido para "ENTREGUE" 
+    com base no order_id fornecido. Se o pedido existir, o status é atualizado, e 
+    uma mensagem de sucesso é exibida ao usuário.
+
+    Parâmetros:
+    order_id (int): O ID do pedido a ser aprovado.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona o usuário para a página de pedidos do usuário após
+    a atualização do status.
+    """
     order = get_object_or_404(Order, pk=order_id)
     order.status = 'ENTREGUE'
     order.save()
@@ -27,6 +41,22 @@ def aprove_order(request, order_id):
 
 @login_required(login_url='login')
 def new_ajuste(request, order_id):
+    """
+    View para criar e enviar um novo ajuste para um pedido.
+
+    Esta view permite que o usuário envie um ajuste para um pedido específico. 
+    Verifica se ainda há ajustes disponíveis para o pedido e, se sim, permite o envio 
+    do ajuste por meio de um formulário. Ao submeter o ajuste com sucesso, o status 
+    do pedido é atualizado para "EM_AJUSTE", e e-mails são enviados tanto ao administrador 
+    quanto ao usuário.
+
+    Parâmetros:
+    order_id (int): O ID do pedido para o qual será enviado o ajuste.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona o usuário para a página de pedidos do usuário após o envio.
+    HttpResponse: Renderiza a página de envio de ajuste se a requisição for GET.
+    """
     order = get_object_or_404(Order, pk=order_id)
     if request.method == 'POST':
         
@@ -54,6 +84,17 @@ def new_ajuste(request, order_id):
 
 @login_required(login_url='login')
 def update_profile(request):
+    """
+    View para atualizar o perfil do usuário.
+
+    Esta view permite que o usuário atualize as informações do seu perfil por meio de um formulário.
+    Se o formulário for enviado e válido, as informações são salvas e uma mensagem de sucesso é exibida.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona o usuário para a página principal após a atualização.
+    HttpResponse: Renderiza a página de atualização de perfil se a requisição for GET.
+    """
+
     if request.method == 'POST':
         form = UserProfileForm(request.POST, instance=request.user)
         if form.is_valid():
@@ -69,6 +110,20 @@ def update_profile(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def complete_order(request, order_id):
+    """
+    View para completar um pedido com o envio de um arquivo de entrega.
+
+    Esta view permite que o administrador ou o usuário autorizado envie o arquivo final 
+    de entrega para um pedido específico. Após o upload, o status do pedido é atualizado
+    de acordo com o número de ajustes restantes.
+
+    Parâmetros:
+    order_id (int): O ID do pedido a ser completado.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona para a página do pedido após a entrega ser concluída.
+    HttpResponse: Renderiza a página de conclusão de pedido se a requisição for GET.
+    """
     order = Order.objects.get(id=order_id)    
     if request.method == 'POST':
         file = request.FILES['file']
@@ -91,7 +146,19 @@ def complete_order(request, order_id):
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
+
 def provider_single_order(request, order_id):
+    """
+    View para exibir um pedido específico para o provedor.
+
+    Mostra as informações detalhadas de um pedido, incluindo os ajustes e o formulário de entrega.
+
+    Parâmetros:
+    order_id (int): O ID do pedido a ser exibido.
+
+    Retorna:
+    HttpResponse: Página com os detalhes do pedido para o provedor.
+    """
     order = Order.objects.get(id=order_id)
     ajustes = order.ajustes.all()
     context = {"order":order, "form":DeliveryForm(), "ajustes":ajustes}
@@ -100,6 +167,18 @@ def provider_single_order(request, order_id):
 
 @login_required(login_url='login')
 def single_order(request, order_id):
+    """
+    View para exibir um pedido específico para o usuário.
+
+    Verifica se o pedido pertence ao usuário atual e exibe os detalhes do pedido, 
+    incluindo as entregas e o número de ajustes restantes.
+
+    Parâmetros:
+    order_id (int): O ID do pedido a ser exibido.
+
+    Retorna:
+    HttpResponse: Página com os detalhes do pedido para o usuário.
+    """
     order = get_object_or_404(Order, id=order_id)
     if request.user != order.user:
         return redirect('user_orders')
@@ -112,6 +191,17 @@ def single_order(request, order_id):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def cancel_order(request, order_id):
+    """
+    View para cancelar um pedido.
+
+    Altera o status do pedido para "CANCELADO" e envia um e-mail notificando o cancelamento.
+
+    Parâmetros:
+    order_id (int): O ID do pedido a ser cancelado.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona para a página de pedido do provedor após o cancelamento.
+    """
     order = get_object_or_404(Order, id=order_id)
     order.status = 'CANCELADO'
     order.save()
@@ -122,6 +212,15 @@ def cancel_order(request, order_id):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def provider_view(request):
+    """
+    View para exibir e filtrar os pedidos para o provedor.
+
+    Mostra uma lista de todos os pedidos, ordenados por data, com a possibilidade 
+    de filtragem e paginação. Os parâmetros do filtro são mantidos na paginação.
+
+    Retorna:
+    HttpResponse: Página com a lista de pedidos filtrados e paginados.
+    """
     orders = Order.objects.all().order_by('-date')
 
     filter = OrderFilter(request.GET, queryset=orders)
@@ -142,6 +241,15 @@ def provider_view(request):
 
 @login_required(login_url='login')
 def user_orders(request):
+    """
+    View para exibir os pedidos do usuário.
+
+    Mostra a lista de pedidos do usuário atual, ordenados por data, e coleta as entregas mais recentes 
+    dos pedidos com status 'ENTREGUE'.
+
+    Retorna:
+    HttpResponse: Página com a lista de pedidos e entregas recentes do usuário.
+    """
     orders = Order.objects.filter(user=request.user).order_by('-date')
 
     delivered_orders = Order.objects.filter(user=request.user, status='ENTREGUE')
@@ -157,11 +265,33 @@ def user_orders(request):
 
 @login_required(login_url='login')
 def subscriptions(request):
+    """
+    View para exibir as assinaturas do usuário.
+
+    Mostra a lista de assinaturas ativas e anteriores do usuário, ordenadas pela data de início.
+
+    Retorna:
+    HttpResponse: Página com a lista de assinaturas do usuário.
+    """
     subscriptions = Subscription.objects.filter(user=request.user).order_by('-start_date')
     return render(request, "bloomy/subscriptions.html", {'subscriptions':subscriptions})
 
 
 def redirect_to_payment(request, package_pk):
+    """
+    View para redirecionar o usuário para a página de pagamento.
+
+    Verifica se o usuário está autenticado e, em caso afirmativo, tenta criar uma sessão de checkout 
+    para o pacote selecionado. Se o usuário não tiver uma conta Stripe, uma nova conta é criada. 
+    O método aceita requisições POST para iniciar o pagamento.
+
+    Parâmetros:
+    package_pk (int): O ID do pacote a ser adquirido.
+
+    Retorna:
+    HttpResponseRedirect: Redireciona para a página de checkout ou para a lista de pacotes.
+    HttpResponse: Renderiza a página de pacotes se a requisição for GET.
+    """
     if not request.user.is_authenticated:
         messages.info(request, 'Faça login para adquirir um pacote!')
         return redirect('login')
@@ -195,6 +325,16 @@ def redirect_to_payment(request, package_pk):
 
 
 def payment_success(request):
+    """
+    View para tratar o sucesso do pagamento.
+
+    Verifica o status da sessão de checkout e, se o pagamento for confirmado, 
+    cria uma nova assinatura para o usuário e envia um e-mail de confirmação. 
+    Caso contrário, renderiza a página de cancelamento do pagamento.
+
+    Retorna:
+    HttpResponse: Renderiza a página de sucesso ou cancelamento do pagamento.
+    """
     checkout_session_id = request.GET.get('session_id', None)
 
     session = retrieve_checkout_session(checkout_session_id)
@@ -227,12 +367,28 @@ def payment_success(request):
 
 
 def payment_cancel(request):
+    """
+    View para renderizar a página de cancelamento de pagamento.
+
+    Retorna:
+    HttpResponse: Página que informa ao usuário sobre o cancelamento do pagamento.
+    """
     return render(request, "payment/payment_cancel.html")
 
 
 @login_required(login_url='login')
 def create_order(request):
+    """
+    View para criar um novo pedido.
 
+    Verifica se o usuário tem usos disponíveis e, em caso afirmativo, 
+    processa o formulário de pedido. Se o pedido for salvo com sucesso, 
+    um e-mail de confirmação é enviado e o uso do usuário é atualizado.
+
+    Retorna:
+    HttpResponse: Redireciona para a página inicial após a criação do pedido 
+                  ou renderiza o formulário de criação de pedido.
+    """
     if request.method == 'POST':
         user = request.user
         form = OrderForm(request.POST, request.FILES)
@@ -259,16 +415,42 @@ def create_order(request):
 
 
 def packages(request):
+    """
+    View para exibir todos os pacotes disponíveis.
+
+    Recupera todos os pacotes ordenados pelo número de usos permitidos e 
+    renderiza a página de pacotes.
+
+    Retorna:
+    HttpResponse: Página com a lista de pacotes disponíveis.
+    """
     packages = Package.objects.all().order_by('allowed_usages')
     context = {'packages':packages}
     return render(request, 'bloomy/packages.html',context)
  
 def index(request):
+    """
+    View para renderizar a página inicial.
+
+    Retorna:
+    HttpResponse: Página inicial da aplicação.
+    """
     return render(request, 'bloomy/index.html')
 
 
 @unauthenticated_user
 def login_view(request):
+    """
+    View para processar o login do usuário.
+
+    Verifica se a requisição é do tipo POST e, em caso afirmativo, 
+    tenta autenticar o usuário com o nome de usuário e senha fornecidos. 
+    Se a autenticação for bem-sucedida, o usuário é redirecionado para 
+    a página inicial; caso contrário, uma mensagem de erro é exibida.
+
+    Retorna:
+    HttpResponse: Renderiza a página de login ou redireciona para a página inicial.
+    """
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -286,6 +468,17 @@ def login_view(request):
 
 @unauthenticated_user
 def register(request):
+    """
+    View para registrar um novo usuário.
+
+    Processa o formulário de registro e realiza as validações necessárias, 
+    como verificar se o nome de usuário ou e-mail já estão em uso e validar 
+    as senhas. Se o registro for bem-sucedido, uma mensagem de sucesso é exibida 
+    e o usuário é redirecionado para a página de login.
+
+    Retorna:
+    HttpResponse: Renderiza a página de registro ou redireciona para a página de login.
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
 
@@ -325,5 +518,13 @@ def register(request):
 
 
 def logout_view(request):
+    """
+    View para processar o logout do usuário.
+
+    Realiza o logout do usuário autenticado e redireciona para a página de login.
+
+    Retorna:
+    HttpResponse: Redireciona para a página de login após o logout.
+    """
     logout(request)
     return redirect('login')

@@ -81,7 +81,7 @@
                     <form id="complete-order-form" action="{% url 'complete_order' order.id %}" method="post" enctype="multipart/form-data" class="flex flex-col items-center">
                         {% csrf_token %}
                         <div class="block text-xl text-branco mb-6">Fazer entregue do pedido</div> 
-                        <label id="file-label" for="form-file" class="text-lg text-preto p-4 bg-amarelo rounded-full mt-4 transform transition duration-300 hover:scale-110 cursor-pointer">Subir trabalho</label>
+                        <label id="file-label" for="form-file" class="text-lg text-preto p-4 bg-amarelo rounded-lg mt-4 transform transition duration-300 hover:scale-110 cursor-pointer">Subir trabalho</label>
                         {% render_field form.file id="form-file" class+="hidden" %}
                         <br>
                         <button type="submit" id="btn-completado" class="hidden">Completar Pedido</button>
